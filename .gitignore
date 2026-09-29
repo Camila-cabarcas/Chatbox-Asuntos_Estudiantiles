@@ -216,3 +216,53 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# =====================================================================
+# Reglas propias del proyecto Chatbox Asuntos Estudiantiles
+# =====================================================================
+# ========== Secretos (NUNCA subir) ==========
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# ========== Datos generados localmente ==========
+# Índice vectorial: se reconstruye desde fichas/ (python -m scripts.indexar)
+data/*
+!data/.gitkeep
+# Volumen local de PostgreSQL, si alguien lo monta en el proyecto
+pgdata/
+
+# ========== Python ==========
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ========== Modelos descargados ==========
+.cache/
+models/
+
+# ========== Editores y sistema operativo ==========
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ========== Logs ==========
+*.log
+logs/
+
+# Nota: fuentes/ y fichas/ SÍ se suben: son la evidencia y la base de conocimiento.

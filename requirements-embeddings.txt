@@ -1,0 +1,4 @@
+# Modelo de embeddings multilingüe local (EMBEDDINGS_PROVIDER=local).
+# Está separado porque es pesado (descarga PyTorch). Instalar:
+#   pip install -r requirements-embeddings.txt
+sentence-transformers>=3.0,<6.0
