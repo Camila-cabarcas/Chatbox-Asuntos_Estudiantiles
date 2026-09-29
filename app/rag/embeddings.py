@@ -32,7 +32,7 @@ class Embeddings(Protocol):
 class EmbeddingsLocal:
     def __init__(self, modelo: str):
         try:
-            from sentence_transformers import SentenceTransformer
+            from sentence_transformers import SentenceTransformer  # pyright: ignore[reportMissingImports]
         except ImportError as e:
             raise RuntimeError(
                 "EMBEDDINGS_PROVIDER=local requiere 'sentence-transformers'. "

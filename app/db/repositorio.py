@@ -18,10 +18,11 @@ class RepositorioConsultas:
         self._db = db
 
     def registrar(self, **datos) -> int | None:
-        if not self._db.disponible:
+        sesion = self._db.Sesion
+        if not self._db.disponible or sesion is None:
             return None
         try:
-            with self._db.Sesion() as s, s.begin():
+            with sesion() as s, s.begin():
                 consulta = Consulta(**datos)
                 s.add(consulta)
             return consulta.id
@@ -30,10 +31,11 @@ class RepositorioConsultas:
             return None
 
     def valorar(self, id_consulta: int, util: bool) -> bool:
-        if not self._db.disponible:
+        sesion = self._db.Sesion
+        if not self._db.disponible or sesion is None:
             return False
         try:
-            with self._db.Sesion() as s, s.begin():
+            with sesion() as s, s.begin():
                 consulta = s.get(Consulta, id_consulta)
                 if consulta is None:
                     return False

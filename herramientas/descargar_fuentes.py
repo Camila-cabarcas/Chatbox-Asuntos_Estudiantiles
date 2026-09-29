@@ -52,7 +52,8 @@ from urllib.parse import urldefrag, urljoin, urlparse
 from urllib.robotparser import RobotFileParser
 
 import requests
-from bs4 import BeautifulSoup, NavigableString, Tag
+from bs4 import BeautifulSoup
+from bs4.element import NavigableString, Tag
 
 # --------------------------------------------------------------------------- #
 # Configuración
@@ -137,6 +138,16 @@ def parece_documento(url: str) -> bool:
 # --------------------------------------------------------------------------- #
 
 
+def texto_atributo(valor) -> str:
+    """bs4 entrega 'class' como lista de nombres y el resto de atributos
+    como texto; esto los deja siempre como texto."""
+    if valor is None:
+        return ""
+    if isinstance(valor, str):
+        return valor
+    return " ".join(str(v) for v in valor)
+
+
 def limpiar_ruido(soup: BeautifulSoup) -> None:
     for t in soup(["script", "style", "noscript", "form", "iframe", "svg",
                    "header", "nav", "footer", "button", "img"]):
@@ -147,7 +158,7 @@ def limpiar_ruido(soup: BeautifulSoup) -> None:
     for t in list(soup.find_all(True)):
         if getattr(t, "decomposed", False) or t.attrs is None:
             continue
-        marca = " ".join(t.get("class", [])) + " " + (t.get("id") or "")
+        marca = texto_atributo(t.get("class")) + " " + texto_atributo(t.get("id"))
         if RUIDO.search(marca) and densidad_enlaces(t) > 0.5:
             t.decompose()
 
@@ -195,7 +206,7 @@ def a_markdown(nodo: Tag, base: str) -> str:
             return str(t)
         if t.name == "a" and t.get("href"):
             txt = t.get_text(" ", strip=True)
-            href = normalizar_url(urljoin(base, t["href"]))
+            href = normalizar_url(urljoin(base, str(t["href"])))
             return f"[{txt}]({href})" if txt else ""
         if t.name in ("strong", "b"):
             txt = t.get_text(" ", strip=True)
@@ -248,7 +259,7 @@ def a_markdown(nodo: Tag, base: str) -> str:
 
 
 def enlaces_de(nodo: Tag, base: str) -> list[str]:
-    return [urljoin(base, a["href"]) for a in nodo.find_all("a", href=True)]
+    return [urljoin(base, str(a["href"])) for a in nodo.find_all("a", href=True)]
 
 
 # --------------------------------------------------------------------------- #
@@ -344,7 +355,8 @@ class Descargador:
             self.robots[base] = rp
         return self.robots[base].can_fetch(USER_AGENT, url)
 
-    def obtener(self, url: str) -> requests.Response | None:
+    def obtener(self, url: str) -> requests.Response:
+        ultimo = requests.RequestException(f"No se pudo obtener {url}")
         for intento in range(3):
             try:
                 time.sleep(self.pausa)
@@ -354,7 +366,7 @@ class Descargador:
             except requests.RequestException as e:
                 ultimo = e
                 time.sleep(2 * (intento + 1))
-        raise ultimo  # noqa: F821  (se asigna en el except)
+        raise ultimo
 
     # --- guardado ----------------------------------------------------------
     def guardar(self, reg: Registro, nombre: str, ext: str,

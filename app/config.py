@@ -52,9 +52,9 @@ class Settings(BaseSettings):
     llm_base_url: str = ""
     llm_api_key: SecretStr = SecretStr("")
     llm_model: str = ""
-    llm_temperature: float = Field(0.1, ge=0.0, le=1.0)
-    llm_timeout_seconds: float = Field(30.0, gt=0)
-    llm_max_tokens: int = Field(600, gt=0)
+    llm_temperature: float = Field(default=0.1, ge=0.0, le=1.0)
+    llm_timeout_seconds: float = Field(default=30.0, gt=0)
+    llm_max_tokens: int = Field(default=600, gt=0)
 
     # --- Embeddings ---------------------------------------------------------
     # local: modelo multilingüe preentrenado (sentence-transformers).
@@ -70,10 +70,10 @@ class Settings(BaseSettings):
     index_on_startup: bool = True
 
     # --- Parámetros del RAG -------------------------------------------------
-    rag_top_k: int = Field(4, ge=1, le=10)
+    rag_top_k: int = Field(default=4, ge=1, le=10)
     # Distancia coseno máxima (0 = idéntico, 2 = opuesto). Si ningún
     # fragmento está por debajo, la pregunta se trata como fuera de alcance.
-    rag_max_distance: float = Field(0.65, gt=0, le=2)
+    rag_max_distance: float = Field(default=0.65, gt=0, le=2)
 
     # --- Canal oficial para remisiones --------------------------------------
     canal_oficial_url: str = (

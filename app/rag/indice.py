@@ -5,8 +5,10 @@ vector y permite buscar los más parecidos a una pregunta.
 
 import logging
 from dataclasses import dataclass
+from typing import cast
 
 import chromadb
+from chromadb.api.types import PyEmbeddings
 from chromadb.config import Settings as ChromaSettings
 
 from app.config import Settings
@@ -60,7 +62,7 @@ class IndiceVectorial:
         self._coleccion.add(
             ids=[f.id for f in fragmentos],
             documents=[f.texto for f in fragmentos],
-            embeddings=self._embeddings.embed([f.texto for f in fragmentos]),
+            embeddings=cast(PyEmbeddings, self._embeddings.embed([f.texto for f in fragmentos])),
             metadatas=[{"ficha_id": f.ficha_id, "titulo": f.titulo,
                         "seccion": f.seccion, "url": f.url} for f in fragmentos],
         )
@@ -71,12 +73,17 @@ class IndiceVectorial:
         if self.total() == 0:
             return []
         r = self._coleccion.query(
-            query_embeddings=self._embeddings.embed([pregunta]),
+            query_embeddings=cast(PyEmbeddings, self._embeddings.embed([pregunta])),
             n_results=min(k, self.total()),
         )
+        # Chroma declara estos campos como opcionales; con la consulta por
+        # defecto siempre vienen, pero se usa [] como respaldo.
+        documentos = (r["documents"] or [[]])[0]
+        metadatos = (r["metadatas"] or [[]])[0]
+        distancias = (r["distances"] or [[]])[0]
         return [
             Resultado(texto=doc, distancia=dist, **{
-                "ficha_id": meta["ficha_id"], "titulo": meta["titulo"],
-                "seccion": meta["seccion"], "url": meta["url"]})
-            for doc, meta, dist in zip(r["documents"][0], r["metadatas"][0], r["distances"][0])
+                "ficha_id": str(meta["ficha_id"]), "titulo": str(meta["titulo"]),
+                "seccion": str(meta["seccion"]), "url": str(meta["url"])})
+            for doc, meta, dist in zip(documentos, metadatos, distancias)
         ]

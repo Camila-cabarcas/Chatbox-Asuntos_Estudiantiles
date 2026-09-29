@@ -9,10 +9,10 @@ def test_proveedor_real_sin_clave_da_error_claro(monkeypatch):
     for v in ("LLM_BASE_URL", "LLM_API_KEY", "LLM_MODEL"):
         monkeypatch.delenv(v, raising=False)
     with pytest.raises(ValidationError, match="LLM_API_KEY"):
-        Settings(_env_file=None)
+        Settings(_env_file=None)  # pyright: ignore[reportCallIssue]
 
 
 def test_la_clave_no_se_imprime(monkeypatch):
     monkeypatch.setenv("LLM_API_KEY", "clave-super-secreta")
-    s = Settings(_env_file=None)
+    s = Settings(_env_file=None)  # pyright: ignore[reportCallIssue]
     assert "clave-super-secreta" not in repr(s)
