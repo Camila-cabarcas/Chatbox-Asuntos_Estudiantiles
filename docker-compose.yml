@@ -1,0 +1,26 @@
+# Levanta PostgreSQL para desarrollo local:   docker compose up -d
+# Detenerlo:                                  docker compose down
+# Borrar también los datos:                   docker compose down -v
+# Lee usuario, contraseña, base y puerto del archivo .env
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: chatbot-uae-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-chatbot}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-chatbot_local}
+      POSTGRES_DB: ${POSTGRES_DB:-chatbot_uae}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-chatbot} -d ${POSTGRES_DB:-chatbot_uae}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:

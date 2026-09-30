@@ -1,0 +1,53 @@
+<!doctype html>
+<!--
+  PÁGINA DE PRUEBA DEL BACKEND (provisional).
+  Solo sirve para comprobar que la API responde. El rol de interfaz la
+  reemplaza por el chat definitivo, respetando el contrato de docs/acuerdos.md.
+-->
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prueba de API - Chatbot Asuntos Estudiantiles</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; }
+    textarea { width: 100%; min-height: 4rem; }
+    pre { white-space: pre-wrap; background: #f4f4f4; padding: 1rem; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <h1>Prueba de API</h1>
+  <p>Página provisional para verificar el backend. Estado: <span id="estado">consultando…</span></p>
+  <textarea id="pregunta" placeholder="Ej.: ¿Cuándo se reúne el comité?"></textarea>
+  <button id="enviar">Preguntar</button>
+  <pre id="salida"></pre>
+
+  <script>
+    const salida = document.getElementById("salida");
+
+    fetch("/api/health").then(r => r.json())
+      .then(d => document.getElementById("estado").textContent =
+        `BD: ${d.base_datos} · fragmentos: ${d.fragmentos_indexados} · LLM: ${d.proveedor_llm}`)
+      .catch(() => document.getElementById("estado").textContent = "sin conexión");
+
+    document.getElementById("enviar").addEventListener("click", async () => {
+      const pregunta = document.getElementById("pregunta").value.trim();
+      if (!pregunta) return;
+      salida.textContent = "Consultando…";
+      try {
+        const r = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ pregunta }),
+        });
+        const d = await r.json();
+        salida.textContent = r.ok
+          ? d.respuesta + "\n\nFuentes:\n" + d.fuentes.map(f => `- ${f.titulo}: ${f.url}`).join("\n")
+          : "Error: " + JSON.stringify(d.detail);
+      } catch (e) {
+        salida.textContent = "No se pudo conectar con el servidor.";
+      }
+    });
+  </script>
+</body>
+</html>
