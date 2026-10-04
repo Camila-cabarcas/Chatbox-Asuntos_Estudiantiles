@@ -3,36 +3,26 @@
 descargar_fuentes.py
 ====================
 
-Descarga las páginas y documentos oficiales del Comité de Asuntos
-Estudiantiles de PREGRADO de la Facultad de Ingeniería (UdeA), extrae SOLO el
-contenido útil (sin menús ni pies de página) y lo guarda con fecha, junto con
-un inventario en CSV.
-
-Alcance: únicamente la sección del Comité (Presentación, Circulares y oficios,
-Formatos) y los documentos (PDF, Word) enlazados desde esas páginas. No se
-siguen enlaces a otras secciones del portal.
+Descarga las páginas y documentos oficiales de los trámites estudiantiles de
+PREGRADO de la Facultad de Ingeniería (UdeA), abarcando el Comité de Asuntos
+Estudiantiles, Vicedecanatura (Supletorios y Segundo Calificador), Escuela de Idiomas
+(PIFLE) y la normatividad del Reglamento Estudiantil. Extrae SOLO el contenido útil
+(sin menús ni pies de página) y lo guarda con fecha, junto con un inventario en CSV.
 
 Qué hace:
   1. Lee las URLs semilla de `semillas.txt`.
   2. Descarga cada página, respetando robots.txt y con pausa entre peticiones.
   3. Detecta el bloque de contenido principal y lo convierte a Markdown limpio.
   4. Sigue los enlaces que aparecen DENTRO de ese contenido (no los del menú),
-     solo si están bajo los prefijos permitidos o son documentos (PDF, Word).
+     siempre que estén bajo los prefijos permitidos o sean documentos (PDF, Word).
   5. Extrae el texto de los PDF (y los campos si son formularios) y de los .docx.
   6. Guarda el original y el texto en fuentes/AAAA-MM-DD/ y actualiza
-     fuentes/inventario.csv, marcando qué fuentes son nuevas o cambiaron
-     desde la descarga anterior.
+     fuentes/inventario.csv, marcando qué fuentes son nuevas o cambiaron.
 
 Uso:
     pip install requests beautifulsoup4 pdfplumber pypdf python-docx
     python herramientas/descargar_fuentes.py
     python herramientas/descargar_fuentes.py --profundidad 2 --pausa 2
-
-Importante:
-  - Los archivos generados son MATERIA PRIMA para escribir las fichas, no se
-    indexan directamente en el chatbot.
-  - Por defecto se excluyen las actas del Comité (pueden contener datos
-    personales de estudiantes y son casos particulares, no reglas generales).
 """
 
 from __future__ import annotations
@@ -64,24 +54,23 @@ USER_AGENT = (
     "(uso académico; recolección de información pública)"
 )
 
-# Solo se siguen enlaces HTML que empiecen por este prefijo: la sección del
-# Comité de Asuntos Estudiantiles de la Facultad de Ingeniería.
-# Los documentos (PDF, Word) enlazados desde ahí sí se descargan aunque estén
-# alojados en otra ruta del portal (/wps/wcm/connect/...).
+# Prefijos autorizados para navegar enlaces HTML de las dependencias e instancias involucradas.
+# Los documentos (PDF, Word) enlazados desde aquí se descargan aunque estén en /wps/wcm/connect/...
 PREFIJOS_PERMITIDOS = [
-    "https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/"
-    "ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+    "https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+    "https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/vicedecanatura",
+    "https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/escuela-idiomas",
 ]
 
-# Cualquier URL que contenga alguno de estos textos se ignora.
+# Cualquier URL que contenga alguno de estos patrones se ignora automáticamente.
 PATRONES_EXCLUIDOS = [
-    "actas",            # actas del Comité: datos personales / casos particulares
+    "actas",            # Actas del Comité: contienen datos sensibles / casos particulares
     "login", "myportal", "registro-usuarios", "recuperar",
-    "posgrado",         # el alcance es solo pregrado
+    "posgrado",         # El alcance del proyecto se limita exclusivamente a pregrado
     "javascript:", "mailto:", "tel:",
 ]
 
-# Clases o ids que casi siempre son "ruido" (menús, cabezotes, redes...).
+# Clases, IDs o etiquetas que representan ruido estructural (menús, pies de página, barras laterales).
 RUIDO = re.compile(
     r"menu|nav|footer|cabezote|header|breadcrumb|signpost|social|compartir|"
     r"share|enlace|interes|cookie|banner|toolbar|accesib|idioma|search|buscar",
@@ -91,6 +80,7 @@ RUIDO = re.compile(
 TIPOS_DOCUMENTO = {
     "application/pdf": "pdf",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx",
+    "application/msword": "doc",
 }
 
 # --------------------------------------------------------------------------- #
@@ -99,8 +89,8 @@ TIPOS_DOCUMENTO = {
 
 
 def normalizar_url(url: str) -> str:
-    """Quita el fragmento (#...) y el estado del portal (/!ut/p/...),
-    que cambia en cada visita y generaría duplicados."""
+    """Quita el fragmento (#...) y el estado dinámico del portal (/!ut/p/...),
+    evitando duplicados en el inventario."""
     url, _ = urldefrag(url.strip())
     url = re.sub(r"/!ut/p/[^?]*", "", url)
     return url.rstrip("/")
@@ -128,8 +118,8 @@ def permitida_html(url: str) -> bool:
 def parece_documento(url: str) -> bool:
     u = url.lower()
     return (
-        u.endswith((".pdf", ".docx"))
-        or "/wps/wcm/connect/" in u  # archivos del gestor de contenidos de la UdeA
+        u.endswith((".pdf", ".docx", ".doc"))
+        or "/wps/wcm/connect/" in u  # Gestor de contenidos y documentos institucionales UdeA
     )
 
 
@@ -138,29 +128,25 @@ def parece_documento(url: str) -> bool:
 # --------------------------------------------------------------------------- #
 
 
-def texto_atributo(valor) -> str:
-    """bs4 entrega 'class' como lista de nombres y el resto de atributos
-    como texto; esto los deja siempre como texto."""
-    if valor is None:
-        return ""
-    if isinstance(valor, str):
-        return valor
-    return " ".join(str(v) for v in valor)
-
-
 def limpiar_ruido(soup: BeautifulSoup) -> None:
     for t in soup(["script", "style", "noscript", "form", "iframe", "svg",
                    "header", "nav", "footer", "button", "img"]):
         t.decompose()
-    # Un bloque se elimina solo si su nombre suena a ruido Y es mayormente
-    # enlaces. Así no se pierde contenido real que viva en un contenedor
-    # con un nombre engañoso (p. ej. el portlet "Información Menú" de la UdeA).
     for t in list(soup.find_all(True)):
         if getattr(t, "decomposed", False) or t.attrs is None:
             continue
-        marca = texto_atributo(t.get("class")) + " " + texto_atributo(t.get("id"))
+        marca = texto_atributo(t, "class") + " " + texto_atributo(t, "id")
         if RUIDO.search(marca) and densidad_enlaces(t) > 0.5:
             t.decompose()
+
+
+def texto_atributo(t: Tag, nombre: str) -> str:
+    valor = t.get(nombre)
+    if valor is None:
+        return ""
+    if isinstance(valor, (list, tuple)):
+        return " ".join(str(v) for v in valor)
+    return str(valor)
 
 
 def densidad_enlaces(t: Tag) -> float:
@@ -174,12 +160,10 @@ def densidad_enlaces(t: Tag) -> float:
 def texto_sin_enlaces(t: Tag) -> int:
     total = len(t.get_text(" ", strip=True))
     en_enlaces = sum(len(a.get_text(" ", strip=True)) for a in t.find_all("a"))
-    return total - 2 * en_enlaces  # penaliza bloques que son casi solo enlaces
+    return total - 2 * en_enlaces
 
 
 def bloque_principal(soup: BeautifulSoup) -> Tag:
-    """Elige el bloque con más texto 'real' y baja mientras un solo hijo
-    concentre casi todo el texto (heurística tipo Readability)."""
     candidatos = soup.find_all(["main", "article", "section", "div"])
     if not candidatos:
         return soup.body or soup
@@ -197,8 +181,6 @@ def bloque_principal(soup: BeautifulSoup) -> Tag:
 
 
 def a_markdown(nodo: Tag, base: str) -> str:
-    """Convierte el bloque a Markdown sencillo conservando títulos,
-    listas, tablas y enlaces (con URL absoluta)."""
     lineas: list[str] = []
 
     def en_linea(t) -> str:
@@ -263,12 +245,11 @@ def enlaces_de(nodo: Tag, base: str) -> list[str]:
 
 
 # --------------------------------------------------------------------------- #
-# Extracción de documentos
+# Extracción de documentos (PDF, Word)
 # --------------------------------------------------------------------------- #
 
 
 def texto_pdf(datos: bytes) -> tuple[str, str]:
-    """Devuelve (texto, observación)."""
     import pdfplumber
     from pypdf import PdfReader
 
@@ -280,13 +261,12 @@ def texto_pdf(datos: bytes) -> tuple[str, str]:
                 partes.append(f"<!-- página {i} -->\n{t}")
     texto = "\n\n".join(partes)
     if not texto:
-        obs = "PDF escaneado o sin texto: requiere OCR o transcripción manual"
+        obs = "PDF escaneado o sin texto detectable: requiere verificación manual"
 
-    # Si es un formulario (formato para diligenciar), listar sus campos.
     try:
         campos = PdfReader(io.BytesIO(datos)).get_fields() or {}
         if campos:
-            texto += "\n\n## Campos del formulario\n" + "\n".join(
+            texto += "\n\n## Campos del formulario detectados\n" + "\n".join(
                 f"- {nombre}" for nombre in campos)
     except Exception:
         pass
@@ -305,7 +285,7 @@ def texto_docx(datos: bytes) -> tuple[str, str]:
 
 
 # --------------------------------------------------------------------------- #
-# Descargador
+# Gestor de Descargas
 # --------------------------------------------------------------------------- #
 
 
@@ -329,7 +309,7 @@ class Descargador:
     salida: Path
     pausa: float
     profundidad: int
-    anteriores: dict[str, str] = field(default_factory=dict)  # url -> hash previo
+    anteriores: dict[str, str] = field(default_factory=dict)
     visitadas: set[str] = field(default_factory=set)
     registros: list[Registro] = field(default_factory=list)
     robots: dict[str, RobotFileParser] = field(default_factory=dict)
@@ -341,7 +321,6 @@ class Descargador:
         self.sesion = requests.Session()
         self.sesion.headers["User-Agent"] = USER_AGENT
 
-    # --- cortesía con el servidor ------------------------------------------
     def puede(self, url: str) -> bool:
         p = urlparse(url)
         base = f"{p.scheme}://{p.netloc}"
@@ -356,7 +335,7 @@ class Descargador:
         return self.robots[base].can_fetch(USER_AGENT, url)
 
     def obtener(self, url: str) -> requests.Response:
-        ultimo = requests.RequestException(f"No se pudo obtener {url}")
+        ultimo: requests.RequestException = requests.RequestException(f"No se pudo obtener {url}")
         for intento in range(3):
             try:
                 time.sleep(self.pausa)
@@ -368,9 +347,7 @@ class Descargador:
                 time.sleep(2 * (intento + 1))
         raise ultimo
 
-    # --- guardado ----------------------------------------------------------
-    def guardar(self, reg: Registro, nombre: str, ext: str,
-                original: bytes, texto: str) -> None:
+    def guardar(self, reg: Registro, nombre: str, ext: str, original: bytes, texto: str) -> None:
         nombre = f"{slug(nombre)}-{sha256(reg.url.encode())[:6]}"
         (self.carpeta / f"{nombre}.{ext}").write_bytes(original)
         encabezado = (
@@ -390,7 +367,6 @@ class Descargador:
         reg.cambio = "nuevo" if previo is None else (
             "sin cambios" if previo == reg.sha256 else "MODIFICADO")
 
-    # --- recorrido ---------------------------------------------------------
     def procesar(self, url: str, nivel: int) -> None:
         url = normalizar_url(url)
         if url in self.visitadas or excluida(url):
@@ -428,9 +404,6 @@ class Descargador:
                 limpiar_ruido(soup)
                 nodo = bloque_principal(soup)
                 texto = a_markdown(nodo, url)
-                # En HTML se compara el TEXTO extraído, no la página completa:
-                # el portal cambia tokens internos en cada visita y daría
-                # falsos "MODIFICADO".
                 reg.sha256 = sha256(texto.encode("utf-8"))
                 if len(texto.split()) < 40:
                     reg.observaciones = "poco texto extraído: revisar manualmente"
@@ -442,14 +415,11 @@ class Descargador:
                         if permitida_html(enlace) or parece_documento(enlace):
                             self.procesar(enlace, nivel + 1)
             else:
-                # Imágenes u otros tipos: se ignoran y se retiran del inventario.
                 self.registros.remove(reg)
-        except Exception as e:  # un archivo dañado no debe detener todo
+        except Exception as e:
             reg.estado, reg.observaciones = "error", f"al extraer: {e}"[:200]
 
-    # --- inventario --------------------------------------------------------
     def escribir_inventario(self, ruta: Path) -> None:
-        # Conserva las filas de URLs no visitadas hoy (historial).
         filas: dict[str, dict] = {}
         if ruta.exists():
             with ruta.open(encoding="utf-8") as f:
@@ -457,8 +427,6 @@ class Descargador:
                     filas[fila["url"]] = fila
         for reg in self.registros:
             if reg.estado != "ok" and reg.url in filas:
-                # Si hoy falló, se conserva la última versión buena y solo
-                # se anota el problema, para no perder su historial.
                 filas[reg.url]["estado"] = reg.estado
                 filas[reg.url]["observaciones"] = reg.observaciones
             else:
@@ -485,23 +453,18 @@ def leer_hashes_previos(ruta: Path) -> dict[str, str]:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="Descarga fuentes oficiales para las fichas.")
-    ap.add_argument("--semillas", type=Path,
-                    default=Path(__file__).with_name("semillas.txt"))
+    ap.add_argument("--semillas", type=Path, default=Path(__file__).with_name("semillas.txt"))
     ap.add_argument("--salida", type=Path, default=Path("fuentes"))
-    ap.add_argument("--profundidad", type=int, default=1,
-                    help="Niveles de enlaces a seguir desde cada semilla (0 = solo semillas).")
-    ap.add_argument("--pausa", type=float, default=1.5,
-                    help="Segundos de espera entre peticiones.")
-    ap.add_argument("--prefijo", action="append", default=[],
-                    help="Prefijo de URL adicional permitido (se puede repetir).")
+    ap.add_argument("--profundidad", type=int, default=1, help="Niveles de enlaces a seguir desde cada semilla (0 = solo semillas).")
+    ap.add_argument("--pausa", type=float, default=1.5, help="Segundos de espera entre peticiones.")
+    ap.add_argument("--prefijo", action="append", default=[], help="Prefijo de URL adicional permitido.")
     args = ap.parse_args()
     PREFIJOS_PERMITIDOS.extend(args.prefijo)
 
     args.salida.mkdir(parents=True, exist_ok=True)
     inventario = args.salida / "inventario.csv"
 
-    d = Descargador(args.salida, args.pausa, args.profundidad,
-                    anteriores=leer_hashes_previos(inventario))
+    d = Descargador(args.salida, args.pausa, args.profundidad, anteriores=leer_hashes_previos(inventario))
     for semilla in leer_semillas(args.semillas):
         d.procesar(semilla, 0)
     d.escribir_inventario(inventario)
@@ -512,8 +475,7 @@ def main() -> int:
     print(f"\nListo: {ok}/{len(d.registros)} fuentes guardadas en {d.carpeta}")
     print(f"Inventario: {inventario}")
     if cambios:
-        print(f"\n{len(cambios)} fuente(s) CAMBIARON desde la última descarga "
-              "(revisen las fichas que dependen de ellas):")
+        print(f"\n{len(cambios)} fuente(s) CAMBIARON desde la última descarga:")
         for r in cambios:
             print("  -", r.url)
     if revisar:

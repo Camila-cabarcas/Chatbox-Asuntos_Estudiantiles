@@ -1,0 +1,29 @@
+# URLs de partida para descargar_fuentes.py
+# Alcance: Tramitología y normatividad para estudiantes de PREGRADO
+# de la Facultad de Ingeniería de la Universidad de Antioquia.
+# Una URL por línea. Las líneas que empiezan con # se ignoran.
+
+# --- COMITÉ DE ASUNTOS ESTUDIANTILES (INSTANCIA PRINCIPAL) ---
+# Presentación: funciones del Comité, trámites que resuelve, sesiones y contacto
+https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles/Contenido/asMenuLateral/presentacion-comite-asuntos-estudiantiles
+
+# Circulares y oficios: reglas y procedimientos vigentes (PDFs institucionales)
+https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles/Contenido/asMenuLateral/circulares-oficios-comite-asuntos-estudiatiles-ingenieria
+
+# Formatos: solicitudes de estudiantes (Reingreso, Homologaciones, Cancelaciones, Incompletos)
+https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles/Contenido/asMenuLateral/formatos-comite-asuntos-estudiantiles-pregrado
+
+# --- VICEDECANATURA Y COMITÉ DE VICEDECANATO ---
+# Formatos e instructivos para Supletorios y Segundo Calificador (bit.ly/viceing)
+https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/vicedecanatura
+
+# --- COMPONENTE DE IDIOMAS Y PIFLE ---
+# Validación de inglés y cursos de la Escuela de Idiomas en la Facultad
+https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/escuela-idiomas
+
+# --- NORMATIVA INSTITUCIONAL DE PREGRADO ---
+# Reglamento Estudiantil de Pregrado (Acuerdo Superior 1 de 1981)
+https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990
+
+# Excluida a propósito: "Actas de pregrado" (decisiones sobre casos particulares
+# que contienen datos personales de estudiantes).
