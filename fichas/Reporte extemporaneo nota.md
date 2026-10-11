@@ -5,6 +5,7 @@ categoria: Calificaciones y notas
 aplica_a: Pregrado presencial, virtual y regionalizado
 instancia: Comité de Carrera (avala) / Comité de Asuntos Estudiantiles de la Facultad de Ingeniería (estudia y aprueba)
 canal: SSOFI (radicación virtual) y Secretaría del Comité (entrega de soportes físicos)
+tambien_se_conoce_como: el profe no me ha subido la nota del semestre pasado y ya se cerró el sistema, ¿cómo hago si en el sistema me aparece un 0.0 pero el profe se equivocó al subir la nota?, resolví un incompleto pero no me han montado la nota definitiva a la historia académica
 fuentes:
   - url: https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990
     archivo: fuentes/2026-10-03/reglamento_estudiantil.pdf

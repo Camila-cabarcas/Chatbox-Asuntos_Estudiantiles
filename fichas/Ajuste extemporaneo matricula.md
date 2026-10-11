@@ -5,6 +5,7 @@ categoria: Matrícula y plan de estudios
 aplica_a: Pregrado presencial, virtual y regionalizado
 instancia: Comité de Asuntos Estudiantiles de Pregrados Presenciales del Consejo de Facultad
 canal: SSOFI
+tambien_se_conoce_como: se me pasó el tiempo de ajustes y necesito meter una materia, ¿puedo cambiar de grupo o meter otra materia esta primera semana?, ¿dónde pido que me dejen sacar una materia si ya cerraron la plataforma?
 fuentes:
   - url: https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990
     archivo: fuentes/2026-10-03/reglamento_estudiantil.pdf
