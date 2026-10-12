@@ -5,6 +5,7 @@ categoria: Trámites generales
 aplica_a: Pregrado presencial, virtual y regionalizado
 instancia: Comité de Asuntos Estudiantiles del Consejo de Facultad
 canal: SSOFI
+tambien_se_conoce_como: ¿Cual seria el proceso para aplicar a practicas académicas?, Cual es el proceso oara poder realizar practica, Dime que pasos debo seguir para que me habiliten mis prácticas académicas, Cuáles son todos los trámites posibles que puedo realizar como estudiante?, Que es todo lo que puedes hacer y no puedes hacer? Y como funciona los tramistes?
 fuentes:
   - url: https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990
     archivo: fuentes/2026-10-03/reglamento_estudiantil.pdf

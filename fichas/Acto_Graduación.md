@@ -5,6 +5,7 @@ categoria: Grados y titulación
 aplica_a: Pregrado presencial, virtual y regionalizado
 instancia: Decanatura de la Facultad de Ingeniería (recepción de requisitos) y Consejo de Facultad / Secretaría General (otorgamiento del título)
 canal: SSOFI (para el ingreso de documentos) y Portal Universitario UdeA (para la inscripción inicial)
+tambien_se_conoce_como: ¿Cómo diligenciar los documentos para los grados?, ¿qué papeles tengo que subir para la ceremonia de grado?, ¿dónde miro si ya me aprobaron el paz y salvo para graduarme?
 fuentes:
   - url: https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990
     archivo: fuentes/2026-10-02/reglamento_estudiantil.pdf

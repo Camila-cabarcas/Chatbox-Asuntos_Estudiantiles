@@ -5,6 +5,7 @@ categoria: Evaluaciones y exámenes
 aplica_a: Pregrado presencial, virtual y regionalizado
 instancia: Vicedecanato de la Facultad de Ingeniería (Comité de Vicedecanato)
 canal: SSOFI
+tambien_se_conoce_como: Cómo se aplica a segundo calificador, no quedé conforme con la revisión del examen que me hizo el profe y quiero que otro profe me califique, ¿cuántos días tengo después de la revisión para pedir un segundo calificador?
 fuentes:
   - url: https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990
     archivo: fuentes/2026-10-03/reglamento_estudiantil.pdf
