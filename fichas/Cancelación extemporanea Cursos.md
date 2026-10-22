@@ -5,6 +5,7 @@ categoria: Cancelación de materias
 aplica_a: Pregrado presencial, virtual y regionalizado
 instancia: Decanatura / Comité de Asuntos Estudiantiles de la Facultad de Ingeniería
 canal: SSOFI
+tambien_se_conoce_como: ya pasó el 40% del semestre pero me va súper mal en una materia, ¿puedo retirarla?, tuve un problema médico feo y necesito cancelar una materia fuera de fecha, ¿qué justificación sirve para cancelar una materia después de tiempo?
 fuentes:
   - url: https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990
     archivo: fuentes/2026-10-03/reglamento_estudiantil.pdf
