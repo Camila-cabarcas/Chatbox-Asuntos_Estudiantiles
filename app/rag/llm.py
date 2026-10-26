@@ -14,6 +14,8 @@ LLMError y el servicio responde con un mensaje amable en vez de caerse.
 """
 
 import logging
+import re
+from dataclasses import dataclass
 from typing import Protocol
 
 import httpx
@@ -22,25 +24,40 @@ from app.config import Settings
 
 log = logging.getLogger(__name__)
 
+# Razonamiento interno que algunos modelos (p. ej. Qwen3) escriben antes de
+# la respuesta. También se quita un bloque sin cerrar (respuesta cortada).
+_RAZONAMIENTO = re.compile(r"<think>.*?(?:</think>|$)", re.DOTALL | re.IGNORECASE)
+
 
 class LLMError(Exception):
     pass
 
 
+@dataclass
+class RespuestaLLM:
+    texto: str
+    # True si el modelo se detuvo por llegar a LLM_MAX_TOKENS (respuesta cortada).
+    recortada: bool = False
+
+
 class LLM(Protocol):
     nombre: str
 
-    def generar(self, sistema: str, usuario: str) -> str: ...
+    def generar(self, sistema: str, usuario: str) -> RespuestaLLM: ...
+
+
+def quitar_razonamiento(texto: str) -> str:
+    return _RAZONAMIENTO.sub("", texto).strip()
 
 
 class LLMMock:
     nombre = "mock"
 
-    def generar(self, sistema: str, usuario: str) -> str:
+    def generar(self, sistema: str, usuario: str) -> RespuestaLLM:
         contexto = usuario.split("CONTEXTO:", 1)[-1].split("PREGUNTA DEL ESTUDIANTE:", 1)[0]
         primer_fragmento = contexto.strip().split("\n\n---\n\n")[0]
-        return ("[Respuesta de prueba - LLM_PROVIDER=mock]\n"
-                "Según la información oficial:\n" + primer_fragmento)
+        return RespuestaLLM("[Respuesta de prueba - LLM_PROVIDER=mock]\n"
+                            "Según la información oficial:\n" + primer_fragmento)
 
 
 class LLMOpenAICompatible:
@@ -53,7 +70,7 @@ class LLMOpenAICompatible:
         self._timeout = settings.llm_timeout_seconds
         self.nombre = f"openai_compatible:{settings.llm_model}"
 
-    def generar(self, sistema: str, usuario: str) -> str:
+    def generar(self, sistema: str, usuario: str) -> RespuestaLLM:
         cuerpo = {
             "model": self._modelo,
             "temperature": self._temperatura,
@@ -67,7 +84,11 @@ class LLMOpenAICompatible:
         try:
             r = httpx.post(self._url, json=cuerpo, headers=cabeceras, timeout=self._timeout)
             r.raise_for_status()
-            return r.json()["choices"][0]["message"]["content"].strip()
+            eleccion = r.json()["choices"][0]
+            return RespuestaLLM(
+                texto=(eleccion["message"].get("content") or "").strip(),
+                recortada=eleccion.get("finish_reason") == "length",
+            )
         except httpx.HTTPStatusError as e:
             # No se registra el cuerpo de la petición para no filtrar datos.
             log.error("El proveedor LLM respondió %s", e.response.status_code)
