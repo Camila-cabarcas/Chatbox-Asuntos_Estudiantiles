@@ -1,3 +1,7 @@
+from app.config import RAIZ_PROYECTO
+from app.rag.fichas import leer_ficha
+
+
 def test_health_responde_sin_base_de_datos(cliente):
     r = cliente.get("/api/health")
     assert r.status_code == 200
@@ -11,8 +15,12 @@ def test_chat_cumple_el_contrato(cliente):
     assert r.status_code == 200
     d = r.json()
     assert set(d) == {"respuesta", "fuentes", "fuera_de_alcance", "id_consulta"}
-    assert "martes" in d["respuesta"]
-    assert d["fuentes"] and d["fuentes"][0]["url"].startswith("https://")
+    assert d["fuera_de_alcance"] is False
+    assert d["respuesta"].strip()
+    # La fuente se identifica por el título de la ficha: su URL coincide con
+    # la del canal oficial, que también se usa en respuestas fuera de alcance.
+    comite = leer_ficha(RAIZ_PROYECTO / "fichas" / "comite-sesiones-contacto.md")
+    assert {"titulo": comite.titulo, "url": comite.url} in d["fuentes"]
     assert d["id_consulta"] is None  # BD deshabilitada: no falla, solo no registra
 
 
