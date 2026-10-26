@@ -5,7 +5,6 @@ categoria: Cancelación de materias y semestre
 aplica_a: Pregrado presencial, virtual y regionalizado
 instancia: Comité de Asuntos Estudiantiles (recomienda) / Consejo Académico de la Universidad (decide)
 canal: SSOFI
-tambien_se_conoce_como: no puedo seguir estudiando este semestre, ¿cómo hago para salirme ya?, se me pasó la fecha para cancelar el semestre completo, ¿todavía puedo?, ¿dónde saco el paz y salvo de PAYSA que piden para retirar el semestre?
 fuentes:
   - url: https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990
     archivo: fuentes/2026-10-03/reglamento_estudiantil.pdf
@@ -15,6 +14,9 @@ preguntas_ejemplo:
   - ¿Puedo cancelar el semestre completo si ya pasó la fecha del 40% evaluado?
   - ¿Qué pasa si no adjunto el Paz y Salvo de PAYSA al solicitar cancelación de semestre?
   - ¿Quién aprueba la cancelación extemporánea de semestre según el reglamento?
+  - no puedo seguir estudiando este semestre, ¿cómo hago para salirme ya?
+  - se me pasó la fecha para cancelar el semestre completo, ¿todavía puedo?
+  - ¿dónde saco el paz y salvo de PAYSA que piden para retirar el semestre?
 redactada_por:
 revisada_por:
 ---

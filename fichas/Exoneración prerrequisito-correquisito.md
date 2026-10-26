@@ -5,7 +5,6 @@ categoria: Matrícula y plan de estudios
 aplica_a: Pregrado presencial, virtual y regionalizado
 instancia: Comité de Asuntos Estudiantiles de Pregrados Presenciales del Consejo de Facultad (para núcleo común) / Comité de Carrera (para cursos específicos del programa)
 canal: SSOFI
-tambien_se_conoce_como: me falta una materia correquisito pero necesito ver la otra ya, ¿puedo pedir que me la dejen ver?, ¿cómo hago para que me dejen ver una materia sin haber ganado el prerrequisito?, ¿el comité deja meter materias sin cumplir todos los requisitos?
 fuentes:
   - url: https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990
     archivo: fuentes/2026-10-03/reglamento_estudiantil.pdf
@@ -15,6 +14,9 @@ preguntas_ejemplo:
   - ¿Dónde tramito la exención de un correquisito del núcleo común de ingeniería?
   - ¿Qué datos debo ingresar en el formulario de SSOFI para solicitar la exoneración de un requisito?
   - ¿A qué comité debo dirigir la solicitud si la materia es propia de mi carrera y no del núcleo común?
+  - me falta una materia correquisito pero necesito ver la otra ya, ¿puedo pedir que me la dejen ver?
+  - ¿cómo hago para que me dejen ver una materia sin haber ganado el prerrequisito?
+  - ¿el comité deja meter materias sin cumplir todos los requisitos?
 redactada_por:
 revisada_por:
 ---

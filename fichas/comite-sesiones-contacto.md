@@ -5,7 +5,6 @@ categoria: General
 aplica_a: Pregrado presencial, virtual y regionalizado
 instancia: Comité de Asuntos Estudiantiles de Pregrado - Facultad de Ingeniería
 canal: Presencial y telefónico
-tambien_se_conoce_como: ¿qué días se reúne la gente del comité a revisar los casos?, ¿a qué correo o número le puedo escribir a la secretaria del comité si tengo una duda?, ¿cuándo suben la respuesta de mi caso en SSOFI?
 fuentes:
   - url: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles
     archivo: PENDIENTE (ejecutar herramientas/descargar_fuentes.py)
@@ -14,6 +13,9 @@ preguntas_ejemplo:
   - ¿Cuándo se reúne el comité?
   - ¿Hasta cuándo puedo mandar mi solicitud para que la estudien esta semana?
   - ¿Dónde queda la oficina de asuntos estudiantiles?
+  - ¿qué días se reúne la gente del comité a revisar los casos?
+  - ¿a qué correo o número le puedo escribir a la secretaria del comité si tengo una duda?
+  - ¿cuándo suben la respuesta de mi caso en SSOFI?
 redactada_por: Ejemplo inicial (verificar)
 revisada_por:
 ---

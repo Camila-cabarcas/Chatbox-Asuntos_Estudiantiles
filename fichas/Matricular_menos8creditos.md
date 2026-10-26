@@ -5,7 +5,6 @@ categoria: Matrícula y carga académica
 aplica_a: Pregrado presencial, virtual y regionalizado
 instancia: Consejo de Facultad de Ingeniería / Comité de Asuntos Estudiantiles
 canal: SSOFI
-tambien_se_conoce_como: ¿Cómo es el proceso para solicitar matrícula de menos de 8 créditos y en qué fechas es aceptado?, solo me falta una materia para terminar materias, ¿puedo matricular solo esa aunque sean poquitos créditos?, ¿qué excusa me acepta el comité para dejarme ver menos de 8 créditos?
 fuentes:
   - url: https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990
     archivo: fuentes/2026-10-03/reglamento_estudiantil.pdf
@@ -15,6 +14,9 @@ preguntas_ejemplo:
   - ¿Qué hago si me faltan menos de 8 créditos para terminar la carrera?
   - ¿Cuáles son los motivos válidos para solicitar la matrícula de menos de 8 créditos?
   - ¿Cómo solicito la autorización para matricular o cancelar cursos quedando con menos de 8 créditos en SSOFI?
+  - ¿Cómo es el proceso para solicitar matrícula de menos de 8 créditos y en qué fechas es aceptado?
+  - solo me falta una materia para terminar materias, ¿puedo matricular solo esa aunque sean poquitos créditos?
+  - ¿qué excusa me acepta el comité para dejarme ver menos de 8 créditos?
 redactada_por:
 revisada_por:
 ---

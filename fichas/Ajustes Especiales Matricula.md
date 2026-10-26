@@ -5,7 +5,6 @@ categoria: Matrícula y ajustes
 aplica_a: Pregrado presencial, virtual y regionalizado de cualquier programa de Ingeniería
 instancia: Comité de Asuntos Estudiantiles del programa de Ingeniería correspondiente / Departamento del programa
 canal: SSOFI / Escuela de Idiomas / Departamento del Programa
-tambien_se_conoce_como: se me cruzan dos materias obligatorias y necesito que me abran cupo, ¿cómo hago para que me dejen matricular una materia del núcleo que no tiene cupos?, no alcancé cupo en una materia común, ¿ante quién me quejo para que me la metan?
 fuentes:
   - url: https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990
     archivo: fuentes/2026-10-03/reglamento_estudiantil.pdf
@@ -18,6 +17,9 @@ preguntas_ejemplo:
   - ¿Dónde gestiono el ajuste si la materia que necesito es de tronco común?
   - ¿A quién me dirijo si la materia no es de tronco común ni de inglés?
   - ¿Qué hago si necesito un ajuste en los niveles de inglés?
+  - se me cruzan dos materias obligatorias y necesito que me abran cupo
+  - ¿cómo hago para que me dejen matricular una materia del núcleo que no tiene cupos?
+  - no alcancé cupo en una materia común, ¿ante quién me quejo para que me la metan?
 redactada_por:
 revisada_por:
 ---

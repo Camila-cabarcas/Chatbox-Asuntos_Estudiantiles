@@ -14,7 +14,8 @@ def cliente(tmp_path, monkeypatch):
     monkeypatch.setenv("EMBEDDINGS_PROVIDER", "mock")
     monkeypatch.setenv("DB_ENABLED", "false")
     monkeypatch.setenv("CHROMA_PATH", str(tmp_path / "chroma"))
-    monkeypatch.setenv("RAG_MAX_DISTANCE", "0.9")
+    # Mismo umbral que el valor por defecto de app/config.py y .env.example.
+    monkeypatch.setenv("RAG_MAX_DISTANCE", "0.65")
 
     from app.config import get_settings
     get_settings.cache_clear()
