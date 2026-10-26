@@ -32,7 +32,8 @@ def main() -> None:
         print(f"(umbral de distancia: {s.rag_max_distance}; menor = más parecido)\n")
         for r in indice.buscar(args.probar, s.rag_top_k):
             marca = "✔" if r.distancia <= s.rag_max_distance else "✘ (descartado)"
-            print(f"{marca} {r.distancia:.3f}  {r.titulo} › {r.seccion}")
+            detalle = r.texto.splitlines()[-1] if r.tipo == "pregunta" else r.seccion
+            print(f"{marca} {r.distancia:.3f}  [{r.tipo}] {r.id}  {r.titulo} › {detalle}")
 
 
 if __name__ == "__main__":

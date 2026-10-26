@@ -8,7 +8,11 @@ Proveedores (se elige con EMBEDDINGS_PROVIDER en .env):
            para pruebas automáticas y para trabajar sin internet.
 
 Para agregar otro proveedor (p. ej. embeddings por API) basta con crear
-una clase con el método `embed` y registrarla en `crear_embeddings`.
+una clase con `embed`, `contar_tokens` y `max_tokens` y registrarla en
+`crear_embeddings`.
+
+`max_tokens` es lo máximo que el modelo lee de cada texto: lo que pase de
+ahí se descarta en silencio. Las fichas se trocean para no superarlo.
 """
 
 import hashlib
@@ -19,14 +23,20 @@ import unicodedata
 from typing import Protocol
 
 from app.config import Settings
+from app.rag.tokens import estimar_tokens
 
 log = logging.getLogger(__name__)
 
 
 class Embeddings(Protocol):
     nombre: str
+    max_tokens: int
+    # True si contar_tokens usa el tokenizador del modelo (y no una estimación).
+    conteo_exacto: bool
 
     def embed(self, textos: list[str]) -> list[list[float]]: ...
+
+    def contar_tokens(self, texto: str) -> int: ...
 
 
 class EmbeddingsLocal:
@@ -42,10 +52,17 @@ class EmbeddingsLocal:
         log.info("Cargando modelo de embeddings '%s' (la primera vez tarda)...", modelo)
         self._modelo = SentenceTransformer(modelo)
         self.nombre = f"local:{modelo}"
+        self.max_tokens = int(self._modelo.max_seq_length or 512)
+        self.conteo_exacto = True
 
     def embed(self, textos: list[str]) -> list[list[float]]:
         vectores = self._modelo.encode(textos, normalize_embeddings=True)
         return [v.tolist() for v in vectores]
+
+    def contar_tokens(self, texto: str) -> int:
+        # verbose=False: no avisar cuando el texto medido supera el límite
+        # (justamente se mide para decidir si hay que dividirlo).
+        return len(self._modelo.tokenizer(texto, verbose=False)["input_ids"])
 
 
 class EmbeddingsMock:
@@ -56,6 +73,12 @@ class EmbeddingsMock:
 
     def __init__(self):
         self.nombre = "mock"
+        # Sin tokenizador: no hay un límite propio; manda RAG_FRAGMENTO_MAX_TOKENS.
+        self.max_tokens = 512
+        self.conteo_exacto = False
+
+    def contar_tokens(self, texto: str) -> int:
+        return estimar_tokens(texto)
 
     @staticmethod
     def _palabras(texto: str) -> list[str]:
