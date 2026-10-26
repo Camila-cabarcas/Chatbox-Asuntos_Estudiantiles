@@ -54,7 +54,9 @@ class Settings(BaseSettings):
     llm_model: str = ""
     llm_temperature: float = Field(default=0.1, ge=0.0, le=1.0)
     llm_timeout_seconds: float = Field(default=30.0, gt=0)
-    llm_max_tokens: int = Field(default=600, gt=0)
+    # Margen sobre las ~250 palabras que pide el prompt; si el modelo llega a
+    # este límite, la respuesta se marca como incompleta.
+    llm_max_tokens: int = Field(default=800, gt=0)
 
     # --- Embeddings ---------------------------------------------------------
     # local: modelo multilingüe preentrenado (sentence-transformers). Es el

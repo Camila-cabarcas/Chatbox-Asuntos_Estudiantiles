@@ -91,6 +91,78 @@ Funciona con cualquier proveedor que ofrezca el endpoint `/chat/completions`
 en formato OpenAI. Si falta alguno de los tres valores, el servidor no
 arranca y dice exactamente cuál falta.
 
+### Conectar Groq
+
+Groq tiene un plan gratuito y ofrece ese endpoint. Pasos:
+
+1. **Crear la cuenta** en https://console.groq.com.
+2. **Crear la clave** en https://console.groq.com/keys y llenar el campo
+   **Expiration** con una fecha de vencimiento (por ejemplo, el fin del
+   semestre). Cada integrante usa su propia clave. La clave solo se ve una
+   vez: cópienla directo al `.env`.
+3. **Activar Zero Data Retention** en https://console.groq.com/settings/data-controls
+   (lo hace quien administra la organización). Por defecto Groq no guarda
+   las preguntas, pero puede conservarlas hasta 30 días si investiga fallas
+   o abusos; con ZDR activado no las conserva en ningún caso. Es importante
+   porque los estudiantes pueden escribir datos personales que el
+   enmascaramiento no detecta (por ejemplo, su nombre).
+4. **Llenar el `.env`:**
+   ```
+   LLM_PROVIDER=openai_compatible
+   LLM_BASE_URL=https://api.groq.com/openai/v1
+   LLM_API_KEY=<su clave>
+   LLM_MODEL=qwen/qwen3.8-27b
+   LLM_MAX_TOKENS=800
+   ```
+   Los modelos disponibles cambian; para ver los de su cuenta, consulten
+   `GET https://api.groq.com/openai/v1/models` con su clave. Si cambian de
+   modelo, repitan las pruebas de abajo.
+5. Reiniciar el servidor y probar en http://localhost:8000.
+
+**Límites del plan gratuito** para `qwen/qwen3.8-27b` (octubre de 2026, según
+https://console.groq.com/docs/rate-limits y las cabeceras de respuesta):
+
+| Límite | Valor | Qué significa para el chatbot |
+|---|---|---|
+| Solicitudes por minuto / por día | 30 / 1 000 | No es el límite que se alcanza primero |
+| Tokens por minuto | 8 000 | ~4 preguntas por minuto |
+| **Tokens por día** | **200 000** | **~100 a 120 preguntas por día** |
+
+Cada pregunta consume entre 1 500 y 2 000 tokens (instrucciones + contexto +
+respuesta). Para que alcance para más preguntas se puede bajar
+`RAG_CONTEXTO_MAX_TOKENS` o `LLM_MAX_TOKENS`, a costa de algo de calidad. Si
+se supera un límite, Groq responde con error y el chatbot muestra un mensaje
+que remite al canal oficial.
+
+**Resultado de las pruebas** (octubre de 2026, `qwen/qwen3.8-27b`, embeddings
+MiniLM-L12, `RAG_MAX_DISTANCE=0.50`). Cada dato de las respuestas se comparó
+con el contexto que recibió el modelo:
+
+| Pregunta | Resultado |
+|---|---|
+| ¿Cuándo se reúne el comité? | Correcta (martes; solicitudes hasta el viernes anterior) |
+| se me pasó el tiempo de ajustes y necesito meter una materia | Correcta: pasos en SSOFI y qué hacer según el tipo de materia |
+| dejé de estudiar hace dos años y quiero volver a la carrera | Correcta: presenta las dos vías según la fecha, sin suponerla |
+| ¿cuánto cuesta la matrícula este semestre y dónde la pago? | Fuera de alcance: remite al canal oficial |
+| quiero matricular física II pero no he aprobado física I | Fuera de alcance por el umbral (pendiente: mejorar la ficha de exoneración) |
+| ¿cómo preparo unas arepas con queso? | Fuera de alcance |
+| Me llamo Ana y mi cédula es 1036456789, ¿cómo cancelo el semestre? | Correcta; la cédula llega enmascarada al modelo |
+| ¿me van a aprobar la cancelación si la pido? | No decide el caso; explica qué instancia decide |
+
+Ninguna respuesta inventó fechas, requisitos, correos ni enlaces, ni mostró
+datos marcados como `PENDIENTE`. Tiempo de respuesta: 1 a 2,5 s. Ajustes que
+salieron de estas pruebas (en `app/rag/prompts.py` y `app/rag/servicio.py`):
+
+- Si el modelo concluye que no tiene la información, responde con la frase
+  fija de fuera de alcance y la API lo marca como `fuera_de_alcance=true`.
+- Respuestas de máximo ~250 palabras, en texto plano (la interfaz actual no
+  muestra Markdown; si se cambia, se puede quitar esa regla del prompt).
+- No supone datos del caso que el estudiante no dio; si el trámite depende
+  de ellos, presenta cada opción.
+- Si la respuesta se corta por `LLM_MAX_TOKENS`, se avisa al estudiante y se
+  remite al canal oficial. Si el modelo escribe razonamiento interno
+  (`<think>`), se quita antes de responder.
+
 ## Trabajar con las fichas
 
 1. Descargar las fuentes oficiales: `python herramientas/descargar_fuentes.py`
