@@ -72,7 +72,9 @@ No todos necesitan todo instalado. En `.env`:
 | Probar el registro de consultas | `DB_ENABLED=true` y `docker compose up -d` |
 
 El modo `mock` de embeddings solo compara palabras, no significado: sirve
-para desarrollar, no para medir la calidad del chatbot.
+para desarrollar, no para medir la calidad del chatbot. `RAG_MAX_DISTANCE`
+está calibrado para el modelo real (ver "Calibración de la búsqueda"); con
+`mock` las distancias son otras.
 
 ## Conectar el modelo de lenguaje
 
@@ -103,13 +105,102 @@ Una ficha mal escrita no rompe el sistema: se omite y aparece una
 advertencia en la consola. Las pruebas (`pytest`) fallan si alguna ficha de
 la carpeta no es válida.
 
+### Cómo se usan las fichas en la búsqueda
+
+El modelo de embeddings solo lee 128 tokens por texto y descarta el resto en
+silencio. Por eso se busca con fragmentos pequeños y se responde con
+secciones completas:
+
+- **Búsqueda:** cada pregunta de `preguntas_ejemplo` es un fragmento propio,
+  y cada sección se divide por párrafos o elementos de lista (sin partir
+  frases) hasta caber en `RAG_FRAGMENTO_MAX_TOKENS`.
+- **Respuesta:** el modelo de lenguaje recibe las secciones completas de los
+  fragmentos encontrados, sin pasar de `RAG_CONTEXTO_MAX_TOKENS`.
+
+## Calibración de la búsqueda
+
+`scripts/calibrar.py` mide, con el banco de preguntas de
+`tests/calibracion/preguntas.csv`, qué ficha encuentra el chatbot para cada
+pregunta y a qué distancia. Sirve para elegir el modelo de embeddings y
+`RAG_MAX_DISTANCE`. Construye el índice en una carpeta temporal y **no lee
+`.env`**: el proveedor y el modelo se pasan por argumentos.
+
+```bash
+python -m scripts.calibrar --proveedor mock
+python -m scripts.calibrar --proveedor local --modelo sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+# Opcional: --json resultado.json guarda el detalle por pregunta
+```
+
+Para cada pregunta muestra la primera ficha encontrada, si es la esperada,
+en qué puesto quedó la esperada y la distancia del mejor fragmento. Al final
+resume los aciertos, las distancias dentro y fuera del alcance, el rango de
+umbral que mejor las separa, los tiempos y la memoria.
+
+**Vuelvan a calibrar** cuando cambien el modelo de embeddings, el troceado o
+muchas fichas. El CSV tiene las columnas `pregunta`, `ficha_esperada`,
+`dentro_alcance` (`true`/`false`) y `tipo` (opcional). Las preguntas no deben
+copiar ningún `preguntas_ejemplo`: tienen que estar escritas como las haría
+un estudiante.
+
+### Resultados (octubre de 2026)
+
+Banco de 23 preguntas: 15 dentro del alcance (una por ficha), 6 de otros
+temas de la universidad y 2 sin relación. "Top 4" = la ficha esperada está
+entre las primeras 4 fichas distintas.
+
+| | mock | **MiniLM-L12** (elegido) | mpnet-base |
+|---|---|---|---|
+| Ficha correcta en 1.er lugar | 11/15 | 11/15 | 11/15 |
+| Ficha correcta en el top 4 | 14/15 | 14/15 | 13/15 |
+| Distancia máxima dentro del alcance | 0.752 | 0.518 | 0.402 |
+| Distancia mínima fuera del alcance | 0.505 | 0.432 | 0.411 |
+| Mejor separación dentro/fuera | 16/23 | 21/23 | 23/23 (margen de 0.009) |
+| Construir el índice | 2 s | 24 s | 118 s |
+| Consulta media | 9 ms | 40 ms | 144 ms |
+| Memoria máxima del proceso | ~100 MB | ~1 GB | ~1,9 GB |
+
+**Por qué MiniLM-L12 con `RAG_MAX_DISTANCE=0.50`:**
+
+- mpnet separa mejor, pero su 23/23 depende de un margen de 0.009 en solo 23
+  preguntas, usa casi el doble de memoria, tarda 5 veces más en construir el
+  índice y acierta menos en el top 4.
+- Con MiniLM, entre 0.48 y 0.55 siempre quedan 2 preguntas mal clasificadas.
+  Con 0.50 los errores son los menos dañinos:
+  - "quiero matricular física II pero no he aprobado física I…" (0.518)
+    queda fuera de alcance y se remite al canal oficial. Su búsqueda ya
+    fallaba (la ficha de exoneración no queda en el top 4), así que
+    aceptarla daría una respuesta equivocada.
+  - "¿cuánto cuesta la matrícula este semestre y dónde la pago?" (0.432) se
+    acepta aunque no es del Comité. Ningún umbral lo evita sin perder
+    preguntas válidas; depende de que el modelo de lenguaje siga la regla de
+    remitir cuando el contexto no tiene la respuesta.
+  - La biblioteca (0.517) queda fuera por un margen de solo 0.017.
+- El modo `mock` no separa dentro de fuera (16/23); por eso las pruebas
+  automáticas usan su propio umbral en `tests/conftest.py`.
+
+### Decisión pendiente: memoria para el despliegue
+
+Con MiniLM el proceso llega a **~1 GB de memoria** (PyTorch, el modelo,
+ChromaDB y el cálculo de los vectores al arrancar). En un servidor gratuito
+de 512 MB no cabe. Opciones, por evaluar y medir antes de desplegar:
+
+1. **Embeddings por API:** el servidor no carga ningún modelo. Hay que
+   recalibrar con el modelo del proveedor y considerar sus límites y costos.
+2. **Modelo cuantizado en ONNX**, sin PyTorch: menos memoria con el mismo
+   modelo. Hay que verificar que las distancias no cambien mucho.
+3. **Índice construido antes del despliegue:** el servidor solo vectoriza
+   las preguntas. Reduce el tiempo de arranque, pero el modelo se sigue
+   cargando en memoria.
+
 ## Pruebas
 
 ```bash
 pytest
 ```
 
-No requieren internet, claves, Docker ni modelos descargados.
+No requieren internet, claves, Docker ni modelos descargados. La prueba que
+usa el tokenizador real del modelo se salta sola si el modelo no está
+descargado.
 
 ## Seguridad y datos personales
 
@@ -132,7 +223,7 @@ app/
 fichas/            base de conocimiento (una ficha por trámite)
 fuentes/           copias fechadas de las páginas oficiales
 herramientas/      recolección de fuentes
-scripts/           utilidades (reindexar)
+scripts/           utilidades (reindexar, calibrar)
 frontend/          interfaz web
 tests/             pruebas automáticas
 docs/              acuerdos del equipo y decisiones de arquitectura

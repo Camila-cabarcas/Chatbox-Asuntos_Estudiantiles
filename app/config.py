@@ -57,7 +57,8 @@ class Settings(BaseSettings):
     llm_max_tokens: int = Field(default=600, gt=0)
 
     # --- Embeddings ---------------------------------------------------------
-    # local: modelo multilingüe preentrenado (sentence-transformers).
+    # local: modelo multilingüe preentrenado (sentence-transformers). Es el
+    #        modo real; el modelo elegido en la calibración es MiniLM-L12.
     # mock: vectores simples por palabras, sin descargar modelos (pruebas).
     embeddings_provider: Literal["local", "mock"] = "local"
     embeddings_model: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
@@ -75,7 +76,9 @@ class Settings(BaseSettings):
     rag_top_k: int = Field(default=8, ge=1, le=20)
     # Distancia coseno máxima (0 = idéntico, 2 = opuesto). Si ningún
     # fragmento está por debajo, la pregunta se trata como fuera de alcance.
-    rag_max_distance: float = Field(default=0.65, gt=0, le=2)
+    # 0.50 sale de calibrar MiniLM-L12 (ver README, "Calibración"); si se
+    # cambia el modelo de embeddings hay que volver a calibrar.
+    rag_max_distance: float = Field(default=0.50, gt=0, le=2)
     # Tamaño máximo de cada fragmento de búsqueda, en tokens del modelo de
     # embeddings. Si el modelo lee menos, se usa el límite del modelo.
     rag_fragmento_max_tokens: int = Field(default=128, ge=32, le=512)

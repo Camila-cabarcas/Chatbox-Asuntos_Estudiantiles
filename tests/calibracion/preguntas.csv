@@ -1,0 +1,24 @@
+pregunta,ficha_esperada,dentro_alcance,tipo
+"ya terminé todas las materias, ¿qué tengo que hacer para que me entreguen el título?",acto-de-graduacion,true,dentro
+ya estoy matriculado pero quiero cambiarme de grupo en una materia y la plataforma ya cerró,ajuste-extemporaneo-matricula,true,dentro
+"llevo semanas enfermo y ya pasó la fecha para cancelar, ¿todavía puedo sacar una materia?",cancelacion-extemporanea-cursos,true,dentro
+me salió un trabajo de tiempo completo y quiero retirarme de todo el semestre aunque ya vamos por la mitad,cancelacion-extemporanea-semestre,true,dentro
+"el día del parcial estaba hospitalizado, ¿me pueden hacer el examen otro día?",examen-supletorio,true,dentro
+"quiero matricular física II pero no he aprobado física I, ¿hay alguna forma de que me dejen?",exoneracion-prerrequisito-correquisito,true,dentro
+"vengo de otra universidad, ¿me pueden reconocer las materias que ya aprobé allá?",reconocimiento-homologacion-materias,true,dentro
+"no me matriculé en las fechas y ya empezaron las clases, ¿qué puedo hacer?",matricula-extemporanea,true,dentro
+"quiero inscribir 26 créditos este semestre para graduarme antes, ¿se puede?",matricular-mas-de-24-creditos,true,dentro
+por el trabajo solo puedo ver dos materias este semestre y no llego al mínimo de créditos,matricula-menos-de-8-creditos,true,dentro
+dejé de estudiar hace dos años y quiero volver a la carrera,reingreso,true,dentro
+el profesor olvidó subir mi nota final y ya cerraron el sistema,reporte-extemporaneo-nota-final,true,dentro
+creo que me calificaron mal el examen final y quiero que lo revise otro profesor,segundo-calificador-examen,true,dentro
+"por una calamidad no alcancé a terminar el proyecto final, ¿puedo entregarlo cuando acabe el semestre?",solicitud-incompletos-academicos,true,dentro
+"ya sé programar, ¿puedo presentar un examen para no tener que ver la materia de introducción?",validaciones-clasificaciones-examenes,true,dentro
+¿a qué hora abre la biblioteca central los sábados?,,false,universidad
+¿cómo saco un duplicado del carné estudiantil si lo perdí?,,false,universidad
+¿cuándo abren la convocatoria del apoyo de alimentación de Bienestar?,,false,universidad
+¿cómo me inscribo a un curso de natación en deportes de la universidad?,,false,universidad
+¿cuánto cuesta la matrícula este semestre y dónde la pago?,,false,universidad
+¿cómo solicito una beca o un auxilio económico?,,false,universidad
+¿cómo preparo unas arepas con queso?,,false,sin_relacion
+¿quién ganó el último mundial de fútbol?,,false,sin_relacion
