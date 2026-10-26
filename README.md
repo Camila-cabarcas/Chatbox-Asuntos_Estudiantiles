@@ -128,8 +128,12 @@ pregunta y a qué distancia. Sirve para elegir el modelo de embeddings y
 ```bash
 python -m scripts.calibrar --proveedor mock
 python -m scripts.calibrar --proveedor local --modelo sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
-# Opcional: --json resultado.json guarda el detalle por pregunta
+# Opcional: --json data/calibracion.json guarda el detalle por pregunta
 ```
+
+Por seguridad, `--csv` solo acepta archivos `.csv` dentro del proyecto,
+`--json` solo escribe archivos `.json` dentro de `data/` (que Git ignora) y
+`--modelo` solo acepta identificadores de Hugging Face, no rutas locales.
 
 Para cada pregunta muestra la primera ficha encontrada, si es la esperada,
 en qué puesto quedó la esperada y la distancia del mejor fragmento. Al final

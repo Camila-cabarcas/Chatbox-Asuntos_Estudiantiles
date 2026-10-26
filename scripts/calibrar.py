@@ -12,6 +12,12 @@ de parámetros usa los valores por defecto de app/config.py.
 
 CSV (tests/calibracion/preguntas.csv): pregunta, ficha_esperada,
 dentro_alcance (true/false) y, opcional, tipo (dentro/universidad/sin_relacion).
+
+Por seguridad, las rutas recibidas se validan antes de usarlas:
+  --csv   debe ser un archivo .csv dentro de la carpeta del proyecto.
+  --json  debe ser un archivo .json dentro de data/ (carpeta ignorada por Git).
+  --modelo debe ser un identificador de Hugging Face ("organizacion/modelo"),
+           no una ruta local.
 """
 
 import argparse
@@ -19,6 +25,7 @@ import csv
 import gc
 import json
 import logging
+import re
 import statistics
 import sys
 import tempfile
@@ -32,6 +39,43 @@ from app.rag.embeddings import crear_embeddings
 from app.rag.indice import IndiceVectorial
 
 CSV_POR_DEFECTO = RAIZ_PROYECTO / "tests" / "calibracion" / "preguntas.csv"
+CARPETA_SALIDA = RAIZ_PROYECTO / "data"
+_ID_MODELO = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*/[A-Za-z0-9][A-Za-z0-9._-]*$")
+
+
+def _ruta_dentro(valor: str, carpeta: Path, extension: str, nombre: str) -> Path:
+    """Resuelve la ruta (también los enlaces simbólicos y los '..') y exige
+    que quede dentro de `carpeta` y con la extensión esperada."""
+    ruta = Path(valor).expanduser().resolve()
+    base = carpeta.resolve()
+    if not ruta.is_relative_to(base):
+        raise argparse.ArgumentTypeError(
+            f"{nombre} debe estar dentro de {base} (se recibió {ruta}).")
+    if ruta.suffix.lower() != extension:
+        raise argparse.ArgumentTypeError(f"{nombre} debe ser un archivo {extension} (se recibió {ruta.name}).")
+    return ruta
+
+
+def ruta_csv(valor: str) -> Path:
+    ruta = _ruta_dentro(valor, RAIZ_PROYECTO, ".csv", "El CSV de preguntas")
+    if not ruta.is_file():
+        raise argparse.ArgumentTypeError(f"No existe el archivo {ruta}.")
+    return ruta
+
+
+def ruta_json(valor: str) -> Path:
+    ruta = _ruta_dentro(valor, CARPETA_SALIDA, ".json", "El archivo de resultados")
+    if not ruta.parent.is_dir():
+        raise argparse.ArgumentTypeError(f"No existe la carpeta {ruta.parent}.")
+    return ruta
+
+
+def id_modelo(valor: str) -> str:
+    if not _ID_MODELO.match(valor) or ".." in valor:
+        raise argparse.ArgumentTypeError(
+            f"El modelo debe ser un identificador de Hugging Face como "
+            f"'sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2', no una ruta (se recibió {valor!r}).")
+    return valor
 
 
 def memoria_maxima_mb() -> float | None:
@@ -69,6 +113,7 @@ def memoria_maxima_mb() -> float | None:
 
 
 def leer_csv(ruta: Path) -> list[dict]:
+    ruta = ruta_csv(str(ruta))  # también si se llama sin pasar por argparse
     with ruta.open(encoding="utf-8", newline="") as f:
         filas = list(csv.DictReader(f))
     for r in filas:
@@ -85,14 +130,21 @@ def fichas_en_orden(resultados) -> list[tuple[str, float]]:
     return list(vistas.items())
 
 
-def main() -> None:
+def crear_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--proveedor", choices=["local", "mock"], required=True)
-    ap.add_argument("--modelo", default="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
-    ap.add_argument("--csv", type=Path, default=CSV_POR_DEFECTO)
+    ap.add_argument("--modelo", type=id_modelo,
+                    default="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
+    ap.add_argument("--csv", type=ruta_csv, default=CSV_POR_DEFECTO,
+                    help="Archivo .csv dentro del proyecto.")
     ap.add_argument("--top", type=int, default=4, help="Primeras N fichas distintas que cuentan como acierto.")
-    ap.add_argument("--json", type=Path, help="Guarda el resultado detallado en este archivo.")
-    args = ap.parse_args()
+    ap.add_argument("--json", type=ruta_json,
+                    help="Guarda el resultado detallado en este archivo .json dentro de data/.")
+    return ap
+
+
+def main() -> None:
+    args = crear_parser().parse_args()
 
     logging.basicConfig(level=logging.WARNING, format="%(levelname)s %(name)s: %(message)s")
     filas = leer_csv(args.csv)
@@ -175,7 +227,7 @@ def main() -> None:
     print(f"Memoria máxima del proceso: {memoria:.0f} MB" if memoria else "Memoria: no disponible")
 
     if args.json:
-        args.json.write_text(json.dumps({
+        ruta_json(str(args.json)).write_text(json.dumps({
             "modelo": nombre, "fragmentos": n_fragmentos, "detalle": detalle,
             "tiempo_modelo_s": t_modelo, "tiempo_indice_s": t_indice,
             "consulta_media_ms": 1000 * statistics.mean(tiempos), "memoria_mb": memoria,
