@@ -4,7 +4,6 @@ titulo: Solicitud de Incompletos (Curso, Semestre o Práctica Académica)
 categoria: Evaluaciones y notas
 aplica_a: Pregrado presencial, virtual y regionalizado
 instancia: Comité de Asuntos Estudiantiles del Consejo de Facultad
-tambien_se_conoce_como: ¿Cómo solicito la autorización de un incompleto para un curso o semestre?, se acabó el semestre y me falta entregar el proyecto final de la práctica, ¿cómo pido el incompleto?, ¿cuánto tiempo me dan para resolver una materia que me quedó en incompleto antes de que me le pongan 0?
 canal: SSOFI
 fuentes:
   - url: https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990
@@ -15,6 +14,8 @@ preguntas_ejemplo:
   - ¿Cómo solicito el estado incompleto para la práctica académica?
   - ¿Cuánto tiempo tengo para resolver una nota que quedó en incompleto?
   - ¿Qué pasa si no resuelvo el incompleto en el plazo del reglamento?
+  - se acabó el semestre y me falta entregar el proyecto final de la práctica, ¿cómo pido el incompleto?
+  - ¿cuánto tiempo me dan para resolver una materia que me quedó en incompleto antes de que me le pongan 0?
 redactada_por:
 revisada_por:
 ---

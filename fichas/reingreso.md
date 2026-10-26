@@ -5,7 +5,6 @@ categoria: Admisión y reingresos
 aplica_a: Pregrado presencial, virtual y regionalizado
 instancia: Departamento de Admisiones y Registro (trámite regular) / Comité de Asuntos Estudiantiles (aval extemporáneo) / Consejo Académico (decisión final)
 canal: Portal UdeA / Admisiones y Registro (ordinario) / SSOFI (aval extemporáneo)
-tambien_se_conoce_como: volver a la U después de retirarme, retomar la carrera, pedir aval para reingresar fuera de tiempo, reingresar a la universidad
 fuentes:
   - url: https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990
     archivo: fuentes/2026-10-01/reglamento_estudiantil.pdf
@@ -14,6 +13,10 @@ preguntas_ejemplo:
   - quería volver después de retirarme y nadie me decía a dónde escribir
   - me retiré hace un tiempo y quiero retomar la carrera, ¿qué tengo que hacer?
   - se me pasó la fecha para pedir el reingreso a la U, ¿cómo pido el aval extemporáneo?
+  - volver a la U después de retirarme
+  - retomar la carrera
+  - pedir aval para reingresar fuera de tiempo
+  - reingresar a la universidad
 redactada_por:
 revisada_por:
 ---

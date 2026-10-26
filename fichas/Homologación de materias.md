@@ -5,7 +5,6 @@ categoria: Trámites académicos y homologaciones
 aplica_a: Pregrado presencial, virtual y regionalizado
 instancia: Comité de Asuntos Estudiantiles del Consejo de Facultad
 canal: SSOFI
-tambien_se_conoce_como: Como homologar algun curso, Razon del porque no me homologaron alguna materia, Describir los paso y requerimientos para a homologar materias
 fuentes:
   - url: https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990
     archivo: fuentes/2026-10-03/reglamento_estudiantil.pdf
@@ -15,6 +14,9 @@ preguntas_ejemplo:
   - ¿Qué documentos necesito para refrendar materias en la Facultad de Ingeniería?
   - ¿Dónde radico la solicitud de homologación de asignaturas en SSOFI?
   - ¿Puedo homologar materias cursadas en otro programa de la UdeA?
+  - Como homologar algun curso
+  - Razon del porque no me homologaron alguna materia
+  - Describir los paso y requerimientos para a homologar materias
 redactada_por:
 revisada_por:
 ---

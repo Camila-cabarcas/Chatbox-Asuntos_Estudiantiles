@@ -5,7 +5,6 @@ categoria: Evaluaciones y exámenes
 aplica_a: Pregrado presencial, virtual y regionalizado
 instancia: Comité de Asuntos Estudiantiles de Pregrados Presenciales del Consejo de Facultad
 canal: SSOFI
-tambien_se_conoce_como: cómo hago para presentar examen y no ver el curso, me falta solo una materia para graduarme y la quiero validar ¿cómo hago?, ¿cómo hago para presentar la prueba de clasificación y no tener que ver esa materia desde cero?
 fuentes:
   - url: https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990
     archivo: fuentes/2026-10-03/reglamento_estudiantil.pdf
@@ -15,6 +14,9 @@ preguntas_ejemplo:
   - ¿Qué es un examen de clasificación y cómo se solicita en SSOFI?
   - ¿Puedo validar una materia si la tengo matriculada en el semestre actual?
   - ¿Cuáles son los plazos para agendar la validación de mi última materia?
+  - cómo hago para presentar examen y no ver el curso
+  - me falta solo una materia para graduarme y la quiero validar ¿cómo hago?
+  - ¿cómo hago para presentar la prueba de clasificación y no tener que ver esa materia desde cero?
 redactada_por:
 revisada_por:
 ---

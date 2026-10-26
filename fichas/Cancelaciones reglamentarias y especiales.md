@@ -5,7 +5,6 @@ categoria: Cancelaciones y retiros
 aplica_a: Pregrado presencial, virtual y regionalizado
 instancia: Portal UdeA (Cancelaciones ordinarias) / Comité de Asuntos Estudiantiles (Cancelaciones especiales y de práctica) / Cancelaciones Cursos Garantías Académicas Fac. Ing.
 canal: Portal UdeA / SSOFI
-tambien_se_conoce_como: Puedo cancelar una materia incluso teniendo el mínimo de créditos y como es el proceso, Como hago para cancelar una materia, estoy viendo una materia por tercera vez y la voy a perder, ¿cómo la cancelo para que no me echen?
 fuentes:
   - url: https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990
     archivo: fuentes/2026-10-03/reglamento_estudiantil.pdf
@@ -15,6 +14,9 @@ preguntas_ejemplo:
   - ¿Cómo cancelo una materia que estoy cursando por tercera vez?
   - ¿Qué hago si un curso fue cancelado por baja demanda?
   - ¿Cómo cancelo la práctica académica o el desistimiento de una validación?
+  - Puedo cancelar una materia incluso teniendo el mínimo de créditos y como es el proceso
+  - Como hago para cancelar una materia
+  - estoy viendo una materia por tercera vez y la voy a perder, ¿cómo la cancelo para que no me echen?
 redactada_por:
 revisada_por:
 ---
