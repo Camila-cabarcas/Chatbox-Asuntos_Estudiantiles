@@ -57,7 +57,8 @@ class Settings(BaseSettings):
     llm_max_tokens: int = Field(default=600, gt=0)
 
     # --- Embeddings ---------------------------------------------------------
-    # local: modelo multilingüe preentrenado (sentence-transformers).
+    # local: modelo multilingüe preentrenado (sentence-transformers). Es el
+    #        modo real; el modelo elegido en la calibración es MiniLM-L12.
     # mock: vectores simples por palabras, sin descargar modelos (pruebas).
     embeddings_provider: Literal["local", "mock"] = "local"
     embeddings_model: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
@@ -70,10 +71,24 @@ class Settings(BaseSettings):
     index_on_startup: bool = True
 
     # --- Parámetros del RAG -------------------------------------------------
-    rag_top_k: int = Field(default=4, ge=1, le=10)
+    # Fragmentos de búsqueda que se recuperan por pregunta. Son pequeños
+    # (una pregunta de ejemplo o parte de una sección), por eso se piden varios.
+    rag_top_k: int = Field(default=8, ge=1, le=20)
     # Distancia coseno máxima (0 = idéntico, 2 = opuesto). Si ningún
     # fragmento está por debajo, la pregunta se trata como fuera de alcance.
-    rag_max_distance: float = Field(default=0.65, gt=0, le=2)
+    # 0.50 sale de calibrar MiniLM-L12 (ver README, "Calibración"); si se
+    # cambia el modelo de embeddings hay que volver a calibrar.
+    rag_max_distance: float = Field(default=0.50, gt=0, le=2)
+    # Tamaño máximo de cada fragmento de búsqueda, en tokens del modelo de
+    # embeddings. Si el modelo lee menos, se usa el límite del modelo.
+    rag_fragmento_max_tokens: int = Field(default=128, ge=32, le=512)
+    # Unidades (párrafo, elemento de lista o frase) que se repiten entre
+    # partes consecutivas de una sección dividida.
+    rag_fragmento_solapamiento: int = Field(default=1, ge=0, le=3)
+    # Tamaño máximo del contexto que recibe el modelo de lenguaje (tokens
+    # estimados). Limita el consumo por pregunta, p. ej. los tokens por minuto
+    # de un plan gratuito.
+    rag_contexto_max_tokens: int = Field(default=1500, ge=200, le=8000)
 
     # --- Canal oficial para remisiones --------------------------------------
     canal_oficial_url: str = (

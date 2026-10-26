@@ -20,6 +20,7 @@ def test_chat_cumple_el_contrato(cliente):
     # La fuente se identifica por el título de la ficha: su URL coincide con
     # la del canal oficial, que también se usa en respuestas fuera de alcance.
     comite = leer_ficha(RAIZ_PROYECTO / "fichas" / "comite-sesiones-contacto.md")
+    assert comite is not None
     assert {"titulo": comite.titulo, "url": comite.url} in d["fuentes"]
     assert d["id_consulta"] is None  # BD deshabilitada: no falla, solo no registra
 

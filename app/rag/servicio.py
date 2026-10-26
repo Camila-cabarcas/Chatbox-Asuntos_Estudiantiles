@@ -1,7 +1,8 @@
 """
 Servicio RAG: la función central del chatbot.
 
-    pregunta -> buscar fragmentos -> construir instrucción -> modelo -> respuesta
+    pregunta -> buscar fragmentos -> armar contexto con las secciones
+             completas -> construir instrucción -> modelo -> respuesta
 
 Es la "función responder" acordada en el equipo. La API la usa sin saber
 cómo funciona por dentro, así que el rol de IA puede cambiarla libremente
@@ -13,6 +14,7 @@ from dataclasses import dataclass, field
 
 from app.config import Settings
 from app.rag import prompts
+from app.rag.contexto import armar_contexto
 from app.rag.indice import IndiceVectorial, Resultado
 from app.rag.llm import LLM, LLMError
 
@@ -47,7 +49,8 @@ class ServicioRAG:
                 fuera_de_alcance=True,
             )
 
-        contexto = "\n\n---\n\n".join(r.texto for r in resultados)
+        contexto = "\n\n---\n\n".join(
+            armar_contexto(resultados, self._indice, self._s.rag_contexto_max_tokens))
         try:
             texto = self._llm.generar(
                 sistema=prompts.PROMPT_SISTEMA.format(canal_oficial=canal),
