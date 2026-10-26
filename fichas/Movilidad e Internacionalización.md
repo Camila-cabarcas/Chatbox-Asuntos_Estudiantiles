@@ -5,6 +5,7 @@ categoria: Movilidad e internacionalización
 aplica_a: Pregrado presencial, virtual y regionalizado
 instancia: Comité para Movilidad Nacional e Internacional de la Facultad de Ingeniería
 canal: SSOFI
+tambien_se_conoce_como: ¿A donde debo dirigirme para tratar temas de movilidad internacional?, El proceso para hacer intercambio,que requisitos se necesitan para hacer un intercambio semestral, ¿Cuáles son las oportunidades de movilidad internacional para los estudiantes de regiones?
 fuentes:
   - url: https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990
     archivo: fuentes/2026-10-03/reglamento_estudiantil.pdf

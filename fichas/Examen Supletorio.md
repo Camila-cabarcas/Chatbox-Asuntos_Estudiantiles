@@ -5,6 +5,7 @@ categoria: Evaluaciones y exámenes
 aplica_a: Pregrado presencial, virtual y regionalizado
 instancia: Docente del curso (primera instancia) / Vicedecanato de la Facultad de Ingeniería (apelación)
 canal: SSOFI (para el recurso de apelación ante Vicedecanato)
+tambien_se_conoce_como: no pude ir al parcial por una urgencia médica, ¿cómo pido que me repitan el examen?, el profe no me quiere hacer el examen que me perdí, ¿dónde apelo?, ¿cuántos días tengo para mandar la excusa del médico para un supletorio?
 fuentes:
   - url: https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990
     archivo: fuentes/2026-10-03/reglamento_estudiantil.pdf

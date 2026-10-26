@@ -5,6 +5,7 @@ categoria: Matrícula y plan de estudios
 aplica_a: Pregrado presencial, virtual y regionalizado
 instancia: Comité de Asuntos Estudiantiles del Consejo de Facultad
 canal: SSOFI
+tambien_se_conoce_como: no alcancé a matricularme en la fecha que me tocaba en el portal, ¿qué hago?, se me pasó la cita de matrícula y me quedé sin materias, ¿cómo pido matrícula fuera de tiempo?, ¿a quién le pido permiso para matricular el semestre si se me venció el plazo?
 fuentes:
   - url: https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990
     archivo: fuentes/2026-10-03/reglamento_estudiantil.pdf
