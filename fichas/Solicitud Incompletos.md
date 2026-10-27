@@ -16,6 +16,11 @@ preguntas_ejemplo:
   - ¿Qué pasa si no resuelvo el incompleto en el plazo del reglamento?
   - se acabó el semestre y me falta entregar el proyecto final de la práctica, ¿cómo pido el incompleto?
   - ¿cuánto tiempo me dan para resolver una materia que me quedó en incompleto antes de que me le pongan 0?
+  - ¿puedo pedir que mi nota quede como incompleto porque una enfermedad no me dejó presentar los exámenes finales?
+  - quiero que suspendan temporalmente la nota definitiva del curso mientras me recupero de una calamidad
+  - ¿en qué se diferencia el incompleto de una materia del incompleto de la práctica?
+  - ¿se puede dejar en incompleto todo el semestre y no solo una materia?
+  - ¿qué pasa si no presento lo pendiente dentro de los 6 meses del incompleto?
 redactada_por:
 revisada_por:
 ---

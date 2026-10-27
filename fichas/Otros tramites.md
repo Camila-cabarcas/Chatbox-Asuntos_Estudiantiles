@@ -19,6 +19,12 @@ preguntas_ejemplo:
   - Dime que pasos debo seguir para que me habiliten mis prácticas académicas
   - Cuáles son todos los trámites posibles que puedo realizar como estudiante?
   - Que es todo lo que puedes hacer y no puedes hacer? Y como funciona los tramistes?
+  - ¿cómo interpongo un recurso contra una respuesta negativa del Consejo de Facultad?
+  - quiero impugnar la decisión del comité y que la revise la instancia superior
+  - ¿qué tipo de solicitud uso en SSOFI para migrar a otra versión del plan de estudio?
+  - soy estudiante avanzado y quiero inscribir un curso de especialización como coterminal
+  - ¿dónde solicito la validación de inglés del PIFLE?
+  - radiqué un caso en SSOFI por error y quiero desistir antes de que lo estudien
 redactada_por:
 revisada_por:
 ---

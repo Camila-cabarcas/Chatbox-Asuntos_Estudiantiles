@@ -17,6 +17,9 @@ preguntas_ejemplo:
   - cómo hago para presentar examen y no ver el curso
   - me falta solo una materia para graduarme y la quiero validar ¿cómo hago?
   - ¿cómo hago para presentar la prueba de clasificación y no tener que ver esa materia desde cero?
+  - ¿quién me dice si un curso de mi pensum es validable?
+  - quiero acreditar los conocimientos de una asignatura sin cursarla, ¿cómo pido la prueba de suficiencia?
+  - ¿puedo presentar el examen de validación de una materia que ya vi por mi cuenta?
 redactada_por:
 revisada_por:
 ---

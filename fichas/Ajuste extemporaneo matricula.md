@@ -17,6 +17,9 @@ preguntas_ejemplo:
   - se me pasó el tiempo de ajustes y necesito meter una materia
   - ¿puedo cambiar de grupo o meter otra materia esta primera semana?
   - ¿dónde pido que me dejen sacar una materia si ya cerraron la plataforma?
+  - ya estoy matriculado y necesito incluir otro curso durante la primera semana de clases
+  - ¿cómo pido un cambio de grupo de una materia del tronco común después del periodo de ajustes?
+  - estando matriculado quiero retirar una asignatura de mi horario en la primera semana del semestre
 redactada_por:
 revisada_por:
 ---

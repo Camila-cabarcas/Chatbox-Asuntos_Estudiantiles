@@ -14,9 +14,14 @@ preguntas_ejemplo:
   - ¿Cómo cancelo una materia que estoy cursando por tercera vez?
   - ¿Qué hago si un curso fue cancelado por baja demanda?
   - ¿Cómo cancelo la práctica académica o el desistimiento de una validación?
-  - Puedo cancelar una materia incluso teniendo el mínimo de créditos y como es el proceso
   - Como hago para cancelar una materia
   - estoy viendo una materia por tercera vez y la voy a perder, ¿cómo la cancelo para que no me echen?
+  - el departamento cerró el grupo por baja demanda, ¿pierdo una de mis cancelaciones reglamentarias?
+  - me retiraron del centro de práctica, ¿cómo cancelo la práctica académica?
+  - ¿con cuánta anticipación aviso que ya no voy a presentar un examen de validación?
+  - ¿cómo cancelo un curso intensivo de intersemestral?
+  - después del paro, ¿cómo cancelo cursos por garantías académicas?
+  - ¿la cancelación ordinaria de materias se hace por el portal antes del 40% evaluado?
 redactada_por:
 revisada_por:
 ---

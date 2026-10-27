@@ -17,9 +17,9 @@ preguntas_ejemplo:
   - ¿Dónde gestiono el ajuste si la materia que necesito es de tronco común?
   - ¿A quién me dirijo si la materia no es de tronco común ni de inglés?
   - ¿Qué hago si necesito un ajuste en los niveles de inglés?
-  - se me cruzan dos materias obligatorias y necesito que me abran cupo
-  - ¿cómo hago para que me dejen matricular una materia del núcleo que no tiene cupos?
-  - no alcancé cupo en una materia común, ¿ante quién me quejo para que me la metan?
+  - ¿dónde consulto en Cursum las materias de mi pensum antes de pedir un ajuste especial?
+  - necesito la adición de Formación Ciudadana y Constitucional a mi matrícula, ¿la radico en SSOFI?
+  - ¿el ajuste de un nivel de inglés lo maneja la Escuela de Idiomas o la facultad?
 redactada_por:
 revisada_por:
 ---

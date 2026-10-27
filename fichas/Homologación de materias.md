@@ -17,6 +17,13 @@ preguntas_ejemplo:
   - Como homologar algun curso
   - Razon del porque no me homologaron alguna materia
   - Describir los paso y requerimientos para a homologar materias
+  - vengo transferido de otra institución y quiero que me reconozcan los créditos de las asignaturas que aprobé allá
+  - tengo cursos aprobados en otra universidad con contenidos parecidos a los de mi pensum, ¿cómo los hago valer?
+  - ¿qué son los microcurrículos que piden para reconocer materias aprobadas en otra institución?
+  - hice una tecnología antes de entrar a ingeniería, ¿me reconocen esas materias en el plan de estudios?
+  - aprobé materias en otro programa de la Universidad de Antioquia, ¿se pueden incorporar a mi plan de estudios actual?
+  - hice semestres en otra universidad, ¿esas materias me sirven para no verlas otra vez acá?
+  - pasé de un programa a otro en la UdeA, ¿tengo que volver a ver las materias que ya había ganado?
 redactada_por:
 revisada_por:
 ---

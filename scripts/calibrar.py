@@ -12,6 +12,20 @@ de parámetros usa los valores por defecto de app/config.py.
 
 CSV (tests/calibracion/preguntas.csv): pregunta, ficha_esperada,
 dentro_alcance (true/false) y, opcional, tipo (dentro/universidad/sin_relacion).
+Columnas opcionales:
+  dentro_alcance        si no está, todas las preguntas cuentan como dentro.
+  fichas_alternativas   otras fichas que también responden bien la pregunta,
+                        separadas por ";". Cuentan como acierto igual que la
+                        esperada.
+
+Cobertura de las fichas (tests/calibracion/cobertura.csv, 3 preguntas por
+ficha), con un resumen por ficha:
+
+    python -m scripts.calibrar --proveedor local --csv tests/calibracion/cobertura.csv --por-ficha
+
+Además del puesto, se informa si la mejor distancia pasa RAG_MAX_DISTANCE y
+si la ficha llega al contexto: si está entre los primeros RAG_TOP_K
+fragmentos que pasan el umbral (los valores por defecto de app/config.py).
 
 Por seguridad, las rutas recibidas se validan antes de usarlas:
   --csv   debe ser un archivo .csv dentro de la carpeta del proyecto.
@@ -117,8 +131,10 @@ def leer_csv(ruta: Path) -> list[dict]:
     with ruta.open(encoding="utf-8", newline="") as f:
         filas = list(csv.DictReader(f))
     for r in filas:
-        r["dentro"] = r["dentro_alcance"].strip().lower() == "true"
+        r["dentro"] = (r.get("dentro_alcance") or "true").strip().lower() == "true"
         r["tipo"] = (r.get("tipo") or ("dentro" if r["dentro"] else "fuera")).strip()
+        r["aceptadas"] = [r["ficha_esperada"]] + [
+            f.strip() for f in (r.get("fichas_alternativas") or "").split(";") if f.strip()]
     return filas
 
 
@@ -140,7 +156,26 @@ def crear_parser() -> argparse.ArgumentParser:
     ap.add_argument("--top", type=int, default=4, help="Primeras N fichas distintas que cuentan como acierto.")
     ap.add_argument("--json", type=ruta_json,
                     help="Guarda el resultado detallado en este archivo .json dentro de data/.")
+    ap.add_argument("--por-ficha", action="store_true",
+                    help="Agrega un resumen por ficha esperada.")
     return ap
+
+
+def resumen_por_ficha(detalle: list[dict]) -> list[dict]:
+    """Por ficha esperada: preguntas, aciertos en 1.er lugar, en el top,
+    cuántas no pasan el umbral y cuántas no llegan al contexto."""
+    fichas: dict[str, dict] = {}
+    for d in detalle:
+        if not d["dentro"]:
+            continue
+        f = fichas.setdefault(d["esperada"], {"ficha": d["esperada"], "preguntas": 0, "acierto_1": 0,
+                                              "acierto_top": 0, "fuera_umbral": 0, "sin_contexto": 0})
+        f["preguntas"] += 1
+        f["acierto_1"] += d["acierto_1"]
+        f["acierto_top"] += d["acierto_top"]
+        f["fuera_umbral"] += not d["pasa_umbral"]
+        f["sin_contexto"] += not d["en_contexto"]
+    return sorted(fichas.values(), key=lambda f: f["ficha"])
 
 
 def main() -> None:
@@ -173,14 +208,23 @@ def main() -> None:
             fichas = fichas_en_orden(resultados)
             primera, mejor = fichas[0] if fichas else ("", float("nan"))
             orden = [f for f, _ in fichas]
-            esperada = r["ficha_esperada"]
-            puesto = orden.index(esperada) + 1 if esperada in orden else None
+            aceptadas = r["aceptadas"]
+            puestos = [orden.index(f) + 1 for f in aceptadas if f in orden]
+            puesto = min(puestos) if puestos else None
+            distancias = [dist for f, dist in fichas if f in aceptadas]
+            # Lo que el servicio le pasaría al modelo: los primeros RAG_TOP_K
+            # fragmentos que pasan RAG_MAX_DISTANCE.
+            contexto = [x.ficha_id for x in resultados[:s.rag_top_k] if x.distancia <= s.rag_max_distance]
             detalle.append({
                 "pregunta": r["pregunta"], "tipo": r["tipo"], "dentro": r["dentro"],
-                "esperada": esperada, "primera": primera, "mejor_distancia": round(mejor, 4),
-                "acierto_1": r["dentro"] and primera == esperada,
+                "esperada": r["ficha_esperada"], "alternativas": aceptadas[1:],
+                "primera": primera, "mejor_distancia": round(mejor, 4),
+                "distancia_esperada": round(min(distancias), 4) if distancias else None,
+                "acierto_1": r["dentro"] and primera in aceptadas,
                 "acierto_top": r["dentro"] and puesto is not None and puesto <= args.top,
                 "puesto": puesto,
+                "pasa_umbral": mejor <= s.rag_max_distance,
+                "en_contexto": any(f in aceptadas for f in contexto),
             })
         memoria = memoria_maxima_mb()
         limite_fragmento = indice.limite_fragmento
@@ -191,44 +235,58 @@ def main() -> None:
 
     nombre = embeddings.nombre
     print(f"\n=== {nombre} | fragmentos: {n_fragmentos} (máx. {limite_fragmento} tokens)")
-    print(f"{'tipo':12} {'dist':>6} {'1.º':>3} {'top' + str(args.top):>5} {'puesto':>6}  primera ficha  |  pregunta")
+    print(f"{'tipo':12} {'dist':>6} {'1.º':>3} {'top' + str(args.top):>5} {'ctx':>3} {'puesto':>6}  "
+          f"primera ficha  |  pregunta")
     for d in detalle:
         marca1 = ("✔" if d["acierto_1"] else "✘") if d["dentro"] else "-"
         marcat = ("✔" if d["acierto_top"] else "✘") if d["dentro"] else "-"
-        print(f"{d['tipo']:12} {d['mejor_distancia']:6.3f} {marca1:>3} {marcat:>5} {str(d['puesto'] or '-'):>6}  "
-              f"{d['primera'][:38]:38} | {d['pregunta'][:70]}")
+        marcac = ("✔" if d["en_contexto"] else "✘") if d["dentro"] else "-"
+        print(f"{d['tipo']:12} {d['mejor_distancia']:6.3f} {marca1:>3} {marcat:>5} {marcac:>3} "
+              f"{str(d['puesto'] or '-'):>6}  {d['primera'][:38]:38} | {d['pregunta'][:70]}")
 
     dentro = [d for d in detalle if d["dentro"]]
     fuera = [d for d in detalle if not d["dentro"]]
     dd = [d["mejor_distancia"] for d in dentro]
     df = [d["mejor_distancia"] for d in fuera]
     print(f"\nAciertos en 1.er lugar: {sum(d['acierto_1'] for d in dentro)}/{len(dentro)} | "
-          f"entre las primeras {args.top} fichas: {sum(d['acierto_top'] for d in dentro)}/{len(dentro)}")
+          f"entre las primeras {args.top} fichas: {sum(d['acierto_top'] for d in dentro)}/{len(dentro)} | "
+          f"llegan al contexto: {sum(d['en_contexto'] for d in dentro)}/{len(dentro)}")
+    print(f"Umbral actual RAG_MAX_DISTANCE={s.rag_max_distance} (RAG_TOP_K={s.rag_top_k}): "
+          f"dentro que no lo pasan {sum(not d['pasa_umbral'] for d in dentro)}/{len(dentro)}"
+          + (f" | fuera que sí lo pasan {sum(d['pasa_umbral'] for d in fuera)}/{len(fuera)}" if fuera else ""))
     print(f"Distancia del mejor fragmento  dentro: min {min(dd):.3f} · mediana {statistics.median(dd):.3f} · máx {max(dd):.3f}")
-    print(f"                               fuera:  min {min(df):.3f} · mediana {statistics.median(df):.3f} · máx {max(df):.3f}")
+    if df:
+        print(f"                               fuera:  min {min(df):.3f} · mediana {statistics.median(df):.3f} · máx {max(df):.3f}")
 
-    # Barrido del umbral: dentro si la mejor distancia <= umbral.
-    candidatos = sorted(set(dd + df))
-    barrido = []
-    for u in candidatos:
-        bien_dentro = sum(x <= u for x in dd)
-        bien_fuera = sum(x > u for x in df)
-        barrido.append((bien_dentro + bien_fuera, bien_dentro, bien_fuera, u))
-    mejor_total = max(b[0] for b in barrido)
-    empates = [i for i, b in enumerate(barrido) if b[0] == mejor_total]
-    # Cualquier umbral desde la primera distancia empatada hasta justo antes
-    # de la distancia siguiente a la última da el mismo resultado.
-    lo = barrido[empates[0]][3]
-    hi = barrido[empates[-1] + 1][3] if empates[-1] + 1 < len(barrido) else float("inf")
-    print(f"Mejor separación: {mejor_total}/{len(detalle)} bien clasificadas con un umbral "
-          f"≥ {lo:.3f} y < {hi:.3f}")
+        # Barrido del umbral: dentro si la mejor distancia <= umbral.
+        candidatos = sorted(set(dd + df))
+        barrido = []
+        for u in candidatos:
+            bien_dentro = sum(x <= u for x in dd)
+            bien_fuera = sum(x > u for x in df)
+            barrido.append((bien_dentro + bien_fuera, bien_dentro, bien_fuera, u))
+        mejor_total = max(b[0] for b in barrido)
+        empates = [i for i, b in enumerate(barrido) if b[0] == mejor_total]
+        # Cualquier umbral desde la primera distancia empatada hasta justo antes
+        # de la distancia siguiente a la última da el mismo resultado.
+        lo = barrido[empates[0]][3]
+        hi = barrido[empates[-1] + 1][3] if empates[-1] + 1 < len(barrido) else float("inf")
+        print(f"Mejor separación: {mejor_total}/{len(detalle)} bien clasificadas con un umbral "
+              f"≥ {lo:.3f} y < {hi:.3f}")
+
+    resumen = resumen_por_ficha(detalle)
+    if args.por_ficha:
+        print(f"\n{'ficha':42} {'preg':>4} {'1.º':>4} {'top' + str(args.top):>5} {'fuera umbral':>12} {'sin ctx':>7}")
+        for f in resumen:
+            print(f"{f['ficha'][:42]:42} {f['preguntas']:>4} {f['acierto_1']:>4} {f['acierto_top']:>5} "
+                  f"{f['fuera_umbral']:>12} {f['sin_contexto']:>7}")
     print(f"Tiempos: carga del modelo {t_modelo:.1f} s · índice {t_indice:.1f} s · "
           f"consulta media {1000 * statistics.mean(tiempos):.0f} ms")
     print(f"Memoria máxima del proceso: {memoria:.0f} MB" if memoria else "Memoria: no disponible")
 
     if args.json:
         ruta_json(str(args.json)).write_text(json.dumps({
-            "modelo": nombre, "fragmentos": n_fragmentos, "detalle": detalle,
+            "modelo": nombre, "fragmentos": n_fragmentos, "detalle": detalle, "por_ficha": resumen,
             "tiempo_modelo_s": t_modelo, "tiempo_indice_s": t_indice,
             "consulta_media_ms": 1000 * statistics.mean(tiempos), "memoria_mb": memoria,
         }, ensure_ascii=False, indent=2), encoding="utf-8")

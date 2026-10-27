@@ -17,6 +17,9 @@ preguntas_ejemplo:
   - ya pasó el 40% del semestre pero me va súper mal en una materia, ¿puedo retirarla?
   - tuve un problema médico feo y necesito cancelar una materia fuera de fecha
   - ¿qué justificación sirve para cancelar una materia después de tiempo?
+  - por calamidad doméstica necesito cancelar solo una materia, no todo el semestre
+  - ¿puedo cancelar una sola asignatura en cualquier momento del semestre si tengo una enfermedad certificada?
+  - voy ganando la materia con más de 3.0 y quiero cancelarla aunque ya pasó el 40%
 redactada_por:
 revisada_por:
 ---

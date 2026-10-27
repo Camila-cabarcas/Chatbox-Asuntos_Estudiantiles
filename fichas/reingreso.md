@@ -17,6 +17,9 @@ preguntas_ejemplo:
   - retomar la carrera
   - pedir aval para reingresar fuera de tiempo
   - reingresar a la universidad
+  - ya pasaron más de 7 días de la fecha de reingreso de Admisiones y Registro, ¿cómo pido el aval al comité?
+  - dejé la universidad varios semestres y quiero volver a matricularme en mi mismo programa de ingeniería
+  - ¿quién puede solicitar reingreso si se retiró después de terminar un periodo académico?
 redactada_por:
 revisada_por:
 ---
