@@ -17,6 +17,14 @@ preguntas_ejemplo:
   - no pude ir al parcial por una urgencia médica, ¿cómo pido que me repitan el examen?
   - el profe no me quiere hacer el examen que me perdí, ¿dónde apelo?
   - ¿cuántos días tengo para mandar la excusa del médico para un supletorio?
+  - falté al examen final por una incapacidad médica, ¿el profesor me lo puede programar otro día?
+  - por una calamidad familiar no pude presentar el parcial, ¿cómo pido presentarlo en otra fecha?
+  - ¿existe examen supletorio para la habilitación o para una validación?
+  - ¿cuánto tiempo puede pasar entre el examen que no presenté y el supletorio?
+  - me enfermé y me perdí una evaluación, ¿qué excusa acepta el profesor para un supletorio?
+  - no pude ir al parcial porque estaba enfermo, ¿me lo repiten con un supletorio?
+  - ¿con una incapacidad médica me reprograman el parcial que perdí?
+  - si estoy enfermo el día de la habilitación, ¿hay supletorio?
 redactada_por:
 revisada_por:
 ---

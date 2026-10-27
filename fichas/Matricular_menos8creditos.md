@@ -17,6 +17,9 @@ preguntas_ejemplo:
   - ¿Cómo es el proceso para solicitar matrícula de menos de 8 créditos y en qué fechas es aceptado?
   - solo me falta una materia para terminar materias, ¿puedo matricular solo esa aunque sean poquitos créditos?
   - ¿qué excusa me acepta el comité para dejarme ver menos de 8 créditos?
+  - por enfermedad solo puedo matricular pocos créditos, ¿me autorizan quedar por debajo de la carga mínima?
+  - ¿qué argumento escojo en SSOFI para matricular menos de 8 créditos por calamidad doméstica?
+  - si cancelo cursos y quedo por debajo de 8 créditos, ¿necesito autorización de la facultad?
 redactada_por:
 revisada_por:
 ---

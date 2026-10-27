@@ -17,6 +17,11 @@ preguntas_ejemplo:
   - me falta una materia correquisito pero necesito ver la otra ya, ¿puedo pedir que me la dejen ver?
   - ¿cómo hago para que me dejen ver una materia sin haber ganado el prerrequisito?
   - ¿el comité deja meter materias sin cumplir todos los requisitos?
+  - perdí física mecánica y quiero matricular física de campos este semestre, ¿me pueden exonerar el prerrequisito?
+  - quedé debiendo cálculo integral y quiero adelantar cálculo multivariable, ¿existe exoneración del requisito?
+  - la materia anterior de la cadena de física me quedó pendiente, ¿la facultad autoriza cursar la siguiente?
+  - para una materia de ingeniería industrial con un requisito sin aprobar, ¿la exoneración la da el comité de carrera?
+  - ¿puedo cursar una asignatura sin matricular al mismo tiempo su correquisito si presento carta de justificación?
 redactada_por:
 revisada_por:
 ---
