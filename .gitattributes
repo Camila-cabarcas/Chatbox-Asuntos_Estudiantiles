@@ -1,0 +1,43 @@
+# Finales de línea del repositorio.
+#
+# El equipo trabaja en Windows: sin esta configuración Git convierte LF y CRLF
+# según la máquina de cada quien y avisa "LF will be replaced by CRLF".
+# Aquí se fija una sola regla para todos, sin importar core.autocrlf.
+
+# Texto: LF en el repositorio y en la copia de trabajo. Git decide qué es
+# texto; los editores actuales (VS Code incluido) trabajan bien con LF.
+* text=auto eol=lf
+
+# Scripts de Windows: CRLF, porque cmd.exe y PowerShell 5 lo esperan.
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binarios: nunca se convierten ni se comparan como texto.
+# Documentos (p. ej. fuentes oficiales descargadas)
+*.pdf  binary
+*.doc  binary
+*.docx binary
+*.xls  binary
+*.xlsx binary
+*.ppt  binary
+*.pptx binary
+# Imágenes
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.webp binary
+*.ico  binary
+# Modelos y datos generados (normalmente ignorados en data/ y models/)
+*.bin         binary
+*.safetensors binary
+*.onnx        binary
+*.pt          binary
+*.pth         binary
+*.pkl         binary
+*.sqlite3     binary
+*.db          binary
+# Comprimidos
+*.zip binary
+*.gz  binary
