@@ -63,8 +63,7 @@ el árbol de trabajo. Las fichas no tienen revisión cruzada
   `49348EE6F093895C375B8F99F11D5B53A96FF8E26859062792AFF8B3F34344F3`.
 - **Calificación por pregunta:** está en la tabla de este documento; los JSON
   de prueba se eliminaron de `data/`.
-- **Script de medición:** `evaluar_banco.py`; **repetición dirigida:**
-  `reevaluar_fallos.py`.
+- **Script de medición:** `evaluar_banco.py`.
 
 ### Cómo se armó esta corrida
 
