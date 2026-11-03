@@ -27,7 +27,7 @@ revisada_por:
 
 ## Solicitud de Incompletos: ¿qué es?
 
-Es la petición formal para suspender temporalmente la nota definitiva de un curso, de la totalidad del semestre o de la Práctica Académica, registrando la condición de **Incompleto** cuando el estudiante, por razones justificadas de fuerza mayor, enfermedad o dinámicas de la práctica, no pudo presentar las evaluaciones finales dentro del calendario regular[cite: 18, 26].
+Es la petición formal para suspender temporalmente la nota definitiva de un curso, de la totalidad del semestre o de la Práctica Académica, registrando la condición de **Incompleto** cuando el estudiante, por razones justificadas de fuerza mayor, enfermedad o dinámicas de la práctica, no pudo presentar las evaluaciones finales dentro del calendario regular.
 
 Se fundamenta en el **Artículo 190 del Reglamento Estudiantil de Pregrado**.
 
@@ -39,8 +39,8 @@ Se fundamenta en el **Artículo 190 del Reglamento Estudiantil de Pregrado**.
    - Aplica cuando imprevistos graves de salud o calamidad impiden la presentación de pruebas finales.
    - **Opción en SSOFI**: `Solicitud Incompleto Curso o Semestre`.
 2. **Incompleto de Práctica Académica**:
-   - Aplica cuando por el cronograma con la empresa, entrega de informes finales o revisiones de la Coordinación de Prácticas no se alcanza a asentar la nota final al cierre del período[cite: 18, 26].
-   - **Opción en SSOFI**: `Solicitud Incompleto Práctica Académica`[cite: 26].
+   - Aplica cuando por el cronograma con la empresa, entrega de informes finales o revisiones de la Coordinación de Prácticas no se alcanza a asentar la nota final al cierre del período.
+   - **Opción en SSOFI**: `Solicitud Incompleto Práctica Académica`.
 
 ---
 
@@ -53,15 +53,15 @@ Se fundamenta en el **Artículo 190 del Reglamento Estudiantil de Pregrado**.
 
 ## Pasos para radicar en SSOFI
 
-1. Ingresar a la plataforma **SSOFI**[cite: 26].
-2. Configurar la casilla general[cite: 26]:
-   - **Categoría**: `Programas de pregrado`[cite: 26]
-   - **Dependencia**: Seleccionar el programa académico correspondiente (ejemplo: `Ingeniería Sistemas-presencial`)[cite: 26].
-   - **Comité o Consejo**: `Comité de Asuntos Estudiantiles de Pregrados Presenciales del Consejo de Facultad`[cite: 26].
-   - **Asunto**: `Asuntos Estudiantiles`[cite: 26]
-   - **Tipo de Solicitud**: Seleccionar `Solicitud Incompleto Curso o Semestre` o `Solicitud Incompleto Práctica Académica` según corresponda[cite: 26].
-3. Explicar los motivos en la caja de descripción y adjuntar los soportes en PDF (incapacidades médicas, certificaciones o cartas de la empresa) en **Documentos Anexos**[cite: 18].
-4. Hacer clic en **Guardar**[cite: 26].
+1. Ingresar a la plataforma **SSOFI**.
+2. Configurar la casilla general:
+   - **Categoría**: `Programas de pregrado`
+   - **Dependencia**: Seleccionar el programa académico correspondiente (ejemplo: `Ingeniería Sistemas-presencial`).
+   - **Comité o Consejo**: `Comité de Asuntos Estudiantiles de Pregrados Presenciales del Consejo de Facultad`.
+   - **Asunto**: `Asuntos Estudiantiles`
+   - **Tipo de Solicitud**: Seleccionar `Solicitud Incompleto Curso o Semestre` o `Solicitud Incompleto Práctica Académica` según corresponda.
+3. Explicar los motivos en la caja de descripción y adjuntar los soportes en PDF (incapacidades médicas, certificaciones o cartas de la empresa) en **Documentos Anexos**.
+4. Hacer clic en **Guardar**.
 
 ---
 

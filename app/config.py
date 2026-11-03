@@ -91,6 +91,13 @@ class Settings(BaseSettings):
     # estimados). Limita el consumo por pregunta, p. ej. los tokens por minuto
     # de un plan gratuito.
     rag_contexto_max_tokens: int = Field(default=1500, ge=200, le=8000)
+    # Búsqueda híbrida: además del vectorial, un ranking léxico (BM25) puede
+    # proponer fichas que el vectorial no trajo. Ver app/rag/lexico.py.
+    rag_hibrido: bool = True
+    # La ficha propuesta por el léxico solo entra si su puntaje alcanza esta
+    # fracción del mejor puntaje léxico entre las fichas ya elegidas. Evita
+    # meter ruido cuando el vectorial ya acertó.
+    rag_hibrido_margen: float = Field(default=0.65, ge=0.0, le=1.0)
 
     # --- Canal oficial para remisiones --------------------------------------
     canal_oficial_url: str = (

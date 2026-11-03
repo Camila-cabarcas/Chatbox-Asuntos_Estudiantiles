@@ -23,43 +23,43 @@ revisada_por:
 
 ## Matrícula extemporánea: ¿qué es?
 
-Es la solicitud mediante la cual un estudiante que no realizó su proceso de matrícula ordinaria en las fechas establecidas en el calendario académico pide autorización para formalizar su vinculación al semestre lectivo e inscribir sus asignaturas[cite: 34, 35]. 
+Es la solicitud mediante la cual un estudiante que no realizó su proceso de matrícula ordinaria en las fechas establecidas en el calendario académico pide autorización para formalizar su vinculación al semestre lectivo e inscribir sus asignaturas. 
 
-Se fundamenta en el **Artículo 73 del Reglamento Estudiantil**: *"Los consejos de facultad dispondrán de la primera semana de cada período académico para efectuar los ajustes necesarios en la matrícula de los estudiantes"*[cite: 34].
+Se fundamenta en el **Artículo 73 del Reglamento Estudiantil**: *"Los consejos de facultad dispondrán de la primera semana de cada período académico para efectuar los ajustes necesarios en la matrícula de los estudiantes"*.
 
 ---
 
-## Diferencia con el Ajuste Extemporáneo de Matrícula
+## Matrícula extemporánea: diferencia con el Ajuste Extemporáneo (dos modalidades)
 
-- **Matrícula Extemporánea**: Aplica cuando el estudiante **no realizó el proceso inicial de matrícula** en el Portal Universitario dentro de las fechas ordinarias[cite: 34, 35].
-- **Ajuste Extemporáneo de Matrícula**: Aplica cuando el estudiante **ya se encuentra matriculado en el semestre** y requiere incluir o retirar materias específicas fuera de fechas[cite: 35, 36].
+- **Matrícula Extemporánea**: Aplica cuando el estudiante **no realizó el proceso inicial de matrícula** en el Portal Universitario dentro de las fechas ordinarias.
+- **Ajuste Extemporáneo de Matrícula**: Aplica cuando el estudiante **ya se encuentra matriculado en el semestre** y requiere incluir o retirar materias específicas fuera de fechas.
 
 ---
 
 ## Campos del formulario emergente en SSOFI
 
-Al seleccionar este tipo de solicitud en SSOFI, el sistema despliega una ventana emergente obligatoria[cite: 35, 36]:
+Al seleccionar este tipo de solicitud en SSOFI, el sistema despliega una ventana emergente obligatoria:
 
-- **Motivo**: Selección del tipo de ajuste (`Materias a registrar`)[cite: 35].
-- **Semestre**: Semestre académico lectivo a matricular[cite: 36].
-- **Tabla de Materias**: Opción para agregar el `Código`, `Nombre` y `Grupo` de las asignaturas a inscribir[cite: 35, 36].
-- **Justificación**: Redacción detallada de las razones de fuerza mayor, salud o administrativas que impidieron la realización de la matrícula en las fechas ordinarias[cite: 35, 36].
-- **Autorización de notificación**: Selección de notificación electrónica al correo registrado (`Sí` / `No`)[cite: 35, 36].
+- **Motivo**: Selección del tipo de ajuste (`Materias a registrar`).
+- **Semestre**: Semestre académico lectivo a matricular.
+- **Tabla de Materias**: Opción para agregar el `Código`, `Nombre` y `Grupo` de las asignaturas a inscribir.
+- **Justificación**: Redacción detallada de las razones de fuerza mayor, salud o administrativas que impidieron la realización de la matrícula en las fechas ordinarias.
+- **Autorización de notificación**: Selección de notificación electrónica al correo registrado (`Sí` / `No`).
 
 ---
 
 ## Matrícula extemporánea: pasos para radicar en SSOFI
 
-1. Ingresar a la plataforma **SSOFI**[cite: 34].
-2. Configurar los desplegables generales[cite: 34]:
-   - **Categoría**: `Programas de pregrado`[cite: 34]
-   - **Dependencia**: Seleccionar el programa académico correspondiente (ejemplo: `Ingeniería Sistemas-presencial` u otra ingeniería)[cite: 34].
-   - **Comité o Consejo**: `Comité de Asuntos Estudiantiles de Pregrados Presenciales del Consejo de Facultad` (o equivalente según la modalidad)[cite: 34].
-   - **Asunto**: `Asuntos Estudiantiles`[cite: 34]
-   - **Tipo de Solicitud**: `Matrícula Extemporánea`[cite: 34]
-3. Completar los campos en la ventana emergente (*Motivo, Semestre, asignaturas con Código, Nombre y Grupo, y Justificación*)[cite: 35, 36].
-4. Cargar en **Documentos Anexos** los soportes justificativos en PDF si aplica[cite: 34].
-5. Hacer clic en **Guardar**[cite: 34].
+1. Ingresar a la plataforma **SSOFI**.
+2. Configurar los desplegables generales:
+   - **Categoría**: `Programas de pregrado`
+   - **Dependencia**: Seleccionar el programa académico correspondiente (ejemplo: `Ingeniería Sistemas-presencial` u otra ingeniería).
+   - **Comité o Consejo**: `Comité de Asuntos Estudiantiles de Pregrados Presenciales del Consejo de Facultad` (o equivalente según la modalidad).
+   - **Asunto**: `Asuntos Estudiantiles`
+   - **Tipo de Solicitud**: `Matrícula Extemporánea`
+3. Completar los campos en la ventana emergente (*Motivo, Semestre, asignaturas con Código, Nombre y Grupo, y Justificación*).
+4. Cargar en **Documentos Anexos** los soportes justificativos en PDF si aplica.
+5. Hacer clic en **Guardar**.
 
 ---
 
@@ -68,4 +68,4 @@ Al seleccionar este tipo de solicitud en SSOFI, el sistema despliega una ventana
 - **Seguimiento del caso**: Las decisiones del Comité se publican a partir de las **14:00 horas del viernes siguiente** a la sesión semanal.
 - **Ubicación presencial del Comité**: Bloque 21, Oficinas 101-103.
 - **Teléfono**: `2198502` | **Correo oficial**: `asuntoses.ing@udea.edu.co`.
-- **Fuente normativa**: Reglamento Estudiantil de Pregrado (Acuerdo Superior 1 de 1981), Artículo 73[cite: 34].
+- **Fuente normativa**: Reglamento Estudiantil de Pregrado (Acuerdo Superior 1 de 1981), Artículo 73.
