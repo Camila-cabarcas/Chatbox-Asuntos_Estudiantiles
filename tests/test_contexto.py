@@ -35,9 +35,12 @@ def texto(seccion_id: str) -> str:
     return FUENTE._s[seccion_id].texto
 
 
-def test_acierto_en_seccion_trae_la_seccion_completa():
+def test_acierto_en_seccion_empieza_por_esa_seccion():
+    # La ficha principal recibe CUPO_PRINCIPAL secciones por ronda: primero la
+    # que se encontró, luego el resto de la misma ficha. Nunca se cuela otra.
     partes = armar_contexto([resultado("b", "seccion", "b::1")], FUENTE, 1500)
-    assert partes == [texto("b::1")]
+    assert partes[0] == texto("b::1")
+    assert set(partes) == {s.texto for s in FUENTE.secciones_de_ficha("b")}
 
 
 def test_acierto_en_pregunta_trae_las_secciones_de_la_ficha():
@@ -55,7 +58,10 @@ def test_sin_duplicados():
 def test_pasada_de_variedad_incluye_varias_fichas_antes_de_rellenar():
     rs = [resultado("a", "pregunta"), resultado("b", "pregunta")]
     partes = armar_contexto(rs, FUENTE, 1500)
-    assert partes[:2] == [texto("a::0"), texto("b::0")]
+    # La ficha mejor rankeada arranca, pero la segunda entra antes de que la
+    # primera agote todas sus secciones.
+    assert partes[0] == texto("a::0")
+    assert partes.index(texto("b::0")) < partes.index(texto("a::2"))
     assert set(partes) == {s.texto for s in FUENTE._s.values()}
 
 

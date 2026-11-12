@@ -17,6 +17,7 @@ from chromadb.config import Settings as ChromaSettings
 from app.config import Settings
 from app.rag.embeddings import Embeddings
 from app.rag.fichas import Ficha, Seccion, cargar_fichas, fragmentos_de, secciones_de
+from app.rag.lexico import IndiceLexico
 
 log = logging.getLogger(__name__)
 
@@ -48,6 +49,7 @@ class IndiceVectorial:
         self._coleccion = self._obtener_coleccion()
         self._secciones: dict[str, Seccion] = {}
         self._secciones_por_ficha: dict[str, list[Seccion]] = {}
+        self._lexico: IndiceLexico | None = None
 
     def _obtener_coleccion(self):
         return self._cliente.get_or_create_collection(
@@ -76,6 +78,41 @@ class IndiceVectorial:
     def total(self) -> int:
         return self._coleccion.count()
 
+    # --- Búsqueda léxica (complemento del vectorial) ------------------------
+    def _indice_lexico(self) -> IndiceLexico:
+        """BM25 sobre los fragmentos ya indexados; se arma la primera vez."""
+        if self._lexico is None:
+            datos = self._coleccion.get(include=["documents", "metadatas"])
+            self._lexico = IndiceLexico(
+                textos=list(datos["documents"] or []),
+                fichas=[str(m["ficha_id"]) for m in (datos["metadatas"] or [])],
+            )
+            log.info("Índice léxico listo con %d fragmentos.", len(self._lexico))
+        return self._lexico
+
+    def fichas_lexicas(self, pregunta: str, ya_elegidas: list[str],
+                       maximo: int = 2) -> list[str]:
+        """Fichas que propone el ranking léxico y que el vectorial no trajo.
+
+        Solo se usan cuando la pregunta ya demostró ser del dominio (el
+        vectorial encontró algo bajo el umbral). Se exige además que el
+        puntaje léxico compita con el de las fichas ya elegidas: si una ficha
+        elegida puntúa mucho mejor, la propuesta es ruido y se descarta.
+        """
+        if not self._settings.rag_hibrido:
+            return []
+        puntajes = self._indice_lexico().puntuar(pregunta)
+        if not puntajes:
+            return []
+        referencia = max((puntajes.get(f, 0.0) for f in ya_elegidas), default=0.0)
+        minimo = referencia * self._settings.rag_hibrido_margen
+        candidatas = sorted(
+            ((p, f) for f, p in puntajes.items()
+             if f not in ya_elegidas and p >= minimo),
+            reverse=True,
+        )
+        return [f for _, f in candidatas[:maximo]]
+
     def reconstruir(self) -> int:
         """Borra el índice y lo vuelve a crear desde la carpeta de fichas."""
         fichas = cargar_fichas(self._settings.fichas_path)
@@ -92,6 +129,7 @@ class IndiceVectorial:
         except Exception:  # la colección no existía
             pass
         self._coleccion = self._obtener_coleccion()
+        self._lexico = None   # los fragmentos cambian: el léxico se rearma
         if not fragmentos:
             log.warning("No hay fichas válidas para indexar.")
             return 0

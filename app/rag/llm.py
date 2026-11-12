@@ -30,7 +30,12 @@ _RAZONAMIENTO = re.compile(r"<think>.*?(?:</think>|$)", re.DOTALL | re.IGNORECAS
 
 
 class LLMError(Exception):
-    pass
+    # status y retry_after permiten esperar lo que pida el proveedor (429/503).
+    def __init__(self, mensaje: str, status: int | None = None,
+                 retry_after: float | None = None) -> None:
+        super().__init__(mensaje)
+        self.status = status
+        self.retry_after = retry_after
 
 
 @dataclass
@@ -48,6 +53,16 @@ class LLM(Protocol):
 
 def quitar_razonamiento(texto: str) -> str:
     return _RAZONAMIENTO.sub("", texto).strip()
+
+
+def _retry_after(valor: str | None) -> float | None:
+    """Segundos que pide esperar el proveedor (cabecera Retry-After numérica)."""
+    if not valor:
+        return None
+    try:
+        return max(0.0, float(valor))
+    except ValueError:      # puede venir como fecha HTTP; se ignora
+        return None
 
 
 class LLMMock:
@@ -92,7 +107,9 @@ class LLMOpenAICompatible:
         except httpx.HTTPStatusError as e:
             # No se registra el cuerpo de la petición para no filtrar datos.
             log.error("El proveedor LLM respondió %s", e.response.status_code)
-            raise LLMError(f"HTTP {e.response.status_code}") from e
+            raise LLMError(f"HTTP {e.response.status_code}",
+                           status=e.response.status_code,
+                           retry_after=_retry_after(e.response.headers.get("Retry-After"))) from e
         except (httpx.HTTPError, KeyError, IndexError, ValueError) as e:
             log.error("Error llamando al proveedor LLM: %s", type(e).__name__)
             raise LLMError(str(type(e).__name__)) from e

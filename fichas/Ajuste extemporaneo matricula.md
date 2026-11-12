@@ -80,7 +80,7 @@ Al seleccionar este tipo de solicitud en SSOFI, se desplegará una ventana emerg
 > - **Matrícula Extemporánea**: Aplica únicamente cuando el estudiante **no logró efectuar su proceso de matrícula inicial al semestre** en el Portal Universitario dentro de las fechas fijadas.
 
 > **Trámite 'Informe Ajustes a la Matrícula (Coordinador)'**:
-> Si un estudiante pregunta por esta opción en SSOFI, el chatbot debe aclararle que **NO debe radicarla**[cite: 26]. Es un canal exclusivo interno utilizado por la Coordinación Académica para emitir reportes consolidados[cite: 26].
+> Si un estudiante pregunta por esta opción en SSOFI, el chatbot debe aclararle que **NO debe radicarla**. Es un canal exclusivo interno utilizado por la Coordinación Académica para emitir reportes consolidados.
 
 > **Regla de Cancelación por 3ra Vez**:
 > Si durante el proceso de ajuste el estudiante manifiesta que desea retirar o cancelar un curso que se encuentra cursando por **tercera ocasión**, el chatbot debe indicarle que **NO use la opción genérica de ajuste**, sino que remita su solicitud al trámite específico `Cancelación Curso(s) por 3ra Vez` en SSOFI, debido a la implicación de exclusión académica del Artículo 136 del Reglamento Estudiantil.

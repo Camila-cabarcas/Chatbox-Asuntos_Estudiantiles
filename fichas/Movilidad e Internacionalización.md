@@ -22,21 +22,28 @@ revisada_por:
 
 ## Movilidad académica e internacionalización: ¿qué es?
 
-Es el trámite administrativo mediante el cual los estudiantes de pregrado solicitan la aprobación de su plan de asignaturas, avales institucionales, reconocimientos previos o prórrogas para cursar períodos académicos, pasantías o estancias de investigación en universidades nacionales o extranjeras con convenio[cite: 25].
+Es el trámite administrativo mediante el cual los estudiantes de pregrado solicitan la aprobación de su plan de asignaturas, avales institucionales, reconocimientos previos o prórrogas para cursar períodos académicos, pasantías o estancias de investigación en universidades nacionales o extranjeras con convenio.
 
 ---
 
 ## Pasos para radicar en SSOFI
 
-1. Ingresar a la plataforma **SSOFI**[cite: 25].
-2. Configurar la casilla general[cite: 25]:
-   - **Categoría**: `Programas de pregrado`[cite: 25]
-   - **Dependencia**: Seleccionar el programa académico correspondiente (ejemplo: `Ingeniería Sistemas-presencial`)[cite: 25].
-   - **Comité o Consejo**: `Asuntos Estudiantiles para Movilidad Nacional e Internacional`[cite: 25].
-   - **Asunto**: `Estudiantes Internacionalizacion`[cite: 25].
-   - **Tipo de Solicitud**: Seleccionar la opción de movilidad o radicar la petición descriptiva[cite: 25].
-3. Adjuntar en **Documentos Anexos** el acuerdo de homologación firmado, la carta de aceptación de la universidad de destino y la autorización de la jefatura de departamento en PDF[cite: 25].
-4. Presionar **Guardar**[cite: 25].
+1. Ingresar a la plataforma **SSOFI**.
+2. Configurar la casilla general:
+   - **Categoría**: `Programas de pregrado`
+   - **Dependencia**: Seleccionar el programa académico correspondiente (ejemplo: `Ingeniería Sistemas-presencial`).
+   - **Comité o Consejo**: `Asuntos Estudiantiles para Movilidad Nacional e Internacional`.
+   - **Asunto**: `Estudiantes Internacionalizacion`.
+   - **Tipo de Solicitud**: Seleccionar la opción de movilidad o radicar la petición descriptiva.
+3. Presionar **Guardar**.
+
+---
+
+## Documentos y correo de contacto
+
+En **SSOFI**, en **Documentos Anexos**, se sube un solo PDF con el acuerdo de homologación firmado, la carta de aceptación de la universidad de destino y la autorización de la jefatura de departamento.
+
+Para dudas del trámite, escribe a `internacionalingenieria@udea.edu.co`.
 
 ---
 
