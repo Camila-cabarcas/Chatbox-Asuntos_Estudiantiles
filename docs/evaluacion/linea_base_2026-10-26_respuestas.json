@@ -1,0 +1,721 @@
+{
+  "fecha": "2026-10-26",
+  "modelo_llm": "qwen/qwen3.8-27b (Groq)",
+  "embeddings": "paraphrase-multilingual-MiniLM-L12-v2",
+  "rag_top_k": 8,
+  "rag_max_distance": 0.5,
+  "rag_contexto_max_tokens": 1500,
+  "llm_max_tokens": 800,
+  "respuestas": [
+    {
+      "id": "N01",
+      "tipo": "normal",
+      "pregunta": "¿por qué parte del portal me inscribo para la ceremonia de grado y qué tengo que subir a SSOFI?",
+      "respuesta": "Para inscribirte en la ceremonia de grado, sigue esta ruta en el Portal Web de la UdeA: Inicio > Somos U de A > Estudiantes > Proceso de graduación > Inscripción para ceremonia de graduación. No uses enlaces emergentes del formulario.\n\nEn SSOFI, debes radicar una solicitud con estos datos:\n1. Comité o Consejo: Acto de Graduación.\n2. Asunto: Ceremonia de Grados - PREGRADO.\n3. Tipo de Solicitud: Ingreso de documentación para inscripción a grados.\n4. Adjunta un único archivo PDF con todos los documentos requeridos.\n\nAntes de subir, verifica tu paz y salvo en la Facultad y en las dependencias universitarias. Para más detalles, consulta la fuente oficial: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Acto de graduación",
+          "url": "https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990"
+        }
+      ],
+      "fuera_de_alcance": false,
+      "segundos": 2.91,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.268094348,
+        "prompt_tokens": 1639,
+        "prompt_time": 0.136907112,
+        "completion_tokens": 208,
+        "completion_time": 0.438122396,
+        "total_tokens": 1847,
+        "total_time": 0.575029508
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "N02",
+      "tipo": "normal",
+      "pregunta": "ya tengo matrícula, pero necesito pasarme a otro grupo de álgebra lineal en la primera semana, ¿qué escojo en SSOFI?",
+      "respuesta": "Para realizar un cambio de grupo dentro de la primera semana, debes radicar una solicitud de Ajuste extemporáneo de matrícula. Este trámite se fundamenta en el Artículo 73 del Reglamento Estudiantil, que autoriza ajustes durante la primera semana del período académico.\n\nLos pasos en SSOFI son:\n\n1. Ingresar a la plataforma SSOFI.\n2. Diligenciar la configuración general:\n   - Categoría: Programas de pregrado.\n   - Dependencia: Tu programa académico específico.\n   - Comité o Consejo: Comité de Asuntos Estudiantiles de Pregrados Presenciales del Consejo de Facultad (o el equivalente según tu modalidad).\n   - Asunto: Asuntos Estudiantiles.\n   - Tipo de Solicitud: Ajuste extemporáneo de matrícula.\n3. Completar los campos requeridos en el recuadro emergente, especificando el cambio de grupo de la asignatura de álgebra lineal.\n4. Cargar en Documentos Anexos los soportes necesarios en PDF.\n5. Hacer clic en Guardar.\n\nPara verificar los documentos exactos que debes adjuntar y confirmar los plazos específicos de tu programa, consulta la información oficial en: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Matricular más de 24 créditos en un semestre",
+          "url": "https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990"
+        }
+      ],
+      "fuera_de_alcance": false,
+      "segundos": 5.14,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.004399454,
+        "prompt_tokens": 1854,
+        "prompt_time": 0.155055503,
+        "completion_tokens": 301,
+        "completion_time": 0.638731801,
+        "total_tokens": 2155,
+        "total_time": 0.793787304
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "N03",
+      "tipo": "normal",
+      "pregunta": "si cancelo por el portal una materia que estoy viendo por tercera vez, ¿sirve o hay otro trámite?",
+      "respuesta": "Para cancelar una materia que cursas por tercera vez, no debes usar el Portal Universitario UdeA, ya que ese canal es para cancelaciones ordinarias.\n\nDebes realizar el trámite a través del sistema SSOFI. Sigue estos pasos:\n\n1. Ingresa a SSOFI.\n2. Selecciona el Comité de Asuntos Estudiantiles.\n3. Elige el Tipo de Solicitud: Cancelación Curso(s) por 3ra Vez.\n\nEste procedimiento especial está diseñado para evitar la pérdida de la calidad de estudiante según el Artículo 136 del Reglamento Estudiantil.\n\nPara más detalles o seguimiento, consulta la información oficial en: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Cancelaciones reglamentarias y especiales (Cursos, Semestre, Prácticas y Exámenes)",
+          "url": "https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990"
+        }
+      ],
+      "fuera_de_alcance": false,
+      "segundos": 48.17,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.198013608,
+        "prompt_tokens": 1730,
+        "prompt_time": 0.178257786,
+        "completion_tokens": 183,
+        "completion_time": 0.464467272,
+        "total_tokens": 1913,
+        "total_time": 0.642725058
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "N04",
+      "tipo": "normal",
+      "pregunta": "llevo 3.2 en termodinámica y ya pasó el 40 %, ¿qué soportes necesito para retirarla?",
+      "respuesta": "No encontré información sobre eso en las fuentes oficiales del Comité de Asuntos Estudiantiles de Pregrado de la Facultad de Ingeniería. Te recomiendo consultar directamente el canal oficial: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Comité de Asuntos Estudiantiles - Facultad de Ingeniería",
+          "url": "https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles"
+        }
+      ],
+      "fuera_de_alcance": true,
+      "segundos": 9.0,
+      "llm_llamado": false,
+      "tokens": null,
+      "finish_reason": null
+    },
+    {
+      "id": "N05",
+      "tipo": "normal",
+      "pregunta": "¿quién da la aprobación final para retirarme de todo el semestre por enfermedad después de la fecha, y qué documento no puede faltar?",
+      "respuesta": "La aprobación final para la cancelación extemporánea de semestre la otorga el Consejo Académico, según lo autoriza el Artículo 76 del Reglamento Estudiantil.\n\nPara que tu solicitud por enfermedad sea válida, el documento que no puede faltar es la incapacidad o certificado médico refrendado por el Servicio Médico de la Universidad. Este soporte debe consolidarse en un solo archivo PDF junto con el Paz y Salvo de PAYSA y el reporte de calificaciones, para adjuntarlo en SSOFI.\n\nRecuerda que este trámite aplica solo si superaste el límite del 40% evaluado o la fecha límite del calendario académico. No puedo determinar si tu caso específico será aprobado, ya que esa decisión corresponde a la instancia oficial.\n\nPara más detalles, consulta el canal oficial: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Cancelación extemporánea de semestre",
+          "url": "https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990"
+        }
+      ],
+      "fuera_de_alcance": false,
+      "segundos": 2.36,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.040757569,
+        "prompt_tokens": 1752,
+        "prompt_time": 0.152433889,
+        "completion_tokens": 211,
+        "completion_time": 0.460655593,
+        "total_tokens": 1963,
+        "total_time": 0.613089482
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "N06",
+      "tipo": "normal",
+      "pregunta": "el profe no aceptó mi incapacidad para repetirme el parcial, ¿cuántos días tengo para apelar y ante quién?",
+      "respuesta": "Tienes 10 días hábiles para apelar. El plazo comienza a contar desde la fecha en que el docente negó tu solicitud.\n\nDebes radicar la apelación ante el Vicedecanato a través de la plataforma SSOFI. Recuerda que este trámite solo es válido si el profesor rechazó tu primera solicitud directa.\n\nPara el proceso, necesitas adjuntar en formato PDF:\n1. El formato oficial de solicitud de examen supletorio, diligenciado y firmado.\n2. Los soportes probatorios de tu incapacidad o causa justificada.\n3. La constancia o firma del docente donde se indiquen los motivos de la negativa.\n\nPuedes descargar el formato oficial en www.bit.ly/viceing. Para más detalles, consulta la información oficial: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Examen supletorio",
+          "url": "https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990"
+        }
+      ],
+      "fuera_de_alcance": false,
+      "segundos": 2.21,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.022491508,
+        "prompt_tokens": 1785,
+        "prompt_time": 0.156366947,
+        "completion_tokens": 209,
+        "completion_time": 0.48422051,
+        "total_tokens": 1994,
+        "total_time": 0.640587457
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "N07",
+      "tipo": "normal",
+      "pregunta": "no he ganado álgebra lineal y quiero inscribir una materia que la pide, ¿qué documentos van en la solicitud?",
+      "respuesta": "No encontré información sobre eso en las fuentes oficiales del Comité de Asuntos Estudiantiles de Pregrado de la Facultad de Ingeniería. Te recomiendo consultar directamente el canal oficial: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Comité de Asuntos Estudiantiles - Facultad de Ingeniería",
+          "url": "https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles"
+        }
+      ],
+      "fuera_de_alcance": true,
+      "segundos": 1.63,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.004104399,
+        "prompt_tokens": 804,
+        "prompt_time": 0.066929385,
+        "completion_tokens": 80,
+        "completion_time": 0.172088787,
+        "total_tokens": 884,
+        "total_time": 0.239018172
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "N08",
+      "tipo": "normal",
+      "pregunta": "aprobé estadística en la Universidad Nacional, ¿qué pasos sigo en SSOFI para que me la refrenden aquí?",
+      "respuesta": "No encontré información sobre eso en las fuentes oficiales del Comité de Asuntos Estudiantiles de Pregrado de la Facultad de Ingeniería. Te recomiendo consultar directamente el canal oficial: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Comité de Asuntos Estudiantiles - Facultad de Ingeniería",
+          "url": "https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles"
+        }
+      ],
+      "fuera_de_alcance": true,
+      "segundos": 1.81,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.100154775,
+        "prompt_tokens": 1822,
+        "prompt_time": 0.153842745,
+        "completion_tokens": 80,
+        "completion_time": 0.15737139,
+        "total_tokens": 1902,
+        "total_time": 0.311214135
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "N09",
+      "tipo": "normal",
+      "pregunta": "el sistema no me dejó inscribir asignaturas en el periodo ordinario y sigo sin vincularme al semestre, ¿qué trámite uso?",
+      "respuesta": "Para tu caso, el trámite adecuado es la Matrícula Extemporánea.\n\nEste procedimiento aplica específicamente cuando el estudiante no realizó el proceso inicial de matrícula en el Portal Universitario dentro de las fechas ordinarias y aún no se encuentra vinculado al semestre. Se fundamenta en el Artículo 73 del Reglamento Estudiantil.\n\nNo debes confundirlo con el Ajuste Extemporáneo de Matrícula, ya que este último solo aplica si ya estás matriculado activamente y necesitas incluir, cambiar o retirar asignaturas fuera de plazo.\n\nPara los detalles específicos de requisitos y plazos, te recomiendo consultar directamente el canal oficial: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Reporte extemporáneo de nota final",
+          "url": "https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990"
+        }
+      ],
+      "fuera_de_alcance": false,
+      "segundos": 2.2,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.103910891,
+        "prompt_tokens": 1705,
+        "prompt_time": 0.141906727,
+        "completion_tokens": 175,
+        "completion_time": 0.382949825,
+        "total_tokens": 1880,
+        "total_time": 0.524856552
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "N10",
+      "tipo": "normal",
+      "pregunta": "para cerrar la carrera necesito una carga por encima del máximo ordinario de créditos, ¿qué anexos subo?",
+      "respuesta": "Para solicitar matricular más de 24 créditos (hasta un máximo de 27) y cerrar tu carrera, debes radicar la solicitud en SSOFI adjuntando los siguientes documentos en formato PDF:\n\n1. Carta de solicitud formal: Debes incluir una explicación detallada de la necesidad académica de superar el límite ordinario.\n2. Constancia de materias faltantes para grado: Reporte de historia académica o certificado que demuestre que, con los créditos adicionados, se completa el plan de estudios para la titulación.\n\nRecuerda que esta autorización es excepcional y está supeditada al cumplimiento estricto de los prerrequisitos y correquisitos vigentes de tu programa. La decisión final corresponde al Consejo de Facultad.\n\nPara más detalles sobre el proceso, consulta la información oficial en: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Matricular más de 24 créditos en un semestre",
+          "url": "https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990"
+        }
+      ],
+      "fuera_de_alcance": false,
+      "segundos": 2.36,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.136194461,
+        "prompt_tokens": 1804,
+        "prompt_time": 0.151812774,
+        "completion_tokens": 216,
+        "completion_time": 0.466527853,
+        "total_tokens": 2020,
+        "total_time": 0.618340627
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "N11",
+      "tipo": "normal",
+      "pregunta": "me quedan 5 créditos para terminar la carrera, ¿puedo matricular solo eso y qué argumento elijo?",
+      "respuesta": "Sí, puedes solicitar la autorización para matricular menos de 8 créditos. Según la información oficial, esto aplica cuando te faltan menos de 8 ULAS-semana para terminar tu carrera.\n\nPara radicar la solicitud en SSOFI, sigue estos pasos:\n\n1. Ingresar a la plataforma SSOFI.\n2. Configurar los campos: Categoría (Programas de pregrado), Dependencia (tu programa), Comité (Comité de Asuntos Estudiantiles de Pregrados Presenciales del Consejo de Facultad), Asunto (Asuntos Estudiantiles) y Tipo de Solicitud (Matrícula con Menos de 8 créditos).\n3. En la ventana emergente, selecciona como Objetivo \"Para matricular curso(s)\".\n4. En el campo Argumento, elige \"Pensum cerrado\".\n5. Diligencia la tabla con el código, nombre y grupo de las asignaturas.\n6. Redacta la justificación detallando tu situación académica.\n7. Adjunta la constancia de materias faltantes para grado en PDF y guarda la solicitud.\n\nLa decisión final sobre la aprobación de tu solicitud corresponde al Consejo de Facultad que administra tu programa. Para más detalles, consulta el canal oficial: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Matrícula con menos de 8 créditos",
+          "url": "https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990"
+        }
+      ],
+      "fuera_de_alcance": false,
+      "segundos": 2.63,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.464094993,
+        "prompt_tokens": 1799,
+        "prompt_time": 0.1466929,
+        "completion_tokens": 302,
+        "completion_time": 0.627546427,
+        "total_tokens": 2101,
+        "total_time": 0.774239327
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "N12",
+      "tipo": "normal",
+      "pregunta": "me voy de intercambio a Chile, ¿qué documentos subo a SSOFI y a qué correo escribo?",
+      "respuesta": "Para radicar tu solicitud de movilidad internacional en SSOFI, debes adjuntar los siguientes documentos en la sección de Documentos Anexos:\n\n1. El acuerdo de homologación firmado.\n2. La carta de aceptación de la universidad de destino.\n3. La autorización de la jefatura de departamento en PDF.\n\nNo encontré información sobre un correo electrónico específico para este trámite en las fuentes oficiales. Te recomiendo consultar directamente el canal oficial: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Asuntos estudiantiles para movilidad nacional e internacional",
+          "url": "https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990"
+        }
+      ],
+      "fuera_de_alcance": false,
+      "segundos": 1.7,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.004953224,
+        "prompt_tokens": 793,
+        "prompt_time": 0.071178548,
+        "completion_tokens": 137,
+        "completion_time": 0.297147646,
+        "total_tokens": 930,
+        "total_time": 0.368326194
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "N13",
+      "tipo": "normal",
+      "pregunta": "¿qué escojo en SSOFI para presentar la prueba de suficiencia de inglés?",
+      "respuesta": "Para presentar la prueba de validación de suficiencia del componente de inglés ante la Escuela de Idiomas / PIFLE, debes seleccionar en SSOFI el tipo de solicitud: Validación English PIFLE.\n\nPara más detalles sobre el proceso, consulta la información oficial en: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Otros trámites generales, solicitudes comodín, recursos y trámites especiales",
+          "url": "https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990"
+        }
+      ],
+      "fuera_de_alcance": false,
+      "segundos": 1.55,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.098351993,
+        "prompt_tokens": 1744,
+        "prompt_time": 0.137723793,
+        "completion_tokens": 101,
+        "completion_time": 0.190757712,
+        "total_tokens": 1845,
+        "total_time": 0.328481505
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "N14",
+      "tipo": "normal",
+      "pregunta": "¿qué avales necesito y dónde entrego los papeles físicos para que registren una nota final atrasada?",
+      "respuesta": "Para el reporte extemporáneo de nota final, necesitas presentar los siguientes avales y documentos:\n\n1. Carta de solicitud formal firmada por ti, con la identificación del curso y una descripción amplia de los motivos de la extemporaneidad.\n2. Aval del Comité de Carrera, explicando las medidas tomadas y las razones del retraso.\n3. Aval del docente, tutor o asesor a cargo del curso.\n4. Pruebas de soporte (archivos o certificados) que respalden los hechos narrados.\n\nDebes entregar la documentación física completa en la Secretaría del Comité de Asuntos Estudiantiles, ubicada en el Bloque 21, Oficina 101. El plazo límite es antes de las 16:00 horas del último día hábil de la semana anterior a la reunión programada del Comité.\n\nTen en cuenta que si no realizas esta entrega física dentro del plazo, el caso no será analizado. Para más detalles, consulta la información oficial: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Reporte extemporáneo de nota final",
+          "url": "https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990"
+        }
+      ],
+      "fuera_de_alcance": false,
+      "segundos": 2.05,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.09591013,
+        "prompt_tokens": 1743,
+        "prompt_time": 0.140295301,
+        "completion_tokens": 250,
+        "completion_time": 0.49375526,
+        "total_tokens": 1993,
+        "total_time": 0.634050561
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "N15",
+      "tipo": "normal",
+      "pregunta": "acabo de salir de revisar el examen con el profesor y sigo inconforme, ¿qué plazo tengo y qué formato descargo?",
+      "respuesta": "Para solicitar un segundo calificador tras la revisión con el docente, debes tener en cuenta lo siguiente según la información oficial:\n\n1. Plazo: Debes presentar la solicitud dentro de los dos (2) días hábiles siguientes a la realización de la revisión con el docente.\n2. Requisito previo: Es obligatorio que hayas acudido a la revisión ordinaria con el profesor dentro del plazo fijado. Si no lo hiciste, no se concederá el trámite.\n3. Consecuencia: La nota asignada por el nuevo jurado será definitiva, aunque resulte inferior a la inicial.\n4. Instancia: En la Facultad de Ingeniería, la asignación está delegada al Comité de Vicedecanato.\n\nEl contexto proporcionado no especifica el formato exacto ni el enlace de descarga para la solicitud. Para obtener el documento oficial y confirmar los pasos de radicación, te recomiendo consultar directamente el canal oficial: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Examen supletorio",
+          "url": "https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990"
+        }
+      ],
+      "fuera_de_alcance": false,
+      "segundos": 2.81,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.717892412,
+        "prompt_tokens": 1779,
+        "prompt_time": 0.16042852,
+        "completion_tokens": 239,
+        "completion_time": 0.469944842,
+        "total_tokens": 2018,
+        "total_time": 0.630373362
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "N16",
+      "tipo": "normal",
+      "pregunta": "me hospitalizaron en la semana de finales, ¿qué solicitud hago y de cuánto plazo dispongo para presentar lo pendiente?",
+      "respuesta": "Para una hospitalización durante la semana de finales, debes solicitar un examen supletorio. El proceso es el siguiente:\n\n1. Solicita directamente al docente la realización de la prueba, acreditando la enfermedad con certificado médico refrendado por el Servicio Médico de la Universidad.\n2. Si el docente niega la solicitud, tienes 10 días hábiles para apelar ante el Vicedecanato a través de la plataforma SSOFI.\n3. Para la apelación, adjunta el formato oficial firmado en PDF, los soportes médicos y la constancia de la negativa del profesor.\n\nSobre los plazos para presentar la prueba pendiente, una vez aprobada la solicitud:\n- Si es un examen parcial, debes presentarlo dentro de los 15 días siguientes a la autorización.\n- Si es un examen final, debes presentarlo a más tardar la víspera del próximo registro del estudiante, sin que transcurran más de 6 meses desde el examen original.\n\nRecuerda que los exámenes de habilitación y validación no tienen supletorio. Para más detalles, consulta la información oficial: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Examen supletorio",
+          "url": "https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990"
+        }
+      ],
+      "fuera_de_alcance": false,
+      "segundos": 2.19,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.040421284,
+        "prompt_tokens": 1939,
+        "prompt_time": 0.166345339,
+        "completion_tokens": 279,
+        "completion_time": 0.65579735,
+        "total_tokens": 2218,
+        "total_time": 0.822142689
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "N17",
+      "tipo": "normal",
+      "pregunta": "¿qué condiciones debo cumplir para pedir que me validen un curso del pensum?",
+      "respuesta": "Para solicitar la validación regular de un curso, debes cumplir con los siguientes requisitos según la información oficial:\n\n1. Confirmar en la Jefatura de Departamento que la asignatura es validable.\n2. Verificar que la materia esté incluida en la versión activa de tu plan de estudios.\n3. No tener matriculada la asignatura en el semestre en el que solicitas la prueba.\n\nEl trámite se realiza de forma digital en el sistema SSOFI, seleccionando el tipo de solicitud \"Validación Regular Curso(s)\".\n\nPara más detalles sobre el proceso y fechas, consulta el canal oficial: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Solicitud de Incompletos (Curso, Semestre o Práctica Académica)",
+          "url": "https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990"
+        }
+      ],
+      "fuera_de_alcance": false,
+      "segundos": 2.25,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.096014991,
+        "prompt_tokens": 1637,
+        "prompt_time": 0.121640504,
+        "completion_tokens": 170,
+        "completion_time": 0.321295479,
+        "total_tokens": 1807,
+        "total_time": 0.442935983
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "N18",
+      "tipo": "normal",
+      "pregunta": "me retiré hace dos años y la fecha de Admisiones para volver venció hace un mes, ¿qué hago?",
+      "respuesta": "Para tu caso, debes presentar la solicitud de reingreso. Al haber vencido la fecha ordinaria de Admisiones, el trámite se realiza como aval extemporáneo.\n\nLos pasos principales son:\n\n1. Verifica que cumplas los requisitos: haber terminado al menos un período académico con calificaciones y no tener sanciones disciplinarias.\n2. Prepara una carta de solicitud dirigida al Comité de Asuntos Estudiantiles donde expongas los motivos de la extemporaneidad.\n3. Adjunta los soportes justificativos en formato PDF.\n4. Presenta el formulario de inscripción del Departamento de Admisiones y Registro junto con los soportes académicos en la plataforma oficial.\n\nTen en cuenta que si te aceptan el reingreso, puedes solicitar el reconocimiento de materias aprobadas en otra institución durante tu retiro.\n\nPara los detalles específicos de la plataforma y el estado de tu solicitud, consulta la información oficial:\nhttps://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Reingreso",
+          "url": "https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990"
+        }
+      ],
+      "fuera_de_alcance": false,
+      "segundos": 2.25,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.221536487,
+        "prompt_tokens": 1679,
+        "prompt_time": 0.145446349,
+        "completion_tokens": 238,
+        "completion_time": 0.519297039,
+        "total_tokens": 1917,
+        "total_time": 0.664743388
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "A01",
+      "tipo": "ambigua",
+      "pregunta": "quiero retirar una materia este semestre, ¿qué debo hacer?",
+      "respuesta": "Para retirar una materia este semestre, el procedimiento depende de si aún estás dentro de los plazos ordinarios o si ya superaste el 40% de la evaluación del semestre.\n\n1. Si estás dentro del plazo regular:\n   - Consulta el calendario académico vigente para verificar las fechas límite.\n   - Si es una materia del Tronco Común, gestiona la solicitud en SSOFI seleccionando el Comité de Asuntos Estudiantiles de Pregrados Presenciales.\n   - Si es una materia específica de tu programa, contacta primero a la Jefatura de Departamento o Coordinación de tu carrera para concertar el trámite.\n   - Si es un nivel de Inglés o idioma, acude a la Escuela de Idiomas (Bloque 11, Oficina 102).\n\n2. Si superaste el 40% de la evaluación o la fecha límite:\n   - Debes solicitar una Cancelación Extemporánea de Cursos.\n   - Debes acreditar fuerza mayor, enfermedad certificada por el Servicio Médico de la Universidad o calamidad doméstica.\n   - La solicitud se fundamenta en el Artículo 74 del Reglamento Estudiantil.\n\nNo puedo determinar si tu solicitud será aprobada, ya que esa decisión corresponde a la instancia competente según el tipo de materia y la situación.\n\nPara más detalles, requisitos específicos y fechas exactas, consulta la información oficial en:\nhttps://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles\n\nTambién puedes contactar al Comité en el Bloque 21, Oficinas 101-103, al teléfono 2198502 o al correo asuntoses.ing@udea.edu.co.",
+      "fuentes": [
+        {
+          "titulo": "Cancelación extemporánea de semestre",
+          "url": "https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990"
+        }
+      ],
+      "fuera_de_alcance": false,
+      "segundos": 2.37,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.118714384,
+        "prompt_tokens": 1705,
+        "prompt_time": 0.120858155,
+        "completion_tokens": 387,
+        "completion_time": 0.833931263,
+        "total_tokens": 2092,
+        "total_time": 0.954789418
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "A02",
+      "tipo": "ambigua",
+      "pregunta": "ya empezó el semestre y en el sistema no me aparecen todas las asignaturas que pensaba ver",
+      "respuesta": "Entiendo tu situación. Si ya iniciaste el semestre y necesitas incluir, cambiar o retirar asignaturas fuera de los plazos ordinarios, debes realizar un ajuste extemporáneo de matrícula. Este trámite se fundamenta en el Artículo 73 del Reglamento Estudiantil.\n\nPara proceder, sigue estos pasos según el tipo de materia:\n\n1. Si son materias del Tronco Común o Núcleo Común (como Cálculo, Física, Química, etc.), ingresa a SSOFI y selecciona el Comité de Asuntos Estudiantiles de Pregrados Presenciales del Consejo de Facultad.\n2. Si son materias específicas de tu programa académico, debes contactar y concertar previamente con la Jefatura de Departamento o la Coordinación de tu carrera.\n3. Si son niveles de Inglés o Idiomas, gestiona la solicitud directamente ante la Escuela de Idiomas, ubicada en el Bloque 11, Oficina 102.\n\nRecuerda que este ajuste se realiza cuando ya estás matriculado activamente. Para los detalles específicos del formulario y los requisitos de justificación, consulta la información oficial en: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Reporte extemporáneo de nota final",
+          "url": "https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990"
+        }
+      ],
+      "fuera_de_alcance": false,
+      "segundos": 2.21,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.245606337,
+        "prompt_tokens": 1682,
+        "prompt_time": 0.146041983,
+        "completion_tokens": 276,
+        "completion_time": 0.623212278,
+        "total_tokens": 1958,
+        "total_time": 0.769254261
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "A03",
+      "tipo": "ambigua",
+      "pregunta": "por una cirugía me perdí el examen final de física de campos, ¿qué opciones tengo?",
+      "respuesta": "No encontré información sobre eso en las fuentes oficiales del Comité de Asuntos Estudiantiles de Pregrado de la Facultad de Ingeniería. Te recomiendo consultar directamente el canal oficial: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Comité de Asuntos Estudiantiles - Facultad de Ingeniería",
+          "url": "https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles"
+        }
+      ],
+      "fuera_de_alcance": true,
+      "segundos": 1.71,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.096125653,
+        "prompt_tokens": 1756,
+        "prompt_time": 0.140863312,
+        "completion_tokens": 80,
+        "completion_time": 0.153130937,
+        "total_tokens": 1836,
+        "total_time": 0.293994249
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "A04",
+      "tipo": "ambigua",
+      "pregunta": "¿cómo me salgo de todas las materias de este semestre?",
+      "respuesta": "Para salirte de todas las materias del semestre, debes presentar una solicitud de cancelación extemporánea de semestre. Este trámite aplica si ya superaste el 40% de la evaluación o la fecha límite del calendario académico.\n\nSolo es posible si demuestras una de estas causas:\n1. Fuerza mayor comprobada.\n2. Enfermedad certificada por el Servicio Médico de la Universidad.\n3. Calamidad doméstica que impidió hacer el trámite a tiempo.\n\nLa decisión final la toma el Consejo Académico, por lo que no puedo garantizar la aprobación de tu caso.\n\nPara más detalles y fechas específicas, consulta la información oficial:\nhttps://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Cancelación extemporánea de semestre",
+          "url": "https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990"
+        }
+      ],
+      "fuera_de_alcance": false,
+      "segundos": 1.79,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.004410822,
+        "prompt_tokens": 1649,
+        "prompt_time": 0.140253756,
+        "completion_tokens": 183,
+        "completion_time": 0.423927611,
+        "total_tokens": 1832,
+        "total_time": 0.564181367
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "F01",
+      "tipo": "fuera_universidad",
+      "pregunta": "¿qué horario tiene el restaurante universitario de la ciudad universitaria?",
+      "respuesta": "No encontré información sobre eso en las fuentes oficiales del Comité de Asuntos Estudiantiles de Pregrado de la Facultad de Ingeniería. Te recomiendo consultar directamente el canal oficial: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Comité de Asuntos Estudiantiles - Facultad de Ingeniería",
+          "url": "https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles"
+        }
+      ],
+      "fuera_de_alcance": true,
+      "segundos": 0.68,
+      "llm_llamado": false,
+      "tokens": null,
+      "finish_reason": null
+    },
+    {
+      "id": "F02",
+      "tipo": "fuera_universidad",
+      "pregunta": "¿cómo cambio la contraseña de mi correo institucional?",
+      "respuesta": "No encontré información sobre eso en las fuentes oficiales del Comité de Asuntos Estudiantiles de Pregrado de la Facultad de Ingeniería. Te recomiendo consultar directamente el canal oficial: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Comité de Asuntos Estudiantiles - Facultad de Ingeniería",
+          "url": "https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles"
+        }
+      ],
+      "fuera_de_alcance": true,
+      "segundos": 0.48,
+      "llm_llamado": false,
+      "tokens": null,
+      "finish_reason": null
+    },
+    {
+      "id": "F03",
+      "tipo": "sin_relacion",
+      "pregunta": "¿cuál es la capital de Australia?",
+      "respuesta": "No encontré información sobre eso en las fuentes oficiales del Comité de Asuntos Estudiantiles de Pregrado de la Facultad de Ingeniería. Te recomiendo consultar directamente el canal oficial: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Comité de Asuntos Estudiantiles - Facultad de Ingeniería",
+          "url": "https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles"
+        }
+      ],
+      "fuera_de_alcance": true,
+      "segundos": 0.49,
+      "llm_llamado": false,
+      "tokens": null,
+      "finish_reason": null
+    },
+    {
+      "id": "F04",
+      "tipo": "sin_relacion",
+      "pregunta": "recomiéndame una serie para ver este fin de semana",
+      "respuesta": "No encontré información sobre eso en las fuentes oficiales del Comité de Asuntos Estudiantiles de Pregrado de la Facultad de Ingeniería. Te recomiendo consultar directamente el canal oficial: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Comité de Asuntos Estudiantiles - Facultad de Ingeniería",
+          "url": "https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles"
+        }
+      ],
+      "fuera_de_alcance": true,
+      "segundos": 0.51,
+      "llm_llamado": false,
+      "tokens": null,
+      "finish_reason": null
+    },
+    {
+      "id": "R01",
+      "tipo": "remision",
+      "pregunta": "tengo 2.8 en cálculo diferencial, si pido la exoneración para ver integral, ¿me la van a aprobar?",
+      "respuesta": "No puedo determinar si tu solicitud será aprobada, ya que esa decisión la toma el Comité de Asuntos Estudiantiles de Pregrados Presenciales del Consejo de Facultad.\n\nPara que tu caso sea evaluado, debes radicar la solicitud en SSOFI siguiendo estos pasos:\n\n1. Verifica que Cálculo Integral sea una materia del Núcleo Común. Si es específica de tu programa, debes acudir al Comité de Carrera.\n2. Ingresa a SSOFI y selecciona la categoría Programas de pregrado, tu dependencia, el Comité de Asuntos Estudiantiles y el asunto Asuntos Estudiantiles.\n3. Elige el tipo de solicitud Exoneración de Prerrequisito o Correquisito.\n4. Completa los campos del formulario: indica que exoneras el prerrequisito, el semestre, los códigos y nombres de la materia a exonerar (Cálculo Diferencial) y la que deseas matricular (Cálculo Integral), el grupo y una justificación detallada.\n5. Adjunta tu carta de justificación y el historial académico en formato PDF.\n\nLa aprobación depende de la valoración académica de la instancia competente. Para más detalles, consulta la información oficial en: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Exoneración de prerrequisito o correquisito",
+          "url": "https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990"
+        }
+      ],
+      "fuera_de_alcance": false,
+      "segundos": 2.25,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.118990584,
+        "prompt_tokens": 1765,
+        "prompt_time": 0.15297212,
+        "completion_tokens": 302,
+        "completion_time": 0.649280253,
+        "total_tokens": 2067,
+        "total_time": 0.802252373
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "R02",
+      "tipo": "remision",
+      "pregunta": "radiqué mi solicitud de reingreso hace tres semanas y no me han respondido, ¿qué pasó con ella?",
+      "respuesta": "No encontré información sobre eso en las fuentes oficiales del Comité de Asuntos Estudiantiles de Pregrado de la Facultad de Ingeniería. Te recomiendo consultar directamente el canal oficial: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Comité de Asuntos Estudiantiles - Facultad de Ingeniería",
+          "url": "https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles"
+        }
+      ],
+      "fuera_de_alcance": true,
+      "segundos": 1.6,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.181256051,
+        "prompt_tokens": 1573,
+        "prompt_time": 0.141802301,
+        "completion_tokens": 80,
+        "completion_time": 0.161212753,
+        "total_tokens": 1653,
+        "total_time": 0.303015054
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "R03",
+      "tipo": "remision",
+      "pregunta": "si radico la solicitud de 27 créditos, ¿qué probabilidad hay de que me la aprueben?",
+      "respuesta": "No puedo determinar la probabilidad de aprobación de tu solicitud, ya que esa decisión la toma el Comité de Asuntos Estudiantiles de Pregrado de la Facultad de Ingeniería.\n\nPara que tu caso sea evaluado favorablemente, la información oficial indica que debes cumplir estrictamente con las siguientes condiciones:\n\n1. Estar en tu último semestre académico para finalizar el plan de estudios, o pertenecer a un programa cuyo diseño requiera una carga superior.\n2. Cumplir con el régimen de prerrequisitos y correquisitos vigentes de tu programa.\n3. Adjuntar en PDF la carta de solicitud formal y la constancia de materias faltantes para el grado.\n\nEl trámite se radica en SSOFI seleccionando la opción \"Matricular más de 24 créditos en un semestre\". Las decisiones del Comité se publican a partir de las 14:00 horas del viernes siguiente a la sesión semanal.\n\nPara más detalles, consulta el canal oficial: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Matricular más de 24 créditos en un semestre",
+          "url": "https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990"
+        }
+      ],
+      "fuera_de_alcance": false,
+      "segundos": 3.43,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.931792,
+        "prompt_tokens": 1589,
+        "prompt_time": 0.139363938,
+        "completion_tokens": 248,
+        "completion_time": 0.577369969,
+        "total_tokens": 1837,
+        "total_time": 0.716733907
+      },
+      "finish_reason": "stop"
+    },
+    {
+      "id": "R04",
+      "tipo": "remision",
+      "pregunta": "me pusieron 2.9 en el final y me parece injusto, ¿el segundo calificador me va a subir la nota?",
+      "respuesta": "No puedo determinar si tu nota subirá o bajará. La información oficial indica que la calificación asignada por el nuevo jurado será definitiva, aunque resulte inferior a la inicial. Por lo tanto, el resultado depende exclusivamente de la evaluación que realicen los dos profesores designados.\n\nPara solicitar el segundo calificador, debes cumplir con estos pasos:\n\n1. Asegúrate de haber realizado la revisión ordinaria con tu docente dentro del plazo. Si no la hiciste, no se concederá la solicitud.\n2. Presenta la solicitud dentro de los dos (2) días hábiles siguientes a esa revisión.\n3. Descarga el formato oficial en www.bit.ly/viceing, diligencialo, fírmalo y guárdalo como PDF.\n4. Ingresa a la plataforma SSOFI y selecciona la categoría Programas de pregrado, tu programa, el Comité de Vicedecanato y el asunto Asuntos Estudiantiles.\n5. Elige el tipo de solicitud Segundo calificador de examen.\n6. Completa los datos de la materia, grupo, fecha de la revisión y la nota inicial.\n7. Adjunta el formato firmado en PDF y la copia del examen o evidencias de la revisión.\n\nPara más detalles, consulta el canal oficial: https://www.udea.edu.co/wps/portal/udea/web/inicio/unidades-academicas/ingenieria/acerca-facultad/comites/comite-asuntos-estudiantiles",
+      "fuentes": [
+        {
+          "titulo": "Segundo calificador de examen",
+          "url": "https://www.udea.edu.co/wps/wcm/connect/udea/082c914c-8158-4115-8423-0d4350722588/reglamento+estudiantil.pdf?MOD=AJPERES&CVID=pnTjCB0&attachment=true&id=1712690691990"
+        }
+      ],
+      "fuera_de_alcance": false,
+      "segundos": 2.26,
+      "llm_llamado": true,
+      "tokens": {
+        "queue_time": 0.101622296,
+        "prompt_tokens": 1724,
+        "prompt_time": 0.148213883,
+        "completion_tokens": 314,
+        "completion_time": 0.639733009,
+        "total_tokens": 2038,
+        "total_time": 0.787946892
+      },
+      "finish_reason": "stop"
+    }
+  ]
+}
