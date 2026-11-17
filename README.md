@@ -54,7 +54,8 @@ docker compose up -d
 uvicorn app.main:app --reload
 ```
 
-- Página de prueba: http://localhost:8000
+- Página de demostración con el widget: http://localhost:8000
+- Página de prueba de la API: http://localhost:8000/prueba-api.html
 - Documentación interactiva de la API: http://localhost:8000/docs
 - Estado del sistema: http://localhost:8000/api/health
 
@@ -75,6 +76,63 @@ El modo `mock` de embeddings solo compara palabras, no significado: sirve
 para desarrollar, no para medir la calidad del chatbot. `RAG_MAX_DISTANCE`
 está calibrado para el modelo real (ver "Calibración de la búsqueda"); con
 `mock` las distancias son otras.
+
+## Widget de chat TiToAI
+
+La interfaz es un widget en HTML, CSS y JavaScript puro (sin frameworks ni
+compilación) en `frontend/widget/`. Sigue el diseño de
+`docs/diseño/widget-titoai.md` y el contrato de `docs/acuerdos.md`.
+
+### Probarlo
+
+1. En `.env`, para trabajar sin Docker ni modelos: `DB_ENABLED=false`,
+   `EMBEDDINGS_PROVIDER=mock`, `LLM_PROVIDER=mock`.
+2. `uvicorn app.main:app --reload` y abrir http://localhost:8000.
+3. El chat se abre solo a los 4 segundos. Si lo minimizan, no se vuelve a
+   abrir solo. Para volver a ver la apertura automática, borren la clave
+   `titoai-minimizado` en las herramientas del navegador
+   (F12 → Aplicación → Almacenamiento local) o usen una ventana privada.
+
+Con `DB_ENABLED=false` no aparece "¿Te fue útil?", porque la API devuelve
+`id_consulta: null`.
+
+### Insertarlo en otra página
+
+Basta una etiqueta, sin tocar nada más de la página:
+
+```html
+<script src="https://SERVIDOR/widget/titoai-widget.js"
+        data-auto-open="4" defer></script>
+```
+
+| Atributo | Para qué | Por defecto |
+|---|---|---|
+| `data-api` | URL base de la API | El servidor desde donde se carga el script |
+| `data-auto-open` | Segundos para abrirse solo; `no` = nunca | `4` |
+| `data-canal` | Enlace al canal oficial que se muestra si el servicio falla | Página del Comité |
+
+**El dominio de la página anfitriona debe estar en `CORS_ORIGINS`** del
+`.env` del servidor, separado por comas; si no, el navegador bloquea las
+preguntas. Por ejemplo, para insertarlo en la página de la Universidad:
+
+```
+CORS_ORIGINS=http://localhost:8000,http://127.0.0.1:8000,https://www.udea.edu.co
+```
+
+### Decisiones del widget
+
+- **Shadow DOM:** los estilos de la página no afectan al widget ni al
+  revés. La página de demostración tiene estilos agresivos para `button`,
+  `img` y `p` a propósito, para comprobarlo.
+- **Privacidad:** la conversación vive solo en memoria y se pierde al
+  recargar. En `localStorage` solo se guarda si la persona minimizó el chat.
+- **Seguridad:** el texto de la API y del usuario se inserta con
+  `textContent`, nunca como HTML. Solo se muestran enlaces `http` o `https`.
+- **Sin recursos externos:** usa Open Sans si la página ya la tiene; si
+  no, Segoe UI o Arial.
+- **Apertura automática:** no mueve el foco, para no quitárselo a la página
+  ni abrir el teclado del celular. Al abrirlo con un clic, el foco va al
+  campo de texto.
 
 ## Conectar el modelo de lenguaje
 
@@ -300,7 +358,7 @@ fichas/            base de conocimiento (una ficha por trámite)
 fuentes/           copias fechadas de las páginas oficiales
 herramientas/      recolección de fuentes
 scripts/           utilidades (reindexar, calibrar)
-frontend/          interfaz web
+frontend/          página de demostración, prueba de la API y widget (widget/)
 tests/             pruebas automáticas
 docs/              acuerdos del equipo y decisiones de arquitectura
 ```
