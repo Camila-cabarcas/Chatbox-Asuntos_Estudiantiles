@@ -36,6 +36,16 @@ def test_servidor_entrega_el_widget_y_su_avatar(cliente):
     assert avatar.headers["content-type"] == "image/png"
 
 
+def test_navegador_revisa_si_hay_version_nueva_del_widget(cliente):
+    r = cliente.get(RUTA_WIDGET)
+    assert r.headers["cache-control"] == "no-cache"
+    # Si el archivo no cambió, se responde 304 sin reenviarlo.
+    igual = cliente.get(RUTA_WIDGET, headers={"If-None-Match": r.headers["etag"]})
+    assert igual.status_code == 304
+    # La API no se ve afectada.
+    assert "cache-control" not in cliente.get("/api/health").headers
+
+
 def test_index_incluye_el_widget_y_se_conserva_la_prueba_de_api(cliente):
     r = cliente.get("/")
     assert r.status_code == 200

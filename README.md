@@ -133,6 +133,9 @@ CORS_ORIGINS=http://localhost:8000,http://127.0.0.1:8000,https://www.udea.edu.co
   tarjeta dice "Descargar reglamento (PDF)" o "Descargar documento (PDF)"
   en vez de "Ver fuente oficial". Para que lleve a una página, la ficha debe
   tener esa página como primera fuente.
+- **Sin copias viejas:** el servidor envía `Cache-Control: no-cache` para
+  `/widget/`. El navegador pregunta si hay versión nueva cada vez que carga
+  la página; si no la hay, recibe un 304 y no vuelve a descargar el archivo.
 - **Sin recursos externos:** usa Open Sans si la página ya la tiene; si
   no, Segoe UI o Arial.
 - **Apertura automática:** no mueve el foco, para no quitárselo a la página
