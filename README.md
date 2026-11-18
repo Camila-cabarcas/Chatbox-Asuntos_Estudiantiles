@@ -128,6 +128,11 @@ CORS_ORIGINS=http://localhost:8000,http://127.0.0.1:8000,https://www.udea.edu.co
   recargar. En `localStorage` solo se guarda si la persona minimizó el chat.
 - **Seguridad:** el texto de la API y del usuario se inserta con
   `textContent`, nunca como HTML. Solo se muestran enlaces `http` o `https`.
+- **Enlaces:** las direcciones `http(s)://` y `www.` dentro de las
+  respuestas se vuelven enlaces. Si la fuente de una ficha es un PDF, la
+  tarjeta dice "Descargar reglamento (PDF)" o "Descargar documento (PDF)"
+  en vez de "Ver fuente oficial". Para que lleve a una página, la ficha debe
+  tener esa página como primera fuente.
 - **Sin recursos externos:** usa Open Sans si la página ya la tiene; si
   no, Segoe UI o Arial.
 - **Apertura automática:** no mueve el foco, para no quitárselo a la página

@@ -56,6 +56,16 @@ def test_widget_solo_usa_innerhtml_con_iconos_fijos():
         assert prohibido not in codigo
 
 
+def test_widget_abre_todos_los_enlaces_de_forma_segura():
+    codigo = WIDGET.read_text(encoding="utf-8")
+    nuevas_pestanas = codigo.count('target: "_blank"')
+    assert nuevas_pestanas >= 2  # tarjetas de fuente y enlaces dentro del texto
+    assert codigo.count('rel: "noopener noreferrer"') == nuevas_pestanas
+    # Todo href pasa antes por urlSegura (solo http y https).
+    assert re.findall(r"href: (\w+)", codigo) == ["href", "href"]
+    assert codigo.count("const href = urlSegura(") == 2
+
+
 def test_widget_no_guarda_la_conversacion_ni_carga_recursos_externos():
     codigo = WIDGET.read_text(encoding="utf-8")
     # En localStorage solo se guarda la preferencia de minimizado.

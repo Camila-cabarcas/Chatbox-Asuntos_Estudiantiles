@@ -86,6 +86,8 @@
       '<line x1="16" y1="17" x2="8" y2="17"/>',
     ubicacion: '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>',
     flecha: '<line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/>',
+    descargar: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/>' +
+      '<line x1="12" y1="15" x2="12" y2="3"/>',
     reintentar: '<polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>',
     pulgarArriba: '<path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>',
     pulgarAbajo: '<path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/>',
@@ -190,6 +192,8 @@
     .burbuja-bot ol { margin: 4px 0 8px; padding-left: 22px; }
     .burbuja-bot li { margin-bottom: 4px; white-space: pre-line; }
     .burbuja-bot li::marker { color: #14612C; font-weight: 700; }
+    .enlace-texto { color: #14612C; font-weight: 600; text-decoration: underline; overflow-wrap: anywhere; }
+    .enlace-texto:hover { color: #0E4A21; }
     .burbuja-bot > :last-child, .contenido > :last-child { margin-bottom: 0; }
     .estado { display: flex; align-items: flex-start; gap: 8px; }
     .estado .icono { margin-top: 1px; }
@@ -578,12 +582,33 @@
       if (bloque.tipo === "lista") {
         const lista = crear("ol");
         if (bloque.inicio !== 1) lista.start = bloque.inicio;
-        for (const item of bloque.items) lista.append(crear("li", {}, item));
+        for (const item of bloque.items) lista.append(textoConEnlaces(crear("li"), item));
         contenedor.append(lista);
       } else {
-        contenedor.append(crear("p", {}, bloque.texto));
+        contenedor.append(textoConEnlaces(crear("p"), bloque.texto));
       }
     }
+  }
+
+  // Agrega el texto al elemento convirtiendo en enlaces las direcciones
+  // http(s):// y www. Todo se crea con nodos de texto, nunca como HTML.
+  function textoConEnlaces(elemento, texto) {
+    const patron = /(?:https?:\/\/|www\.)[^\s<>"']+/gi;
+    let desde = 0;
+    for (const coincidencia of texto.matchAll(patron)) {
+      // La puntuación final (". , ; : ) !") no es parte de la dirección.
+      const direccion = coincidencia[0].replace(/[.,;:!?)\]]+$/, "");
+      const href = urlSegura(/^www\./i.test(direccion) ? "https://" + direccion : direccion);
+      if (!href) continue;
+      elemento.append(texto.slice(desde, coincidencia.index));
+      const enlace = crear("a", { clase: "enlace-texto", href: href, target: "_blank", rel: "noopener noreferrer" },
+        direccion);
+      enlace.append(crear("span", { clase: "sr" }, " (se abre en una pestaña nueva)"));
+      elemento.append(enlace);
+      desde = coincidencia.index + direccion.length;
+    }
+    elemento.append(texto.slice(desde));
+    return elemento;
   }
 
   // Agrupa las líneas: "1. ..." seguidas forman una lista; las líneas en
@@ -642,12 +667,24 @@
     const href = urlSegura(fuente.url);
     if (href) {
       const enlace = crear("a", { href: href, target: "_blank", rel: "noopener noreferrer" });
-      enlace.append(crear("span", {}, esCanal ? "Ir al canal oficial" : "Ver fuente oficial"),
-        icono("flecha", "icono-chico"),
-        crear("span", { clase: "sr" }, " (se abre en una pestaña nueva)"));
+      const pdf = textoPdf(href);
+      if (pdf) {
+        enlace.append(crear("span", {}, pdf), icono("descargar", "icono-chico"));
+      } else {
+        enlace.append(crear("span", {}, esCanal ? "Ir al canal oficial" : "Ver fuente oficial"),
+          icono("flecha", "icono-chico"),
+          crear("span", { clase: "sr" }, " (se abre en una pestaña nueva)"));
+      }
       tarjeta.append(enlace);
     }
     return tarjeta;
+  }
+
+  // Si el enlace es un PDF, devuelve el texto que avisa la descarga.
+  function textoPdf(href) {
+    const ruta = new URL(href).pathname.toLowerCase();
+    if (!ruta.endsWith(".pdf")) return null;
+    return ruta.includes("reglamento") ? "Descargar reglamento (PDF)" : "Descargar documento (PDF)";
   }
 
   function crearBotonReintentar(alHacerClic) {
