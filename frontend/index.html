@@ -1,53 +1,104 @@
 <!doctype html>
 <!--
-  PÁGINA DE PRUEBA DEL BACKEND (provisional).
-  Solo sirve para comprobar que la API responde. El rol de interfaz la
-  reemplaza por el chat definitivo, respetando el contrato de docs/acuerdos.md.
+  PÁGINA DE DEMOSTRACIÓN DEL WIDGET TiToAI.
+  Imita de forma sencilla la página de la Facultad para probar el widget
+  insertado como lo estaría en udea.edu.co. Sus estilos tocan a propósito
+  button, img y p: el widget no debe verse afectado (Shadow DOM).
+  Para probar solo la API, usar /prueba-api.html.
 -->
 <html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Prueba de API - Chatbot Asuntos Estudiantiles</title>
+  <title>Asuntos Estudiantiles - Facultad de Ingeniería (demostración)</title>
   <style>
-    body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; }
-    textarea { width: 100%; min-height: 4rem; }
-    pre { white-space: pre-wrap; background: #f4f4f4; padding: 1rem; border-radius: 6px; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Georgia, serif; color: #1B1B1B; background: #F5F5F5; }
+    .demo-aviso {
+      margin: 0; padding: 6px 16px; text-align: center;
+      background: #FFF4D6; color: #4A3200; font: 13px/1.4 Arial, sans-serif;
+    }
+    .barra { background: #33691E; color: #FFFFFF; border-bottom: 4px solid #7DB006; }
+    .barra-contenido {
+      max-width: 960px; margin: 0 auto; padding: 14px 16px;
+      display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px;
+    }
+    .barra strong { font: 700 20px/1.2 Arial, sans-serif; }
+    .barra span { font: 14px/1.4 Arial, sans-serif; }
+    nav { background: #14612C; }
+    nav ul {
+      max-width: 960px; margin: 0 auto; padding: 0 16px; list-style: none;
+      display: flex; flex-wrap: wrap; gap: 0 20px;
+    }
+    nav a { display: block; padding: 10px 0; color: #FFFFFF; font: 14px Arial, sans-serif; }
+    main { max-width: 960px; margin: 0 auto; padding: 24px 16px 120px; }
+    h1 { margin: 0 0 12px; font: 700 28px/1.25 Arial, sans-serif; color: #14612C; }
+    h2 { font: 700 20px/1.3 Arial, sans-serif; color: #33691E; }
+    .tarjetas { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .tarjeta { background: #FFFFFF; border: 1px solid #C3CFB8; border-radius: 8px; padding: 16px; }
+    .tarjeta h3 { margin: 0 0 8px; font: 700 16px Arial, sans-serif; }
+    footer { background: #011A18; color: #FFFFFF; padding: 16px; text-align: center; font: 13px Arial, sans-serif; }
+    footer a { color: #BEF97A; }
+
+    /* Estilos agresivos a propósito: no deben cambiar el widget. */
+    p { font-size: 17px; line-height: 1.7; color: #333333; }
+    button { background: #8B0000; color: #FFFF00; border: 4px dashed black; font-size: 24px; }
+    img { filter: grayscale(1); border: 5px solid orange; }
   </style>
 </head>
 <body>
-  <h1>Prueba de API</h1>
-  <p>Página provisional para verificar el backend. Estado: <span id="estado">consultando…</span></p>
-  <textarea id="pregunta" placeholder="Ej.: ¿Cuándo se reúne el comité?"></textarea>
-  <button id="enviar">Preguntar</button>
-  <pre id="salida"></pre>
+  <p class="demo-aviso">Página de demostración del proyecto. No es el sitio oficial de la Universidad de Antioquia.</p>
 
-  <script>
-    const salida = document.getElementById("salida");
+  <header class="barra">
+    <div class="barra-contenido">
+      <strong>Facultad de Ingeniería</strong>
+      <span>Universidad de Antioquia</span>
+    </div>
+  </header>
+  <nav aria-label="Menú de ejemplo">
+    <ul>
+      <li><a href="#tramites">Trámites</a></li>
+      <li><a href="#comite">Comité</a></li>
+      <li><a href="/prueba-api.html">Prueba de la API</a></li>
+    </ul>
+  </nav>
 
-    fetch("/api/health").then(r => r.json())
-      .then(d => document.getElementById("estado").textContent =
-        `BD: ${d.base_datos} · fragmentos: ${d.fragmentos_indexados} · LLM: ${d.proveedor_llm}`)
-      .catch(() => document.getElementById("estado").textContent = "sin conexión");
+  <main>
+    <h1>Asuntos Estudiantiles de Pregrado</h1>
+    <p>
+      El Comité de Asuntos Estudiantiles de Pregrado estudia las solicitudes
+      académicas de los estudiantes de la Facultad. Este texto es contenido de
+      ejemplo para probar el asistente TiToAI.
+    </p>
 
-    document.getElementById("enviar").addEventListener("click", async () => {
-      const pregunta = document.getElementById("pregunta").value.trim();
-      if (!pregunta) return;
-      salida.textContent = "Consultando…";
-      try {
-        const r = await fetch("/api/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ pregunta }),
-        });
-        const d = await r.json();
-        salida.textContent = r.ok
-          ? d.respuesta + "\n\nFuentes:\n" + d.fuentes.map(f => `- ${f.titulo}: ${f.url}`).join("\n")
-          : "Error: " + JSON.stringify(d.detail);
-      } catch (e) {
-        salida.textContent = "No se pudo conectar con el servidor.";
-      }
-    });
-  </script>
+    <h2 id="tramites">Trámites frecuentes</h2>
+    <div class="tarjetas">
+      <section class="tarjeta">
+        <h3>Ajustes de matrícula</h3>
+        <p>Cambios de cursos fuera de las fechas establecidas.</p>
+      </section>
+      <section class="tarjeta">
+        <h3>Cancelaciones</h3>
+        <p>Cancelación de cursos o del semestre completo.</p>
+      </section>
+      <section class="tarjeta">
+        <h3>Validaciones y homologaciones</h3>
+        <p>Reconocimiento de cursos aprobados en otros programas.</p>
+      </section>
+    </div>
+
+    <h2 id="comite">Comité</h2>
+    <p>
+      Contenido de ejemplo. Usen la burbuja de abajo a la derecha para hacer
+      preguntas sobre los trámites.
+    </p>
+    <button type="button">Botón de la página anfitriona</button>
+  </main>
+
+  <footer>
+    Proyecto Integrador 1 · Grupo 6 · <a href="/prueba-api.html">Prueba de la API</a>
+  </footer>
+
+  <script src="/widget/titoai-widget.js" data-auto-open="4" defer></script>
 </body>
 </html>

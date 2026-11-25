@@ -13,7 +13,7 @@ Arquitectura en tres capas (según el anteproyecto):
 import logging
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
@@ -69,6 +69,17 @@ def crear_app() -> FastAPI:
         allow_methods=["GET", "POST"],
         allow_headers=["Content-Type"],
     )
+
+    @app.middleware("http")
+    async def revalidar_widget(request: Request, call_next):
+        # El widget se inserta en otras páginas: el navegador debe preguntar
+        # si hay una versión nueva (ETag) en vez de usar una copia vieja.
+        # Si no cambió, el servidor responde 304 sin reenviar el archivo.
+        respuesta = await call_next(request)
+        if request.url.path.startswith("/widget/"):
+            respuesta.headers["Cache-Control"] = "no-cache"
+        return respuesta
+
     app.include_router(router)
 
     frontend = RAIZ_PROYECTO / "frontend"
