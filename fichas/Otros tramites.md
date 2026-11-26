@@ -14,9 +14,6 @@ preguntas_ejemplo:
   - ¿Cómo interpongo un Recurso de Reposición en Subsidio de Apelación?
   - ¿Cómo retiro o desisto de una solicitud previa que radiqué en SSOFI?
   - ¿Cómo matriculo cursos como estudiante coterminal en posgrado?
-  - ¿Cual seria el proceso para aplicar a practicas académicas?
-  - Cual es el proceso oara poder realizar practica
-  - Dime que pasos debo seguir para que me habiliten mis prácticas académicas
   - Cuáles son todos los trámites posibles que puedo realizar como estudiante?
   - Que es todo lo que puedes hacer y no puedes hacer? Y como funciona los tramistes?
   - ¿cómo interpongo un recurso contra una respuesta negativa del Consejo de Facultad?
