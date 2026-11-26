@@ -24,7 +24,7 @@ def health(request: Request) -> EstadoOut:
     st = request.app.state
     return EstadoOut(
         estado="ok",
-        base_datos=st.db.estado,
+        base_datos=st.db.verificar(),
         fragmentos_indexados=st.indice.total(),
         proveedor_llm=st.llm.nombre,
         proveedor_embeddings=st.embeddings.nombre,

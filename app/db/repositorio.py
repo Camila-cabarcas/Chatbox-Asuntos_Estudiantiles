@@ -18,8 +18,8 @@ class RepositorioConsultas:
         self._db = db
 
     def registrar(self, **datos) -> int | None:
-        sesion = self._db.Sesion
-        if not self._db.disponible or sesion is None:
+        sesion = self._db.sesion()
+        if sesion is None:
             return None
         try:
             with sesion() as s, s.begin():
@@ -28,11 +28,12 @@ class RepositorioConsultas:
             return consulta.id
         except SQLAlchemyError as e:
             log.error("No se pudo registrar la consulta: %s", type(e).__name__)
+            self._db.registrar_fallo(e)
             return None
 
     def valorar(self, id_consulta: int, util: bool) -> bool:
-        sesion = self._db.Sesion
-        if not self._db.disponible or sesion is None:
+        sesion = self._db.sesion()
+        if sesion is None:
             return False
         try:
             with sesion() as s, s.begin():
@@ -43,4 +44,5 @@ class RepositorioConsultas:
             return True
         except SQLAlchemyError as e:
             log.error("No se pudo guardar la valoración: %s", type(e).__name__)
+            self._db.registrar_fallo(e)
             return False
