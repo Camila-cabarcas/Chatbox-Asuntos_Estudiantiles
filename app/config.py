@@ -84,13 +84,15 @@ class Settings(BaseSettings):
     rag_top_k: int = Field(default=8, ge=1, le=20)
     # Distancia coseno máxima (0 = idéntico, 2 = opuesto). Si ningún
     # fragmento está por debajo, la pregunta se trata como fuera de alcance.
-    # 0.49 sale de calibrar MiniLM-L12 en ONNX int8 (un texto por lote) con
-    # tests/calibracion (78 preguntas dentro y 8 fuera del alcance): es el
-    # mayor umbral que no deja pasar más preguntas fuera del alcance que
-    # PyTorch con 0.50 (1 de 8). Con PyTorch se usaba 0.50 (ver README,
-    # "Calibración"). Si se cambia el modelo de embeddings o la variante
-    # ONNX hay que volver a calibrar.
-    rag_max_distance: float = Field(default=0.49, gt=0, le=2)
+    # 0.50 sale de calibrar MiniLM-L12 (ver README, "Calibración") y se
+    # revisó con ONNX int8 (un texto por lote): en la búsqueda pasan el
+    # umbral 2 de las 8 preguntas fuera del alcance de tests/calibracion
+    # (PyTorch: 1), pero con el chatbot completo las 8 reciben la respuesta
+    # de fuera de alcance, porque el modelo responde "no encontré" (noviembre
+    # de 2026). 0.49 las frenaba en la búsqueda, pero dejaba fuera la
+    # pregunta A03 del banco (0.4985). Si se cambia el modelo de embeddings,
+    # la variante ONNX o el modelo de lenguaje, hay que volver a calibrar.
+    rag_max_distance: float = Field(default=0.50, gt=0, le=2)
     # Tamaño máximo de cada fragmento de búsqueda, en tokens del modelo de
     # embeddings. Si el modelo lee menos, se usa el límite del modelo.
     rag_fragmento_max_tokens: int = Field(default=128, ge=32, le=512)

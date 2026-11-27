@@ -77,10 +77,14 @@ python -m scripts.descargar_modelo --sin-indice  # solo descarga
 
 `local` queda para desarrollo y para comparar con el ONNX. Los vectores de
 ambos son casi iguales (coseno medio 0.993), pero no idénticos: el umbral
-`RAG_MAX_DISTANCE` se calibra para el que se despliegue (0.49 con ONNX int8,
-0.50 con PyTorch). El ONNX procesa un texto por lote: el modelo int8 cuantiza
-con una escala de todo el lote, y en lotes de varios textos el vector de cada
-uno dependía de sus vecinos. El índice guarda
+`RAG_MAX_DISTANCE` se calibra para el que se despliegue. Con ONNX int8 se
+mantiene 0.50, validado con el chatbot completo: en la búsqueda pasan el umbral
+2 de las 8 preguntas fuera del alcance de `tests/calibracion` (con PyTorch, 1),
+pero las 8 reciben la respuesta de fuera de alcance porque el modelo responde
+"no encontré". Con 0.49 se frenaban en la búsqueda, pero quedaba fuera una
+pregunta del banco que sí es del Comité. El ONNX procesa un texto por lote: el
+modelo int8 cuantiza con una escala de todo el lote, y en lotes de varios
+textos el vector de cada uno dependía de sus vecinos. El índice guarda
 qué modelo lo construyó; si al arrancar no coincide con el configurado, se
 reconstruye aunque `INDEX_ON_STARTUP=false`.
 
