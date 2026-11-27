@@ -106,3 +106,22 @@ def test_cliente_openai_lee_finish_reason(monkeypatch, finish_reason, recortada)
     monkeypatch.setattr(httpx, "post", post_falso)
     r = LLMOpenAICompatible(s).generar("sistema", "usuario")
     assert r == RespuestaLLM("Hola", recortada=recortada)
+
+
+def test_cliente_openai_registra_solo_los_numeros_de_tokens(monkeypatch, caplog):
+    s = Settings(_env_file=None, llm_provider="openai_compatible",  # pyright: ignore[reportCallIssue]
+                 llm_base_url="https://proveedor.invalid/v1", llm_api_key="clave-falsa", llm_model="modelo")
+
+    def post_falso(url, **kwargs):
+        cuerpo = {"choices": [{"message": {"role": "assistant", "content": "respuesta secreta"},
+                               "finish_reason": "stop"}],
+                  "usage": {"prompt_tokens": 1900, "completion_tokens": 250, "total_tokens": 2150}}
+        return httpx.Response(200, json=cuerpo, request=httpx.Request("POST", url))
+
+    monkeypatch.setattr(httpx, "post", post_falso)
+    with caplog.at_level("INFO", logger="app.rag.llm"):
+        LLMOpenAICompatible(s).generar("sistema", "pregunta del estudiante")
+    assert "Tokens LLM: entrada=1900 salida=250 total=2150" in caplog.text
+    # No se registra el contenido de la petición ni de la respuesta.
+    assert "pregunta del estudiante" not in caplog.text
+    assert "respuesta secreta" not in caplog.text

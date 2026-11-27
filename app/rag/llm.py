@@ -99,7 +99,12 @@ class LLMOpenAICompatible:
         try:
             r = httpx.post(self._url, json=cuerpo, headers=cabeceras, timeout=self._timeout)
             r.raise_for_status()
-            eleccion = r.json()["choices"][0]
+            datos = r.json()
+            eleccion = datos["choices"][0]
+            # Consumo de la llamada (solo números: no se registra el contenido).
+            uso = datos.get("usage") or {}
+            log.info("Tokens LLM: entrada=%s salida=%s total=%s",
+                     uso.get("prompt_tokens"), uso.get("completion_tokens"), uso.get("total_tokens"))
             return RespuestaLLM(
                 texto=(eleccion["message"].get("content") or "").strip(),
                 recortada=eleccion.get("finish_reason") == "length",
