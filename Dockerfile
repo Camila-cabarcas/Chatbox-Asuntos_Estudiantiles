@@ -10,7 +10,13 @@
 
 FROM python:3.12-slim
 
-ENV PYTHONDONTWRITEBYTECODE=1 \
+# Variante ONNX del modelo (carpeta onnx/ del repositorio en Hugging Face):
+#   docker build --build-arg EMBEDDINGS_ONNX_ARCHIVO=model_O4.onnx -t chatbot-uae .
+# Si se cambia, hay que volver a calibrar RAG_MAX_DISTANCE.
+ARG EMBEDDINGS_ONNX_ARCHIVO=model_quint8_avx2.onnx
+
+ENV EMBEDDINGS_ONNX_ARCHIVO=${EMBEDDINGS_ONNX_ARCHIVO} \
+    PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
