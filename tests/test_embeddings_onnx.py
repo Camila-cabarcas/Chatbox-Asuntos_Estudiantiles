@@ -94,16 +94,18 @@ def test_recorte_conserva_el_inicio_y_el_cierre(onnx):
     assert onnx._recortar(onnx._ids("ab")) == onnx._ids("ab")
 
 
-def test_lotes_de_ocho(onnx):
+def test_un_texto_por_llamada_al_modelo(onnx):
+    # Con int8 el vector depende de los demás textos del lote: cada texto va solo.
     vectores = onnx.embed([f"t{i}" for i in range(19)])
     lotes = SesionFalsa.instancias[0].lotes
     assert len(vectores) == 19
-    assert [len(lote["input_ids"]) for lote in lotes] == [8, 8, 3]
+    assert [len(lote["input_ids"]) for lote in lotes] == [1] * 19
 
 
-def test_relleno_fuera_del_promedio_y_vectores_normalizados(onnx):
-    # "a" sola y junto a un texto más largo (que obliga a rellenar "a")
-    # deben dar exactamente el mismo vector.
+def test_relleno_fuera_del_promedio_y_vectores_normalizados(onnx, monkeypatch):
+    # El código admite lotes de varios textos: "a" sola y junto a un texto
+    # más largo (que obliga a rellenar "a") deben dar el mismo vector.
+    monkeypatch.setattr(EmbeddingsOnnx, "LOTE", 8)
     sola = onnx.embed(["a"])[0]
     con_relleno = onnx.embed(["a", "abcdef"])[0]
     assert sola == pytest.approx(con_relleno)
@@ -206,6 +208,17 @@ def test_modelo_real_ordena_por_significado(modelo_real):
     assert len(p) == 384
     coseno = lambda a, b: sum(x * y for x, y in zip(a, b))  # noqa: E731
     assert coseno(p, parecida) > coseno(p, otra) + 0.2
+
+
+@real
+def test_modelo_real_mismo_texto_mismo_vector_solo_o_acompanado(modelo_real):
+    # Regresión: con lotes de 8, el int8 daba vectores distintos al mismo
+    # texto según sus vecinos (coseno ~0.996), y las distancias se movían.
+    texto = "La aprobación definitiva corresponde al Consejo Académico."
+    vecinos = ["hola", "Texto largo de relleno sobre matrícula, créditos y SSOFI. " * 6, "otra pregunta"]
+    solo = modelo_real.embed([texto])[0]
+    acompanado = modelo_real.embed(vecinos[:2] + [texto] + vecinos[2:])[2]
+    assert acompanado == solo
 
 
 @real

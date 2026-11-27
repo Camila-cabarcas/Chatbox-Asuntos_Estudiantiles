@@ -76,11 +76,18 @@ class EmbeddingsOnnx:
     con ONNX Runtime y promedia los vectores de los tokens (mean pooling),
     igual que sentence-transformers con este modelo.
 
-    Pensado para un servidor pequeño: un solo hilo, sin el arena de memoria
+    Pensado para un servidor pequeño: un solo hilo y sin el arena de memoria
     de ONNX Runtime (que retiene la memoria del lote más grande que haya
-    visto) y textos de a LOTE para acotar el pico al indexar."""
+    visto).
 
-    LOTE = 8
+    Cada texto se procesa solo (LOTE = 1). El modelo int8 cuantiza las
+    activaciones con una escala calculada sobre todo el lote, así que en un
+    lote de varios textos el vector de cada uno depende de sus vecinos (y
+    del relleno): el mismo fragmento cambiaba según con qué textos se
+    indexara, y no coincidía con la pregunta, que se procesa sola. Con un
+    texto por lote los vectores son reproducibles y no hay relleno."""
+
+    LOTE = 1
     # El tokenizador de XLM-R (el de este modelo) usa los ids de fairseq:
     # cuatro especiales al inicio y el resto del vocabulario de SentencePiece
     # corrido en 1. El id 0 de SentencePiece es su <unk>.

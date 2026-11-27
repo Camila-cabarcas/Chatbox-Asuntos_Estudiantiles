@@ -77,7 +77,10 @@ python -m scripts.descargar_modelo --sin-indice  # solo descarga
 
 `local` queda para desarrollo y para comparar con el ONNX. Los vectores de
 ambos son casi iguales (coseno medio 0.993), pero no idénticos: el umbral
-`RAG_MAX_DISTANCE` se calibra para el que se despliegue. El índice guarda
+`RAG_MAX_DISTANCE` se calibra para el que se despliegue (0.49 con ONNX int8,
+0.50 con PyTorch). El ONNX procesa un texto por lote: el modelo int8 cuantiza
+con una escala de todo el lote, y en lotes de varios textos el vector de cada
+uno dependía de sus vecinos. El índice guarda
 qué modelo lo construyó; si al arrancar no coincide con el configurado, se
 reconstruye aunque `INDEX_ON_STARTUP=false`.
 
