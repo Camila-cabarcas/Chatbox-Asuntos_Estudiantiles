@@ -97,8 +97,10 @@ class Settings(BaseSettings):
     rag_fragmento_solapamiento: int = Field(default=1, ge=0, le=3)
     # Tamaño máximo del contexto que recibe el modelo de lenguaje (tokens
     # estimados). Limita el consumo por pregunta, p. ej. los tokens por minuto
-    # de un plan gratuito.
-    rag_contexto_max_tokens: int = Field(default=1500, ge=200, le=8000)
+    # de un plan gratuito. 1800 recupera 2 preguntas más del banco de 30 que
+    # 1500 con embeddings ONNX int8 (scripts/medir_esenciales.py), por ~230
+    # tokens más por llamada; 2000 no mejora.
+    rag_contexto_max_tokens: int = Field(default=1800, ge=200, le=8000)
     # Búsqueda híbrida: además del vectorial, un ranking léxico (BM25) puede
     # proponer fichas que el vectorial no trajo. Ver app/rag/lexico.py.
     rag_hibrido: bool = True

@@ -186,8 +186,9 @@ def medir(indice: IndiceVectorial, s: Settings, filas: list[dict], presupuesto: 
 def crear_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--proveedor", choices=["onnx", "local", "mock"], required=True)
-    ap.add_argument("--presupuesto", type=int, nargs="+", default=[1500],
-                    help="RAG_CONTEXTO_MAX_TOKENS a medir.")
+    ap.add_argument("--presupuesto", type=int, nargs="+",
+                    default=[Settings.model_fields["rag_contexto_max_tokens"].default],
+                    help="RAG_CONTEXTO_MAX_TOKENS a medir (por defecto, el de app/config.py).")
     ap.add_argument("--max-fichas", type=int, nargs="+", default=[modulo_contexto.MAX_FICHAS],
                     help="Fichas candidatas en el contexto (MAX_FICHAS).")
     ap.add_argument("--proactivo", type=float, nargs="+", default=[0.0],

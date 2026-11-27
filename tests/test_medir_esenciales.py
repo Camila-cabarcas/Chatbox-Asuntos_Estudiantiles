@@ -48,7 +48,7 @@ def test_json_solo_dentro_de_data(tmp_path):
 
 def test_valores_por_defecto():
     args = crear_parser().parse_args(["--proveedor", "onnx"])
-    assert (args.presupuesto, args.max_fichas, args.proactivo) == ([1500], [4], [0.0])
+    assert (args.presupuesto, args.max_fichas, args.proactivo) == ([1800], [4], [0.0])
     with pytest.raises(SystemExit):
         crear_parser().parse_args(["--proveedor", "otro"])
     assert isinstance(crear_parser(), argparse.ArgumentParser)
