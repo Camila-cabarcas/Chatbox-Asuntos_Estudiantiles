@@ -81,6 +81,20 @@ ambos son casi iguales (coseno medio 0.993), pero no idénticos: el umbral
 qué modelo lo construyó; si al arrancar no coincide con el configurado, se
 reconstruye aunque `INDEX_ON_STARTUP=false`.
 
+### Imagen Docker (despliegue)
+
+El `Dockerfile` arma la imagen con embeddings ONNX: descarga el modelo y
+construye el índice durante el build, y arranca con `INDEX_ON_STARTUP=false`.
+No incluye `.env`, `data/`, `models/` ni PyTorch (ver `.dockerignore`). Las
+credenciales se pasan como variables de entorno del servicio.
+
+```bash
+docker build -t chatbot-uae .
+docker run --rm -p 8000:8000 --memory=512m -e LLM_PROVIDER=mock -e DB_ENABLED=false chatbot-uae
+```
+
+Usa el puerto de `$PORT` si existe (Render lo define) y 8000 si no.
+
 ## Modos de trabajo según el rol
 
 No todos necesitan todo instalado. En `.env`:

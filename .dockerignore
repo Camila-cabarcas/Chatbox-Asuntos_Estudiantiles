@@ -1,0 +1,16 @@
+# Lista blanca: se excluye todo y solo entra lo que la imagen necesita.
+# Así nunca llegan al build .env, data/ (índice local), models/, .venv ni
+# .git, aunque aparezcan archivos nuevos en el proyecto.
+*
+
+!requirements.txt
+!app/
+!scripts/
+!fichas/
+!frontend/
+
+# Por si acaso, dentro de lo permitido:
+**/__pycache__
+**/*.py[cod]
+**/.env
+**/.env.*
