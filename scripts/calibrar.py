@@ -31,6 +31,7 @@ ficha), con un resumen por ficha:
 Además del puesto, se informa si la mejor distancia pasa RAG_MAX_DISTANCE y
 si la ficha llega al contexto: si está entre los primeros RAG_TOP_K
 fragmentos que pasan el umbral (los valores por defecto de app/config.py).
+Para probar otro umbral sin cambiar la configuración: --umbral 0.45
 
 Por seguridad, las rutas recibidas se validan antes de usarlas:
   --csv   debe ser un archivo .csv dentro de la carpeta del proyecto.
@@ -161,6 +162,8 @@ def crear_parser() -> argparse.ArgumentParser:
     ap.add_argument("--top", type=int, default=4, help="Primeras N fichas distintas que cuentan como acierto.")
     ap.add_argument("--json", type=ruta_json,
                     help="Guarda el resultado detallado en este archivo .json dentro de data/.")
+    ap.add_argument("--umbral", type=float,
+                    help="RAG_MAX_DISTANCE a evaluar (por defecto, el de app/config.py).")
     ap.add_argument("--por-ficha", action="store_true",
                     help="Agrega un resumen por ficha esperada.")
     return ap
@@ -194,7 +197,8 @@ def main() -> None:
     with tempfile.TemporaryDirectory(prefix="calibracion_", ignore_cleanup_errors=True) as tmp:
         # _env_file=None: no se lee .env.
         s = Settings(_env_file=None, embeddings_provider=args.proveedor,  # pyright: ignore[reportCallIssue]
-                     embeddings_model=args.modelo, chroma_path=Path(tmp) / "chroma")
+                     embeddings_model=args.modelo, chroma_path=Path(tmp) / "chroma",
+                     **({"rag_max_distance": args.umbral} if args.umbral is not None else {}))
         t0 = time.perf_counter()
         embeddings = crear_embeddings(s)
         t_modelo = time.perf_counter() - t0
@@ -256,7 +260,7 @@ def main() -> None:
     print(f"\nAciertos en 1.er lugar: {sum(d['acierto_1'] for d in dentro)}/{len(dentro)} | "
           f"entre las primeras {args.top} fichas: {sum(d['acierto_top'] for d in dentro)}/{len(dentro)} | "
           f"llegan al contexto: {sum(d['en_contexto'] for d in dentro)}/{len(dentro)}")
-    print(f"Umbral actual RAG_MAX_DISTANCE={s.rag_max_distance} (RAG_TOP_K={s.rag_top_k}): "
+    print(f"Umbral evaluado RAG_MAX_DISTANCE={s.rag_max_distance} (RAG_TOP_K={s.rag_top_k}): "
           f"dentro que no lo pasan {sum(not d['pasa_umbral'] for d in dentro)}/{len(dentro)}"
           + (f" | fuera que sí lo pasan {sum(d['pasa_umbral'] for d in fuera)}/{len(fuera)}" if fuera else ""))
     print(f"Distancia del mejor fragmento  dentro: min {min(dd):.3f} · mediana {statistics.median(dd):.3f} · máx {max(dd):.3f}")

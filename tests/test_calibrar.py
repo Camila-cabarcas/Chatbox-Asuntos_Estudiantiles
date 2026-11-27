@@ -114,3 +114,8 @@ def test_resumen_por_ficha():
         {"ficha": "a", "preguntas": 1, "acierto_1": 0, "acierto_top": 0, "fuera_umbral": 0, "sin_contexto": 1},
         {"ficha": "b", "preguntas": 2, "acierto_1": 1, "acierto_top": 2, "fuera_umbral": 1, "sin_contexto": 1},
     ]
+
+
+def test_umbral_opcional():
+    assert crear_parser().parse_args(["--proveedor", "mock"]).umbral is None
+    assert crear_parser().parse_args(["--proveedor", "onnx", "--umbral", "0.45"]).umbral == 0.45
