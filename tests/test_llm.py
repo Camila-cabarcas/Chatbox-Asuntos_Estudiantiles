@@ -125,3 +125,16 @@ def test_cliente_openai_registra_solo_los_numeros_de_tokens(monkeypatch, caplog)
     # No se registra el contenido de la petición ni de la respuesta.
     assert "pregunta del estudiante" not in caplog.text
     assert "respuesta secreta" not in caplog.text
+
+
+def test_prompt_no_contiene_preguntas_ni_fichas_del_banco():
+    """Las reglas del prompt deben ser generales: nada del banco de evaluación."""
+    import csv
+
+    from app.config import RAIZ_PROYECTO
+    s = prompts.sistema(CANAL).casefold()
+    with (RAIZ_PROYECTO / "tests" / "evaluacion" / "banco_30.csv").open(encoding="utf-8-sig") as f:
+        for fila in csv.DictReader(f):
+            assert fila["pregunta"].casefold() not in s
+            if fila["ficha_esperada"]:
+                assert fila["ficha_esperada"] not in s
