@@ -59,11 +59,17 @@ class Settings(BaseSettings):
     llm_max_tokens: int = Field(default=800, gt=0)
 
     # --- Embeddings ---------------------------------------------------------
-    # local: modelo multilingüe preentrenado (sentence-transformers). Es el
-    #        modo real; el modelo elegido en la calibración es MiniLM-L12.
+    # onnx: el modelo elegido (MiniLM-L12) en ONNX int8, sin PyTorch. Es el
+    #       modo de despliegue; requiere `python -m scripts.descargar_modelo`.
+    # local: el mismo modelo con sentence-transformers (PyTorch). Desarrollo.
     # mock: vectores simples por palabras, sin descargar modelos (pruebas).
-    embeddings_provider: Literal["local", "mock"] = "local"
+    embeddings_provider: Literal["onnx", "local", "mock"] = "local"
     embeddings_model: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+    # Carpeta donde scripts/descargar_modelo.py deja los archivos ONNX (se
+    # respeta la estructura del repositorio de Hugging Face) y variante int8
+    # que se usa, de las que publica el modelo en su carpeta onnx/.
+    embeddings_onnx_dir: Path = RAIZ_PROYECTO / "models" / "minilm-l12"
+    embeddings_onnx_archivo: str = "model_quint8_avx2.onnx"
 
     # --- Índice vectorial y base de conocimiento ---------------------------
     chroma_path: Path = RAIZ_PROYECTO / "data" / "chroma"
@@ -78,8 +84,14 @@ class Settings(BaseSettings):
     rag_top_k: int = Field(default=8, ge=1, le=20)
     # Distancia coseno máxima (0 = idéntico, 2 = opuesto). Si ningún
     # fragmento está por debajo, la pregunta se trata como fuera de alcance.
-    # 0.50 sale de calibrar MiniLM-L12 (ver README, "Calibración"); si se
-    # cambia el modelo de embeddings hay que volver a calibrar.
+    # 0.50 sale de calibrar MiniLM-L12 (ver README, "Calibración") y se
+    # revisó con ONNX int8 (un texto por lote): en la búsqueda pasan el
+    # umbral 2 de las 8 preguntas fuera del alcance de tests/calibracion
+    # (PyTorch: 1), pero con el chatbot completo las 8 reciben la respuesta
+    # de fuera de alcance, porque el modelo responde "no encontré" (noviembre
+    # de 2026). 0.49 las frenaba en la búsqueda, pero dejaba fuera la
+    # pregunta A03 del banco (0.4985). Si se cambia el modelo de embeddings,
+    # la variante ONNX o el modelo de lenguaje, hay que volver a calibrar.
     rag_max_distance: float = Field(default=0.50, gt=0, le=2)
     # Tamaño máximo de cada fragmento de búsqueda, en tokens del modelo de
     # embeddings. Si el modelo lee menos, se usa el límite del modelo.
@@ -89,8 +101,10 @@ class Settings(BaseSettings):
     rag_fragmento_solapamiento: int = Field(default=1, ge=0, le=3)
     # Tamaño máximo del contexto que recibe el modelo de lenguaje (tokens
     # estimados). Limita el consumo por pregunta, p. ej. los tokens por minuto
-    # de un plan gratuito.
-    rag_contexto_max_tokens: int = Field(default=1500, ge=200, le=8000)
+    # de un plan gratuito. 1800 recupera 2 preguntas más del banco de 30 que
+    # 1500 con embeddings ONNX int8 (scripts/medir_esenciales.py), por ~230
+    # tokens más por llamada; 2000 no mejora.
+    rag_contexto_max_tokens: int = Field(default=1800, ge=200, le=8000)
     # Búsqueda híbrida: además del vectorial, un ranking léxico (BM25) puede
     # proponer fichas que el vectorial no trajo. Ver app/rag/lexico.py.
     rag_hibrido: bool = True
@@ -106,6 +120,14 @@ class Settings(BaseSettings):
     )
 
     # ------------------------------------------------------------------------
+    @property
+    def embeddings_onnx_ruta(self) -> Path:
+        return self.embeddings_onnx_dir / "onnx" / self.embeddings_onnx_archivo
+
+    @property
+    def embeddings_tokenizador_ruta(self) -> Path:
+        return self.embeddings_onnx_dir / "sentencepiece.bpe.model"
+
     @property
     def cors_origins_list(self) -> list[str]:
         return [o.strip() for o in self.cors_origins.split(",") if o.strip()]
