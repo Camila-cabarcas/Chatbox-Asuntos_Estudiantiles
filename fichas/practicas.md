@@ -5,7 +5,6 @@ categoria: Prácticas y egresados
 aplica_a: Pregrado presencial, virtual y regionalizado
 instancia: Coordinación de Prácticas de la Facultad de Ingeniería / Jefatura de Departamento / Comité de Carrera / Comité de Asuntos Estudiantiles
 canal: PRAXIS / SSOFI / Formularios oficiales
-preguntas_ejemplo: habilitar prácticas profesionales, solicitar carta de intención, inscribir taller de prácticas, subir propuesta de práctica en PRAXIS, cambio de asesor interno, carta de control de cambios, segundo contrato sena, inscripción a arl udea, registro de inicio de práctica, evaluación ad referendum, propuesta no favorable, incompleto de práctica, quien es el coordinador de practicas de mi carrera, ruta de practicas academicas, porcentajes de creditos para practica, modalidades de practica
 fuentes:
   - url: https://udeasytes.wordpress.com/practicas-academicas-ingenierias-electronica-y-telecomunicaciones/preguntas-frecuentes-faqs/
     archivo: fuentes/2026-10-27/practicas_faqs.md
@@ -23,6 +22,23 @@ preguntas_ejemplo:
   - ¿Quién es el coordinador de prácticas de mi programa académico?
   - ¿Cuál es la ruta paso a paso y el porcentaje de créditos requerido para iniciar la práctica académica?
   - ¿Qué hago si mi propuesta de práctica quedó en estado AD REFERENDUM o NO FAVORABLE?
+  - ¿Cuántos créditos del plan de estudios necesito haber aprobado antes de inscribir la práctica?
+  - habilitar prácticas profesionales
+  - solicitar carta de intención
+  - inscribir taller de prácticas
+  - subir propuesta de práctica en PRAXIS
+  - cambio de asesor interno
+  - carta de control de cambios
+  - segundo contrato sena
+  - inscripción a arl udea
+  - registro de inicio de práctica
+  - evaluación ad referendum
+  - propuesta no favorable
+  - incompleto de práctica
+  - quien es el coordinador de practicas de mi carrera
+  - ruta de practicas academicas
+  - porcentajes de creditos para practica
+  - modalidades de practica
 redactada_por:
 revisada_por:
 ---
@@ -39,7 +55,8 @@ La Práctica Académica es una asignatura y modalidad de formación obligatoria 
 
 Cada programa académico cuenta con un docente coordinador(a) de prácticas, quien te acompaña en la preparación, el desarrollo y la finalización de tu proceso[cite: 16].
 
-> **Orientación para el estudiante**: Si buscas el contacto o responsable de prácticas de tu ingeniería específica (por ejemplo, Ingeniería Eléctrica, Sistemas, Industrial, Civil, etc.), **dirígete a la siguiente presentación interactiva y comprueba si tu carrera aparece listada; de lo contrario, dirígete directamente al jefe de tu programa para obtener más información**:
+> **Orientación para el estudiante**: Si buscas el contacto o responsable de prácticas de tu ingeniería específica (por ejemplo, Ingeniería Eléctrica, Sistemas, Industrial, Civil, etc.),
+> **dirígete a la siguiente presentación interactiva y comprueba si tu carrera aparece listada; de lo contrario, dirígete directamente al jefe de tu programa para obtener más información**:
 > - [Presentación Directorio de Coordinadores de Prácticas (Genially)](https://view.genially.com/6481ebd8636ead001ab2eddf)
 
 ---
@@ -85,7 +102,8 @@ De acuerdo con la ruta institucional de la Facultad de Ingeniería (Acuerdo 958 
 
 ### 1. Solicitud de Carta de Intención de Práctica
 - **Propósito**: Documento formal expedido por la Facultad dirigido a una empresa patrocinadora que lo exija en una convocatoria, certificando que eres estudiante activo y apto para realizar la práctica[cite: 15].
-- **Formulario en línea**: [Formulario de Solicitud de Carta de Intención de Práctica](https://docs.google.com/forms/d/e/1FAIpQLSewlyfkBkdLI3GQ46gQK_AmoYIMHX18pt7hXk36o_kEqJvqTg/viewform)[cite: 15].
+- **Formulario en línea**:
+  [Formulario de Solicitud de Carta de Intención de Práctica](https://docs.google.com/forms/d/e/1FAIpQLSewlyfkBkdLI3GQ46gQK_AmoYIMHX18pt7hXk36o_kEqJvqTg/viewform)[cite: 15].
 
 ### 2. Estados de evaluación de la Propuesta de Práctica y retrasos
 - **Mora por exceder 45 días**: Si transcurren más de 45 días calendario sin cargar la propuesta formal, debes radicar una justificación escrita ante el Comité de Carrera para evitar la cancelación del proceso[cite: 15].
