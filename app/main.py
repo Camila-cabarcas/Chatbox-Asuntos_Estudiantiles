@@ -40,7 +40,10 @@ async def ciclo_de_vida(app: FastAPI):
     st = app.state
     st.embeddings = crear_embeddings(s)
     st.indice = IndiceVectorial(s, st.embeddings)
-    if s.index_on_startup or st.indice.total() == 0:
+    if s.index_on_startup:
+        st.indice.reconstruir()
+    elif not st.indice.vigente():
+        log.warning("El índice está vacío o lo generó otro modelo de embeddings: se reconstruye.")
         st.indice.reconstruir()
     st.llm = crear_llm(s)
     st.servicio = ServicioRAG(s, st.indice, st.llm)

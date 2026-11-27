@@ -2,8 +2,13 @@
 Embeddings: convierten texto en vectores para buscar por significado.
 
 Proveedores (se elige con EMBEDDINGS_PROVIDER en .env):
-  - local: modelo multilingüe preentrenado con sentence-transformers,
-           como indica el anteproyecto. La primera vez descarga el modelo.
+  - onnx:  el mismo modelo multilingüe, exportado a ONNX y cuantizado a
+           int8, con ONNX Runtime y SentencePiece. No necesita PyTorch y
+           usa mucha menos memoria: es el modo de despliegue (Render). Los
+           archivos se descargan con `python -m scripts.descargar_modelo`.
+  - local: modelo multilingüe preentrenado con sentence-transformers
+           (PyTorch), como indica el anteproyecto. Para desarrollo y para
+           comparar con el ONNX. La primera vez descarga el modelo.
   - mock:  vectores simples basados en palabras. No descarga nada; sirve
            para pruebas automáticas y para trabajar sin internet.
 
@@ -20,6 +25,7 @@ import logging
 import math
 import re
 import unicodedata
+from pathlib import Path
 from typing import Protocol
 
 from app.config import Settings
@@ -65,6 +71,94 @@ class EmbeddingsLocal:
         return len(self._modelo.tokenizer(texto, verbose=False)["input_ids"])
 
 
+class EmbeddingsOnnx:
+    """MiniLM-L12 en ONNX int8: tokeniza con SentencePiece, corre el modelo
+    con ONNX Runtime y promedia los vectores de los tokens (mean pooling),
+    igual que sentence-transformers con este modelo.
+
+    Pensado para un servidor pequeño: un solo hilo, sin el arena de memoria
+    de ONNX Runtime (que retiene la memoria del lote más grande que haya
+    visto) y textos de a LOTE para acotar el pico al indexar."""
+
+    LOTE = 8
+    # El tokenizador de XLM-R (el de este modelo) usa los ids de fairseq:
+    # cuatro especiales al inicio y el resto del vocabulario de SentencePiece
+    # corrido en 1. El id 0 de SentencePiece es su <unk>.
+    BOS, PAD, EOS, UNK = 0, 1, 2, 3
+    _DESPLAZAMIENTO = 1
+
+    def __init__(self, ruta_modelo: Path, ruta_tokenizador: Path, nombre: str,
+                 max_tokens: int = 128):
+        try:
+            import numpy as np
+            import onnxruntime as ort
+            import sentencepiece as spm
+        except ImportError as e:
+            raise RuntimeError(
+                "EMBEDDINGS_PROVIDER=onnx requiere 'onnxruntime', 'sentencepiece' y 'numpy'. "
+                "Instálelos con: pip install -r requirements.txt"
+            ) from e
+        faltan = [str(r) for r in (ruta_modelo, ruta_tokenizador) if not r.is_file()]
+        if faltan:
+            raise RuntimeError(
+                "Faltan los archivos del modelo ONNX: " + ", ".join(faltan)
+                + ". Descárguelos con: python -m scripts.descargar_modelo"
+            )
+        log.info("Cargando modelo de embeddings ONNX '%s'...", ruta_modelo.name)
+        opciones = ort.SessionOptions()
+        opciones.intra_op_num_threads = 1
+        opciones.inter_op_num_threads = 1
+        opciones.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
+        opciones.enable_cpu_mem_arena = False
+        opciones.log_severity_level = 3   # solo errores
+        self._np = np
+        self._sesion = ort.InferenceSession(str(ruta_modelo), opciones,
+                                            providers=["CPUExecutionProvider"])
+        self._entradas = {e.name for e in self._sesion.get_inputs()}
+        self._sp = spm.SentencePieceProcessor(model_file=str(ruta_tokenizador))
+        self.nombre = f"onnx:{nombre}/{ruta_modelo.name}"
+        # 128 es el max_seq_length de MiniLM-L12 (sentence_bert_config.json).
+        self.max_tokens = max_tokens
+        self.conteo_exacto = True
+
+    def _ids(self, texto: str) -> list[int]:
+        """Ids del texto con <s> y </s>, sin recortar."""
+        piezas = self._sp.encode(texto)
+        return ([self.BOS]
+                + [i + self._DESPLAZAMIENTO if i else self.UNK for i in piezas]
+                + [self.EOS])
+
+    def contar_tokens(self, texto: str) -> int:
+        return len(self._ids(texto))
+
+    def _recortar(self, ids: list[int]) -> list[int]:
+        # Como sentence-transformers: se conservan los primeros tokens y el </s>.
+        if len(ids) <= self.max_tokens:
+            return ids
+        return ids[: self.max_tokens - 1] + [self.EOS]
+
+    def embed(self, textos: list[str]) -> list[list[float]]:
+        np = self._np
+        salida: list[list[float]] = []
+        for i in range(0, len(textos), self.LOTE):
+            lote = [self._recortar(self._ids(t)) for t in textos[i:i + self.LOTE]]
+            largo = max(len(ids) for ids in lote)
+            input_ids = np.full((len(lote), largo), self.PAD, dtype=np.int64)
+            mascara = np.zeros((len(lote), largo), dtype=np.int64)
+            for fila, ids in enumerate(lote):
+                input_ids[fila, :len(ids)] = ids
+                mascara[fila, :len(ids)] = 1
+            entradas = {"input_ids": input_ids, "attention_mask": mascara}
+            if "token_type_ids" in self._entradas:
+                entradas["token_type_ids"] = np.zeros_like(input_ids)
+            tokens = self._sesion.run(None, entradas)[0]          # (lote, largo, 384)
+            peso = mascara[:, :, None].astype(np.float32)
+            medias = (tokens * peso).sum(axis=1) / np.clip(peso.sum(axis=1), 1e-9, None)
+            normas = np.clip(np.linalg.norm(medias, axis=1, keepdims=True), 1e-12, None)
+            salida.extend((medias / normas).tolist())
+        return salida
+
+
 class EmbeddingsMock:
     """Bolsa de palabras con hashing. NO entiende sinónimos; solo sirve
     para desarrollo y pruebas."""
@@ -99,6 +193,9 @@ class EmbeddingsMock:
 
 
 def crear_embeddings(settings: Settings) -> Embeddings:
+    if settings.embeddings_provider == "onnx":
+        return EmbeddingsOnnx(settings.embeddings_onnx_ruta, settings.embeddings_tokenizador_ruta,
+                              settings.embeddings_model)
     if settings.embeddings_provider == "local":
         return EmbeddingsLocal(settings.embeddings_model)
     return EmbeddingsMock()

@@ -59,11 +59,17 @@ class Settings(BaseSettings):
     llm_max_tokens: int = Field(default=800, gt=0)
 
     # --- Embeddings ---------------------------------------------------------
-    # local: modelo multilingüe preentrenado (sentence-transformers). Es el
-    #        modo real; el modelo elegido en la calibración es MiniLM-L12.
+    # onnx: el modelo elegido (MiniLM-L12) en ONNX int8, sin PyTorch. Es el
+    #       modo de despliegue; requiere `python -m scripts.descargar_modelo`.
+    # local: el mismo modelo con sentence-transformers (PyTorch). Desarrollo.
     # mock: vectores simples por palabras, sin descargar modelos (pruebas).
-    embeddings_provider: Literal["local", "mock"] = "local"
+    embeddings_provider: Literal["onnx", "local", "mock"] = "local"
     embeddings_model: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+    # Carpeta donde scripts/descargar_modelo.py deja los archivos ONNX (se
+    # respeta la estructura del repositorio de Hugging Face) y variante int8
+    # que se usa, de las que publica el modelo en su carpeta onnx/.
+    embeddings_onnx_dir: Path = RAIZ_PROYECTO / "models" / "minilm-l12"
+    embeddings_onnx_archivo: str = "model_quint8_avx2.onnx"
 
     # --- Índice vectorial y base de conocimiento ---------------------------
     chroma_path: Path = RAIZ_PROYECTO / "data" / "chroma"
@@ -106,6 +112,14 @@ class Settings(BaseSettings):
     )
 
     # ------------------------------------------------------------------------
+    @property
+    def embeddings_onnx_ruta(self) -> Path:
+        return self.embeddings_onnx_dir / "onnx" / self.embeddings_onnx_archivo
+
+    @property
+    def embeddings_tokenizador_ruta(self) -> Path:
+        return self.embeddings_onnx_dir / "sentencepiece.bpe.model"
+
     @property
     def cors_origins_list(self) -> list[str]:
         return [o.strip() for o in self.cors_origins.split(",") if o.strip()]

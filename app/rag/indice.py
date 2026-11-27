@@ -52,10 +52,18 @@ class IndiceVectorial:
         self._lexico: IndiceLexico | None = None
 
     def _obtener_coleccion(self):
+        # "embeddings" registra qué modelo generó los vectores (ver vigente()).
         return self._cliente.get_or_create_collection(
             name=self._settings.chroma_collection,
-            metadata={"hnsw:space": "cosine"},
+            metadata={"hnsw:space": "cosine", "embeddings": self._embeddings.nombre},
         )
+
+    def vigente(self) -> bool:
+        """True si el índice tiene fragmentos y los generó el mismo modelo de
+        embeddings que se usa ahora. Un índice hecho con otro modelo (p. ej.
+        construido con mock y consultado con onnx) da distancias sin sentido."""
+        meta = self._coleccion.metadata or {}
+        return self.total() > 0 and meta.get("embeddings") == self._embeddings.nombre
 
     def _cargar_secciones(self, fichas: list[Ficha]) -> None:
         self._secciones_por_ficha = {f.id: secciones_de(f) for f in fichas}

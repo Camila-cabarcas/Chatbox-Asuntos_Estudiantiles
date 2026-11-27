@@ -5,6 +5,11 @@ modelo de embeddings y RAG_MAX_DISTANCE.
 
     python -m scripts.calibrar --proveedor mock
     python -m scripts.calibrar --proveedor local --modelo sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+    python -m scripts.calibrar --proveedor onnx
+
+Con --proveedor onnx se usa el modelo ONNX int8 de EMBEDDINGS_ONNX_DIR
+(models/ por defecto), que se descarga antes con
+`python -m scripts.descargar_modelo --sin-indice`; --modelo no aplica.
 
 El índice se construye en una carpeta temporal (no toca data/) y NO se lee
 el archivo .env: el proveedor y el modelo se pasan por argumentos; el resto
@@ -148,7 +153,7 @@ def fichas_en_orden(resultados) -> list[tuple[str, float]]:
 
 def crear_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--proveedor", choices=["local", "mock"], required=True)
+    ap.add_argument("--proveedor", choices=["onnx", "local", "mock"], required=True)
     ap.add_argument("--modelo", type=id_modelo,
                     default="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
     ap.add_argument("--csv", type=ruta_csv, default=CSV_POR_DEFECTO,

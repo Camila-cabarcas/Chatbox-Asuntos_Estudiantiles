@@ -62,6 +62,25 @@ uvicorn app.main:app --reload
 La primera vez con `EMBEDDINGS_PROVIDER=local` tarda unos minutos porque
 descarga el modelo de embeddings.
 
+### Embeddings ONNX (despliegue)
+
+`EMBEDDINGS_PROVIDER=onnx` usa el mismo modelo (MiniLM-L12) exportado a ONNX
+y cuantizado a int8, con ONNX Runtime y SentencePiece: no necesita PyTorch
+(`requirements-embeddings.txt`) y ocupa mucha menos memoria. Es el modo de
+Render. Los archivos (~118 MB) se descargan una vez a `models/`, que Git
+ignora; el mismo comando construye el índice:
+
+```bash
+python -m scripts.descargar_modelo               # descarga y construye el índice
+python -m scripts.descargar_modelo --sin-indice  # solo descarga
+```
+
+`local` queda para desarrollo y para comparar con el ONNX. Los vectores de
+ambos son casi iguales (coseno medio 0.993), pero no idénticos: el umbral
+`RAG_MAX_DISTANCE` se calibra para el que se despliegue. El índice guarda
+qué modelo lo construyó; si al arrancar no coincide con el configurado, se
+reconstruye aunque `INDEX_ON_STARTUP=false`.
+
 ## Modos de trabajo según el rol
 
 No todos necesitan todo instalado. En `.env`:
@@ -69,7 +88,7 @@ No todos necesitan todo instalado. En `.env`:
 | Situación | Configuración |
 |---|---|
 | Trabajar en la interfaz, sin Docker ni modelos | `DB_ENABLED=false`, `EMBEDDINGS_PROVIDER=mock`, `LLM_PROVIDER=mock` |
-| Probar la calidad de las respuestas | `EMBEDDINGS_PROVIDER=local` y un proveedor LLM real |
+| Probar la calidad de las respuestas | `EMBEDDINGS_PROVIDER=local` (u `onnx`) y un proveedor LLM real |
 | Probar el registro de consultas | `DB_ENABLED=true` y `docker compose up -d` |
 
 El modo `mock` de embeddings solo compara palabras, no significado: sirve
@@ -266,6 +285,7 @@ pregunta y a qué distancia. Sirve para elegir el modelo de embeddings y
 ```bash
 python -m scripts.calibrar --proveedor mock
 python -m scripts.calibrar --proveedor local --modelo sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+python -m scripts.calibrar --proveedor onnx   # requiere scripts.descargar_modelo
 # Opcional: --json data/calibracion.json guarda el detalle por pregunta
 ```
 
